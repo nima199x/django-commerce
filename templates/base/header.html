@@ -1,0 +1,274 @@
+{% load static %}<!--
+//////////////////////////////////////////////////////////////////////////////////////////
+//										                                            	//
+// Project:	 MarketShop - Responsive E-Commerce HTML5 Template                          //
+//		                                                                                //
+// File:  index.html       							                                    //
+//											                                            //
+// Version: 1.0										                                    //
+//										                                            	//
+// Description:                                                                        	//
+//											                                            //
+//		    Responsive E-Commerce HTML5 Template    					                //
+//											                                            //
+//											                                            //
+//											                                            //
+//											                                            //
+// Author: Ami Bappy [amibappy77@gmail.com]						                        //
+//                                                                                      //
+// Github: https://github.com/amibappy                                                  //
+//                                                                                      //
+//        										                                        //
+//  .______       .___      .______   .______   ____.  .____ 				            //
+//  |   _  \      /   \     |   _  \  |   _  \  \   \  /   / 				            //
+//  |  |_)  |    /  ^  \    |  |_)  | |  |_)  |  \   \/   /  				            //
+//  |   _  <    /  /_\  \   |   ___/  |   ___/    \_    _/   				            //
+//  |  |_)  |  /  _____  \  |  |      |  |          |  |     				            //
+//  |______/  /__/     \__\ | _|      | _|          |__|     				            //
+//                                                       				                //
+//											                                            //
+//											                                            //
+//////////////////////////////////////////////////////////////////////////////////////////
+//											                                            //
+// Copyright (c) 2017 Bappy [amibappy77@gmail.com]					                    //
+// All Rights Reserved.									                                //
+//											                                            //
+//////////////////////////////////////////////////////////////////////////////////////////
+//											                                            //
+// Unauthorized copying of this file, via any medium is strictly prohibited	            //
+// Proprietary and confidential								                            //
+//											                                            //
+//////////////////////////////////////////////////////////////////////////////////////////
+//											                                            //
+// DO NOT REMOVE THIS AREA                                                              //
+//                                                                                      //
+//////////////////////////////////////////////////////////////////////////////////////////
+-->
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{% static 'image/favicon.png' %}" rel="icon"/>
+    <title>Marketshop - eCommerce HTML Template</title>
+    <meta name="description" content="Responsive and clean html template design for any kind of ecommerce webshop">
+    <!-- CSS Part Start-->
+    <link rel="stylesheet" href="{% static 'js/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.transitions.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <!-- CSS Part End-->
+</head>
+
+<body>
+<div class="wrapper-wide">
+    <div id="header">
+        <!-- Top Bar Start-->
+        <nav id="top" class="htop">
+            <div class="container">
+                <div class="row"><span class="drop-icon visible-sm visible-xs"><i
+                        class="fa fa-align-justify"></i></span>
+                    <div class="pull-left flip left-top">
+                        <div class="links">
+                            <ul>
+                                <li class="mobile"><i class="fa fa-phone"></i>+91 9898777656</li>
+                                <li class="email"><a href="mailto:info@marketshop.com"><i class="fa fa-envelope"></i>info@marketshop.com</a>
+                                </li>
+                                <li class="wrap_custom_block hidden-sm hidden-xs"><a>Custom Block<b></b></a>
+                                    <div class="dropdown-menu custom_block">
+                                        <ul>
+                                            <li>
+                                                <table>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td><img alt="" src="{% static 'image/banner/cms-block.jpg' %}"></td>
+                                                        <td><img alt="" src="{% static 'image/banner/responsive.jpg' %}"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <h4>CMS Blocks</h4></td>
+                                                        <td>
+                                                            <h4>Responsive Template</h4></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>This is a CMS block. You can insert any content (HTML, Text,
+                                                            Images) Here.
+                                                        </td>
+                                                        <td>This is a CMS block. You can insert any content (HTML, Text,
+                                                            Images) Here.
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong><a class="btn btn-default btn-sm" href="#">Read
+                                                            More</a></strong></td>
+                                                        <td><strong><a class="btn btn-default btn-sm" href="#">Read
+                                                            More</a></strong></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#">Wish List (0)</a></li>
+                                <li><a href="checkout.html">Checkout</a></li>
+                            </ul>
+                        </div>
+                        <div id="language" class="btn-group">
+                            <button class="btn-link dropdown-toggle" data-toggle="dropdown"><span> <img
+                                    src="{%static 'image/flags/gb.png'%}" alt="English" title="English">English <i
+                                    class="fa fa-caret-down"></i></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button class="btn btn-link btn-block language-select" type="button" name="GB"><img
+                                            src="{% static 'image/flags/gb.png' %}" alt="English" title="English"/> English
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-link btn-block language-select" type="button" name="GB"><img
+                                            src="{% static 'image/flags/ar.png' %}" alt="Arabic" title="Arabic"/> Arabic
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="currency" class="btn-group">
+                            <button class="btn-link dropdown-toggle" data-toggle="dropdown"><span> $ USD <i
+                                    class="fa fa-caret-down"></i></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button class="currency-select btn btn-link btn-block" type="button" name="EUR">€
+                                        Euro
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="currency-select btn btn-link btn-block" type="button" name="GBP">£
+                                        Pound Sterling
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="currency-select btn btn-link btn-block" type="button" name="USD">$ US
+                                        Dollar
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="top-links" class="nav pull-right flip">
+                        <ul>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="register.html">Register</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Top Bar End-->
+        <!-- Header Start-->
+        <header class="header-row">
+            <div class="container">
+                <div class="table-container">
+                    <!-- Logo Start -->
+                    <div class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
+                        <div id="logo">
+                            <a href="index.html"><img class="img-responsive" src="{% static 'image/logo.png' %}" title="MarketShop"
+                                                      alt="MarketShop"/></a>
+                        </div>
+                    </div>
+                    <!-- Logo End -->
+                    <!-- Mini Cart Start-->
+                    <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div id="cart">
+                            <button type="button" data-toggle="dropdown" data-loading-text="Loading..."
+                                    class="heading dropdown-toggle">
+                                <span class="cart-icon pull-left flip"></span>
+                                <span id="cart-total">2 item(s) - $1,132.00</span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="product.html"><img class="img-thumbnail"
+                                                                            title="Xitefun Causal Wear Fancy Shoes"
+                                                                            alt="Xitefun Causal Wear Fancy Shoes"
+                                                                            src="{% static 'image/product/sony_vaio_1-50x50.jpg' %}"></a>
+                                            </td>
+                                            <td class="text-left"><a href="product.html">Xitefun Causal Wear Fancy
+                                                Shoes</a></td>
+                                            <td class="text-right">x 1</td>
+                                            <td class="text-right">$902.00</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger btn-xs remove" title="Remove" onClick=""
+                                                        type="button"><i class="fa fa-times"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <a href="product.html"><img class="img-thumbnail"
+                                                                            title="Aspire Ultrabook Laptop"
+                                                                            alt="Aspire Ultrabook Laptop"
+                                                                            src="{% static 'image/product/samsung_tab_1-50x50.jpg' %}"></a>
+                                            </td>
+                                            <td class="text-left"><a href="product.html">Aspire Ultrabook Laptop</a>
+                                            </td>
+                                            <td class="text-right">x 1</td>
+                                            <td class="text-right">$230.00</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger btn-xs remove" title="Remove" onClick=""
+                                                        type="button"><i class="fa fa-times"></i></button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li>
+                                    <div>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                            <tr>
+                                                <td class="text-right"><strong>Sub-Total</strong></td>
+                                                <td class="text-right">$940.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right"><strong>Eco Tax (-2.00)</strong></td>
+                                                <td class="text-right">$4.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right"><strong>VAT (20%)</strong></td>
+                                                <td class="text-right">$188.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right"><strong>Total</strong></td>
+                                                <td class="text-right">$1,132.00</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="checkout"><a href="cart.html" class="btn btn-primary"><i
+                                                class="fa fa-shopping-cart"></i> View Cart</a>&nbsp;&nbsp;&nbsp;<a
+                                                href="checkout.html" class="btn btn-primary"><i class="fa fa-share"></i>
+                                            Checkout</a></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Mini Cart End-->
+                    <!-- Search Start-->
+                    <div class="col-table-cell col-lg-3 col-md-3 col-sm-6 col-xs-12 inner">
+                        <div id="search" class="input-group">
+                            <input id="filter_name" type="text" name="search" value="" placeholder="Search"
+                                   class="form-control input-lg"/>
+                            <button type="button" class="button-search"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                    <!-- Search End-->
+                </div>
+            </div>
+        </header>
+        <!-- Header End-->
