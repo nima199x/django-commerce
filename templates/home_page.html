@@ -8,7 +8,7 @@
         <div class="navbar-header"><span class="visible-xs visible-sm"> Menu <b></b></span></div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
-                <li><a class="home_link" title="Home" href="index.html"><span>Home</span></a></li>
+                <li><a class="home_link" title="Home" href="{% url 'home' %}"><span>Home</span></a></li>
                 <li class="mega-menu dropdown"><a>Categories</a>
                     <div class="dropdown-menu">
                         <div class="column col-lg-2 col-md-3"><a href="category.html">Clothing</a>
@@ -236,76 +236,74 @@
                             </div>
                         </div>
                     </div>
-                </li>
                 <li class="menu_brands dropdown"><a href="#">Brands</a>
                     <div class="dropdown-menu">
                         <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="Apple"
-                                                 alt="Apple"/></a>
-                                <a href="#">Apple</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="Canon"
-                                                 alt="Canon"/></a>
-                                <a href="#">Canon</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/hp_logo-60x60.jpg' %}"
-                                                 title="Hewlett-Packard" alt="Hewlett-Packard"/></a>
-                                <a href="#">Hewlett-Packard</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/htc_logo-60x60.jpg' %}" title="HTC"
-                                                 alt="HTC"/></a>
-                                <a href="#">HTC</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/palm_logo-60x60.jpg' %}" title="Palm"
-                                                 alt="Palm"/></a>
-                                <a href="#">Palm</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/sony_logo-60x60.jpg' %}" title="Sony"
-                                                 alt="Sony"/></a>
-                                <a href="#">Sony</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test"
-                                                 alt="test"/></a>
-                                <a href="#">test</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test 3"
-                                                 alt="test 3"/></a>
-                                <a href="#">test 3</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test 5"
-                                                 alt="test 5"/></a>
-                                <a href="#">test 5</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test 6"
-                                                 alt="test 6"/></a>
-                                <a href="#">test 6</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test 7"
-                                                 alt="test 7"/></a>
-                                <a href="#">test 7</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test1"
-                                                 alt="test1"/></a>
-                                <a href="#">test1</a>
-                            </div>
-                            <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                                <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test2"
-                                                 alt="test2"/></a>
-                                <a href="#">test2</a>
-                            </div>
+                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="Apple"
+                                             alt="Apple"/></a>
+                            <a href="#">Apple</a>
                         </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="Canon"
+                                             alt="Canon"/></a>
+                            <a href="#">Canon</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/hp_logo-60x60.jpg' %}"
+                                             title="Hewlett-Packard" alt="Hewlett-Packard"/></a>
+                            <a href="#">Hewlett-Packard</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/htc_logo-60x60.jpg' %}" title="HTC"
+                                             alt="HTC"/></a>
+                            <a href="#">HTC</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/palm_logo-60x60.jpg' %}" title="Palm"
+                                             alt="Palm"/></a>
+                            <a href="#">Palm</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/sony_logo-60x60.jpg' %}" title="Sony"
+                                             alt="Sony"/></a>
+                            <a href="#">Sony</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test"
+                                             alt="test"/></a>
+                            <a href="#">test</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test 3"
+                                             alt="test 3"/></a>
+                            <a href="#">test 3</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test 5"
+                                             alt="test 5"/></a>
+                            <a href="#">test 5</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test 6"
+                                             alt="test 6"/></a>
+                            <a href="#">test 6</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test 7"
+                                             alt="test 7"/></a>
+                            <a href="#">test 7</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test1"
+                                             alt="test1"/></a>
+                            <a href="#">test1</a>
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
+                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test2"
+                                             alt="test2"/></a>
+                            <a href="#">test2</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="custom-link"><a href="#">Custom Links</a></li>
                 <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>Custom Block</a>
@@ -371,11 +369,11 @@
                             <li><a href="elements.html">Elements</a></li>
                             <li><a href="faq.html">Faq</a></li>
                             <li><a href="sitemap.html">Sitemap</a></li>
-                            <li><a href="contact-us.html">Contact Us</a></li>
+                            <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="contact-link"><a href="contact-us.html">Contact Us</a></li>
+                <li class="contact-link"><a href="{% url 'contact_us' %}">Contact Us</a></li>
                 <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
             </ul>
         </div>
