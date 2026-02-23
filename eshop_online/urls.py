@@ -22,12 +22,13 @@ from django.contrib import admin
 from django.urls import path
 
 from eshop_online import settings
-from eshop_online.views import home_page , contact_us
+from eshop_online.views import home_page , contact_us , about_us
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page,name='home'),
     path('contact-us/', contact_us,name='contact_us'),
+    path('about-us/', about_us,name='about_us'),
 
 
 

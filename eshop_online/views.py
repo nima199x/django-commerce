@@ -8,6 +8,10 @@ def home_page(request):
 def contact_us(request):
     context = {}
     return render(request, 'contact_us.html', context)
+
+def about_us(request):
+    context = {}
+    return render(request, 'about_us.html', context)
 #Auth Section
 
 #Auth Section
