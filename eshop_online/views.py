@@ -12,6 +12,9 @@ def contact_us(request):
 def about_us(request):
     context = {}
     return render(request, 'about_us.html', context)
+def category(request):
+    context = {}
+    return render(request, 'category.html', context)
 #Auth Section
 
 #Auth Section
