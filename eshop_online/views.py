@@ -15,6 +15,7 @@ def about_us(request):
 def category(request):
     context = {}
     return render(request, 'category.html', context)
+
 #Auth Section
 
 #Auth Section
