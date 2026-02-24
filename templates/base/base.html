@@ -1,8 +1,11 @@
 {% include 'base/header.html' %}
 
-{%block contents%}
-{%endblock%}
+{# ۱. اضافه کردن جایگاه منو در فایل بیس #}
+{% block navbar %}
+    {# این قسمت در صفحات دیگر پر می‌شود #}
+{% endblock %}
 
-
+{% block contents %}
+{% endblock %}
 
 {% include 'base/footer.html' %}
