@@ -5,362 +5,8 @@
 
 <!-- Main Menu Start-->
 <div class="container">
-    <nav id="menu" class="navbar">
-        <div class="navbar-header"><span class="visible-xs visible-sm"> Menu <b></b></span></div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                <li><a class="home_link" title="Home" href="{% url 'home' %}"><span>Home</span></a></li>
-                <li class="mega-menu dropdown"><a>Categories</a>
-                    <div class="dropdown-menu">
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Clothing</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Men <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Women</a></li>
-                                    <li><a href="{% url 'category' %}">Girls<span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">Sub Categories </a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Boys</a></li>
-                                    <li><a href="{% url 'category' %}">Baby</a></li>
-                                    <li><a href="{% url 'category' %}">Accessories <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Electronics</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Laptops <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories </a></li>
-                                                <li><a href="{% url 'category' %}">New Sub Categories </a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New </a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Desktops <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories </a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New </a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New </a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Cameras <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Mobile Phones <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">TV &amp; Home Audio <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories </a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories New </a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">MP3 Players</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Shoes</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Men</a></li>
-                                    <li><a href="{% url 'category' %}">Women <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories </a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories </a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Girls</a></li>
-                                    <li><a href="{% url 'category' %}">Boys</a></li>
-                                    <li><a href="{% url 'category' %}">Baby</a></li>
-                                    <li><a href="{% url 'category' %}">Accessories <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Watches</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Men's Watches</a></li>
-                                    <li><a href="{% url 'category' %}">Women's Watches</a></li>
-                                    <li><a href="{% url 'category' %}">Kids' Watches</a></li>
-                                    <li><a href="{% url 'category' %}">Accessories</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Jewellery</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Silver <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Gold <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">test 1</a></li>
-                                                <li><a href="{% url 'category' %}">test 2</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Diamond</a></li>
-                                    <li><a href="{% url 'category' %}">Pearl <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Men's Jewellery</a></li>
-                                    <li><a href="{% url 'category' %}">Children's Jewellery <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">New Sub Categories </a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Health &amp; Beauty</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Perfumes</a></li>
-                                    <li><a href="{% url 'category' %}">Makeup</a></li>
-                                    <li><a href="{% url 'category' %}">Sun Care</a></li>
-                                    <li><a href="{% url 'category' %}">Skin Care</a></li>
-                                    <li><a href="{% url 'category' %}">Eye Care</a></li>
-                                    <li><a href="{% url 'category' %}">Hair Care</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Kids &amp; Babies</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Toys</a></li>
-                                    <li><a href="{% url 'category' %}">Games <span>&rsaquo;</span></a>
-                                        <div class="dropdown-menu">
-                                            <ul>
-                                                <li><a href="{% url 'category' %}">test 25</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="{% url 'category' %}">Puzzles</a></li>
-                                    <li><a href="{% url 'category' %}">Hobbies</a></li>
-                                    <li><a href="{% url 'category' %}">Strollers</a></li>
-                                    <li><a href="{% url 'category' %}">Health &amp; Safety</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Sports</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Cycling</a></li>
-                                    <li><a href="{% url 'category' %}">Running</a></li>
-                                    <li><a href="{% url 'category' %}">Swimming</a></li>
-                                    <li><a href="{% url 'category' %}">Football</a></li>
-                                    <li><a href="{% url 'category' %}">Golf</a></li>
-                                    <li><a href="{% url 'category' %}">Windsurfing</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Home &amp; Garden</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Bedding</a></li>
-                                    <li><a href="{% url 'category' %}">Food</a></li>
-                                    <li><a href="{% url 'category' %}">Furniture</a></li>
-                                    <li><a href="{% url 'category' %}">Kitchen</a></li>
-                                    <li><a href="{% url 'category' %}">Lighting</a></li>
-                                    <li><a href="{% url 'category' %}">Tools</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="column col-lg-2 col-md-3"><a href="{% url 'category' %}">Wines &amp; Spirits</a>
-                            <div>
-                                <ul>
-                                    <li><a href="{% url 'category' %}">Wine</a></li>
-                                    <li><a href="{% url 'category' %}">Whiskey</a></li>
-                                    <li><a href="{% url 'category' %}">Vodka</a></li>
-                                    <li><a href="{% url 'category' %}">Liqueurs</a></li>
-                                    <li><a href="{% url 'category' %}">Beer</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="menu_brands dropdown"><a href="#">Brands</a>
-                    <div class="dropdown-menu">
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/apple_logo-60x60.jpg'%}" title="Apple"
-                                             alt="Apple"/></a><a
-                                href="#">Apple</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/canon_logo-60x60.jpg'%}" title="Canon"
-                                             alt="Canon"/></a><a
-                                href="#">Canon</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/hp_logo-60x60.jpg'%}" title="Hewlett-Packard"
-                                             alt="Hewlett-Packard"/></a><a href="#">Hewlett-Packard</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/htc_logo-60x60.jpg'%}" title="HTC" alt="HTC"/></a><a
-                                href="#">HTC</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/palm_logo-60x60.jpg'%}" title="Palm"
-                                             alt="Palm"/></a><a
-                                href="#">Palm</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/sony_logo-60x60.jpg'%}" title="Sony"
-                                             alt="Sony"/></a><a
-                                href="#">Sony</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/canon_logo-60x60.jpg'%}" title="test"
-                                             alt="test"/></a><a
-                                href="#">test</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/apple_logo-60x60.jpg'%}" title="test 3"
-                                             alt="test 3"/></a><a href="#">test 3</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/canon_logo-60x60.jpg'%}" title="test 5"
-                                             alt="test 5"/></a><a href="#">test 5</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/canon_logo-60x60.jpg'%}" title="test 6"
-                                             alt="test 6"/></a><a href="#">test 6</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/apple_logo-60x60.jpg'%}" title="test 7"
-                                             alt="test 7"/></a><a href="#">test 7</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/canon_logo-60x60.jpg'%}" title="test1"
-                                             alt="test1"/></a><a
-                                href="#">test1</a></div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{%static 'image/product/apple_logo-60x60.jpg'%}" title="test2"
-                                             alt="test2"/></a><a
-                                href="#">test2</a></div>
-                    </div>
-                </li>
-                <li class="custom-link"><a href="#">Custom Links</a></li>
-                <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>Custom Block</a>
-                    <div class="dropdown-menu custom_block">
-                        <ul>
-                            <li>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td><img alt="" src="{%static 'image/banner/cms-block.jpg'%}"></td>
-                                        <td><img alt="" src="{%static 'image/banner/responsive.jpg'%}"></td>
-                                        <td><img alt="" src="{%static 'image/banner/cms-block.jpg'%}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h4>CMS Blocks</h4></td>
-                                        <td>
-                                            <h4>Responsive Template</h4></td>
-                                        <td>
-                                            <h4>Dedicated Support</h4></td>
-                                    </tr>
-                                    <tr>
-                                        <td>This is a CMS block. You can insert any content (HTML, Text, Images) Here.
-                                        </td>
-                                        <td>This is a CMS block. You can insert any content (HTML, Text, Images) Here.
-                                        </td>
-                                        <td>This is a CMS block. You can insert any content (HTML, Text, Images) Here.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">Read More</a></strong>
-                                        </td>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">Read More</a></strong>
-                                        </td>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">Read More</a></strong>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="dropdown information-link"><a>Pages</a>
-                    <div class="dropdown-menu">
-                        <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="{% url 'category' %}">Category (Grid/List)</a></li>
-                            <li><a href="product.html">Product</a></li>
-                            <li><a href="cart.html">Shopping Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="compare.html">Compare</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
-                            <li><a href="search.html">Search</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="{% url 'about_us' %}">About Us</a></li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li><a href="faq.html">Faq</a></li>
-                            <li><a href="sitemap.html">Sitemap</a></li>
-                            <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="contact-link"><a href="{% url 'contact_us' %}">Contact Us</a></li>
-                <li class="custom-link-right"><a href="#" target="_blank"> Buy Now!</a></li>
-            </ul>
-        </div>
-    </nav>
 </div>
 <!-- Main Menu End-->
-</div>
 <div id="container">
     <div class="container">
         <!-- Breadcrumb Start-->
@@ -555,7 +201,7 @@
                 <div class="side-item">
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg' %}"
                                                         alt="Brand Fashion Cotton T-Shirt"
                                                         title="Brand Fashion Cotton T-Shirt"
                                                         class="img-responsive"/></a>
@@ -568,8 +214,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/iphone_1-50x50.jpg'%}"
-                                                        alt="iPhone5"
+                            <a href="product.html"><img src="{%static 'image/product/iphone_1-50x50.jpg' %}" alt="iPhone5"
                                                         title="iPhone5" class="img-responsive"/></a>
                         </div>
                         <div class="caption">
@@ -587,7 +232,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_1-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/macbook_1-50x50.jpg' %}"
                                                         alt="Ideapad Yoga 13-59341124 Laptop"
                                                         title="Ideapad Yoga 13-59341124 Laptop" class="img-responsive"/></a>
                         </div>
@@ -606,7 +251,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/sony_vaio_1-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/sony_vaio_1-50x50.jpg' %}"
                                                         alt="Xitefun Causal Wear Fancy Shoes"
                                                         title="Xitefun Causal Wear Fancy Shoes" class="img-responsive"/></a>
                         </div>
@@ -626,10 +271,9 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img
-                                    src="{%static 'image/product/FinePix-Long-Zoom-Camera-50x50.jpg'%}"
-                                    alt="FinePix S8400W Long Zoom Camera"
-                                    title="FinePix S8400W Long Zoom Camera" class="img-responsive"/></a>
+                            <a href="product.html"><img src="{%static 'image/product/FinePix-Long-Zoom-Camera-50x50.jpg' %}"
+                                                        alt="FinePix S8400W Long Zoom Camera"
+                                                        title="FinePix S8400W Long Zoom Camera" class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">FinePix S8400W Long Zoom Camera</a></h4>
@@ -641,7 +285,7 @@
                 <div class="side-item">
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-50x50.jpg' %}"
                                                         alt=" Strategies for Acquiring Your Own Laptop "
                                                         title=" Strategies for Acquiring Your Own Laptop "
                                                         class="img-responsive"/></a>
@@ -654,7 +298,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-50x50.jpg' %}"
                                                         alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop"
                                                         class="img-responsive"/></a>
                         </div>
@@ -674,7 +318,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg' %}"
                                                         alt="Brand Fashion Cotton T-Shirt"
                                                         title="Brand Fashion Cotton T-Shirt"
                                                         class="img-responsive"/></a>
@@ -687,7 +331,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-50x50.jpg' %}"
                                                         alt="Digital Camera for Elderly"
                                                         title="Digital Camera for Elderly" class="img-responsive"/></a>
                         </div>
@@ -699,7 +343,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_5-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_5-50x50.jpg' %}"
                                                         alt="Hair Care Products" title="Hair Care Products"
                                                         class="img-responsive"/></a>
                         </div>
@@ -717,7 +361,7 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_air_1-50x50.jpg'%}"
+                            <a href="product.html"><img src="{%static 'image/product/macbook_air_1-50x50.jpg' %}"
                                                         alt="Laptop Silver black" title="Laptop Silver black"
                                                         class="img-responsive"/></a>
                         </div>
@@ -730,11 +374,11 @@
                 </div>
                 <div class="banner owl-carousel">
                     <div class="item">
-                        <a href="#"><img src="{%static 'image/banner/small-banner1-265x350.jpg'%}" alt="small banner"
+                        <a href="#"><img src="{%static 'image/banner/small-banner1-265x350.jpg' %}" alt="small banner"
                                          class="img-responsive"/></a>
                     </div>
                     <div class="item">
-                        <a href="#"><img src="{%static 'image/banner/small-banner-265x350.jpg'%}" alt="small banner1"
+                        <a href="#"><img src="{%static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1"
                                          class="img-responsive"/></a>
                     </div>
                 </div>
@@ -746,32 +390,23 @@
                 <h3 class="subtitle">Refine Search</h3>
                 <div class="category-list-thumb row">
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{% static 'image/no_image.jpg' %}" alt="Laptops (6)"/></a>
-                        <a href="{% url 'category' %}">Laptops (6)</a>
-                    </div>
+                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Laptops (6)"/></a> <a
+                            href="{% url 'category' %}">Laptops (6)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{% static 'image/no_image.jpg' %}" alt="Desktops (1)"/></a>
-                        <a href="{% url 'category' %}">Desktops (1)</a>
-                    </div>
+                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Desktops (1)"/></a> <a
+                            href="{% url 'category' %}">Desktops (1)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{% static 'image/no_image.jpg' %}" alt="Cameras (2)"/></a>
-                        <a href="{% url 'category' %}">Cameras (2)</a>
-                    </div>
+                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Cameras (2)"/></a> <a
+                            href="{% url 'category' %}">Cameras (2)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{% static 'image/no_image.jpg' %}"
-                                                            alt="Mobile Phones (4)"/></a>
-                        <a href="{% url 'category' %}">Mobile Phones (4)</a>
-                    </div>
+                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Mobile Phones (4)"/></a> <a
+                            href="{% url 'category' %}">Mobile Phones (4)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{% static 'image/no_image.jpg' %}"
-                                                            alt="TV &amp; Home Audio (11)"/></a>
-                        <a href="{% url 'category' %}">TV &amp; Home Audio (11)</a>
-                    </div>
+                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="TV &amp; Home Audio (11)"/></a> <a
+                            href="{% url 'category' %}">TV &amp; Home Audio (11)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{% static 'image/no_image.jpg' %}"
-                                                            alt="MP3 Players (2)"/></a>
-                        <a href="{% url 'category' %}">MP3 Players (2)</a>
-                    </div>
+                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="MP3 Players (2)"/></a> <a
+                            href="{% url 'category' %}">MP3 Players (2)</a></div>
                 </div>
                 <div class="product-filter">
                     <div class="row">
@@ -818,7 +453,7 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-200x200.jpg' %}"
                                                             alt=" Strategies for Acquiring Your Own Laptop "
                                                             title=" Strategies for Acquiring Your Own Laptop "
                                                             class="img-responsive"/></a>
@@ -828,8 +463,7 @@
                                     <h4><a href="product.html"> Strategies for Acquiring Your Own Laptop </a></h4>
                                     <p class="description"> Latest Intel mobile architecture Powered by the most
                                         advanced mobile processors from Intel, t..</p>
-                                    <p class="price"><span class="price-new">$1,400.00</span> <span
-                                            class="price-old">$1,900.00</span>
+                                    <p class="price"><span class="price-new">$1,400.00</span> <span class="price-old">$1,900.00</span>
                                         <span class="saving">-26%</span> <span
                                                 class="price-tax">Ex Tax: $1,400.00</span></p>
                                 </div>
@@ -837,8 +471,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -851,10 +484,9 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-200x200.jpg' %}"
                                                             alt="Digital Camera for Elderly"
-                                                            title="Digital Camera for Elderly"
-                                                            class="img-responsive"/></a>
+                                                            title="Digital Camera for Elderly" class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
@@ -862,16 +494,14 @@
                                     <p class="description"> Engineered with pro-level features and performance, the
                                         12.3-effective-megapixel D300 combines bra..</p>
                                     <p class="price"><span class="price-new">$92.00</span> <span class="price-old">$98.00</span>
-                                        <span class="saving">-6%</span> <span
-                                                class="price-tax">Ex Tax: $75.00</span>
+                                        <span class="saving">-6%</span> <span class="price-tax">Ex Tax: $75.00</span>
                                     </p>
                                 </div>
                                 <div class="button-group">
                                     <button class="btn-primary" type="button" onClick="cart.add('31');"><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -884,11 +514,10 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img
-                                        src="{%static 'image/product/FinePix-Long-Zoom-Camera-200x200.jpg'%}"
-                                        alt="FinePix S8400W Long Zoom Camera"
-                                        title="FinePix S8400W Long Zoom Camera"
-                                        class="img-responsive"/></a>
+                                <a href="product.html"><img src="{%static 'image/product/FinePix-Long-Zoom-Camera-200x200.jpg' %}"
+                                                            alt="FinePix S8400W Long Zoom Camera"
+                                                            title="FinePix S8400W Long Zoom Camera"
+                                                            class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
@@ -901,8 +530,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -915,7 +543,7 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_shuffle_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/ipod_shuffle_1-200x200.jpg' %}"
                                                             alt="Hp Pavilion G6 2314ax Notebok Laptop"
                                                             title="Hp Pavilion G6 2314ax Notebok Laptop"
                                                             class="img-responsive"/></a>
@@ -931,8 +559,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -945,10 +572,9 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/palm_treo_pro_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/palm_treo_pro_1-200x200.jpg' %}"
                                                             alt="HTC M7 with Stunning Looks"
-                                                            title="HTC M7 with Stunning Looks"
-                                                            class="img-responsive"/></a>
+                                                            title="HTC M7 with Stunning Looks" class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
@@ -961,8 +587,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -975,7 +600,7 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/macbook_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/macbook_1-200x200.jpg' %}"
                                                             alt="Ideapad Yoga 13-59341124 Laptop"
                                                             title="Ideapad Yoga 13-59341124 Laptop"
                                                             class="img-responsive"/></a>
@@ -983,16 +608,12 @@
                             <div>
                                 <div class="caption">
                                     <h4><a href="product.html">Ideapad Yoga 13-59341124 Laptop</a></h4>
-                                    <p class="description"> Intel Core 2 Duo processor Powered by an Intel Core 2
-                                        Duo
+                                    <p class="description"> Intel Core 2 Duo processor Powered by an Intel Core 2 Duo
                                         processor at speeds up to 2.16GHz, th..</p>
                                     <p class="price"> $2.00 <span class="price-tax">Ex Tax: $0.00</span></p>
-                                    <div class="rating"><span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                            class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span>
+                                    <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                            class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                                 class="fa fa-star-o fa-stack-2x"></i></span> <span
                                                 class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
@@ -1004,8 +625,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -1018,23 +638,18 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/iphone_1-200x200.jpg'%}"
-                                                            alt="iPhone5"
+                                <a href="product.html"><img src="{%static 'image/product/iphone_1-200x200.jpg' %}" alt="iPhone5"
                                                             title="iPhone5" class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
                                     <h4><a href="product.html">iPhone5</a></h4>
-                                    <p class="description">iPhone is a revolutionary new mobile phone that allows
-                                        you to
+                                    <p class="description">iPhone is a revolutionary new mobile phone that allows you to
                                         make a call by simply tapping a name o..</p>
                                     <p class="price"> $123.20 <span class="price-tax">Ex Tax: $101.00</span></p>
-                                    <div class="rating"><span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                            class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span>
+                                    <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                            class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                                 class="fa fa-star-o fa-stack-2x"></i></span> <span
                                                 class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
@@ -1046,8 +661,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -1060,7 +674,7 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/macbook_air_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/macbook_air_1-200x200.jpg' %}"
                                                             alt="Laptop Silver black" title="Laptop Silver black"
                                                             class="img-responsive"/></a>
                             </div>
@@ -1069,18 +683,15 @@
                                     <h4><a href="product.html">Laptop Silver black</a></h4>
                                     <p class="description">MacBook Air is ultrathin, ultraportable, and ultra unlike
                                         anything else. But you don’t lose inches a..</p>
-                                    <p class="price"><span class="price-new">$1,142.00</span> <span
-                                            class="price-old">$1,202.00</span>
-                                        <span class="saving">-5%</span> <span
-                                                class="price-tax">Ex Tax: $950.00</span>
+                                    <p class="price"><span class="price-new">$1,142.00</span> <span class="price-old">$1,202.00</span>
+                                        <span class="saving">-5%</span> <span class="price-tax">Ex Tax: $950.00</span>
                                     </p>
                                 </div>
                                 <div class="button-group">
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -1093,15 +704,13 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_nano_1-200x200.jpg'%}"
-                                                            alt="Mp3 Player"
+                                <a href="product.html"><img src="{%static 'image/product/ipod_nano_1-200x200.jpg' %}" alt="Mp3 Player"
                                                             title="Mp3 Player" class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
                                     <h4><a href="product.html">Mp3 Player</a></h4>
-                                    <p class="description"> Video in your pocket. Its the small iPod with one very
-                                        big
+                                    <p class="description"> Video in your pocket. Its the small iPod with one very big
                                         idea: video. The worlds most popular..</p>
                                     <p class="price"> $122.00 <span class="price-tax">Ex Tax: $100.00</span></p>
                                 </div>
@@ -1109,8 +718,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -1123,15 +731,14 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_classic_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/ipod_classic_1-200x200.jpg' %}"
                                                             alt="Portable Mp3 Player" title="Portable Mp3 Player"
                                                             class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
                                     <h4><a href="product.html">Portable Mp3 Player</a></h4>
-                                    <p class="description"> More room to move. With 80GB or 160GB of storage and up
-                                        to
+                                    <p class="description"> More room to move. With 80GB or 160GB of storage and up to
                                         40 hours of battery life, the new ..</p>
                                     <p class="price"> $122.00 <span class="price-tax">Ex Tax: $100.00</span></p>
                                 </div>
@@ -1139,8 +746,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -1153,27 +759,24 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_touch_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/ipod_touch_1-200x200.jpg' %}"
                                                             alt="Samsung Galaxy S4" title="Samsung Galaxy S4"
                                                             class="img-responsive"/></a>
                             </div>
                             <div>
                                 <div class="caption">
                                     <h4><a href="product.html">Samsung Galaxy S4</a></h4>
-                                    <p class="description">Revolutionary multi-touch interface. iPod touch features
-                                        the
+                                    <p class="description">Revolutionary multi-touch interface. iPod touch features the
                                         same multi-touch screen technology as ..</p>
                                     <p class="price"><span class="price-new">$62.00</span> <span class="price-old">$122.00</span>
-                                        <span class="saving">-50%</span> <span
-                                                class="price-tax">Ex Tax: $50.00</span>
+                                        <span class="saving">-50%</span> <span class="price-tax">Ex Tax: $50.00</span>
                                     </p>
                                 </div>
                                 <div class="button-group">
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
@@ -1186,7 +789,7 @@
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-200x200.jpg'%}"
+                                <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-200x200.jpg' %}"
                                                             alt="Aspire Ultrabook Laptop"
                                                             title="Aspire Ultrabook Laptop" class="img-responsive"/></a>
                             </div>
@@ -1196,15 +799,11 @@
                                     <p class="description">Samsung Galaxy Tab 10.1, is the world’s thinnest tablet,
                                         measuring 8.6 mm thickness, running with An..</p>
                                     <p class="price"><span class="price-new">$230.00</span> <span class="price-old">$241.99</span>
-                                        <span class="saving">-5%</span> <span
-                                                class="price-tax">Ex Tax: $190.00</span>
+                                        <span class="saving">-5%</span> <span class="price-tax">Ex Tax: $190.00</span>
                                     </p>
-                                    <div class="rating"><span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                            class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span>
+                                    <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                            class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                                         <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                                 class="fa fa-star-o fa-stack-2x"></i></span> <span
                                                 class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
@@ -1216,8 +815,7 @@
                                     <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
                                     </button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List"
-                                                onClick="">
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
                                         <button type="button" data-toggle="tooltip" title="Compare this Product"
                                                 onClick=""><i class="fa fa-exchange"></i>
