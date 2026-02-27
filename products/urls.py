@@ -1,12 +1,15 @@
 from django.urls import path
-from . import views # بهتر است کل ویوز را ایمپورت کنی
+from . import views
 
 app_name = 'products'
 
 urlpatterns = [
-    # ۱. صفحه‌ای که لیست همه دسته‌بندی‌ها را نشان می‌دهد
+    # ۱. لیست دسته‌بندی‌ها
     path('categories/', views.category_list, name='category_list'),
 
-    # ۲. صفحه‌ای که محصولات یک دسته‌بندی خاص را نشان می‌دهد (اصلاح شد)
-    path('categories/<slug:slug>/', views.category_products, name='category'),
+    # ۲. دسته‌بندی اصلی (بدون والد)
+    path('categories/<slug:parent_slug>/', views.category_products, name='category'),
+
+    # ۳. دسته فرزند (والد/فرزند) -> این مسیر کلید حل مشکل است!
+    path('categories/<slug:parent_slug>/<slug:child_slug>/', views.category_products, name='category_detail'),
 ]

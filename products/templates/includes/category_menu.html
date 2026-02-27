@@ -1,19 +1,25 @@
 {% load mptt_tags %}
 <ul id="cat_accordion">
     {% recursetree categories %}
-        <li class="cuton-parent-li">
-            {# اضافه کردن کلاس active به صورت شرطی #}
-            <a href="{% url 'products:category' node.slug %}"
-               class="{% if node.get_children %}cuton-parent{% endif %} {% if node.slug == category.slug %}active{% endif %}">
-                {{ node.title }}
-            </a>
+    <li class="cuton-parent-li">
+        {# اضافه کردن کلاس active به صورت شرطی #}
+        <a href="
+    {% if node.parent %}
+        {% url 'products:category_detail' node.parent.slug node.slug %}
+    {% else %}
+        {% url 'products:category' node.slug %}
+    {% endif %}"
+           class="{% if node.get_children %}cuton-parent{% endif %} {% if node.slug == category.slug %}active{% endif %}">
+            {{ node.title }}
+        </a>
 
-            {% if node.get_children %}
-                <span class="down"></span>
-                <ul style="display: none;">
-                    {{ children }}
-                </ul>
-            {% endif %}
-        </li>
+        {% if node.get_children.count > 0 %}
+
+        <span class="down"></span>
+        <ul style="display: none;">
+            {{ children }}
+        </ul>
+        {% endif %}
+    </li>
     {% endrecursetree %}
 </ul>

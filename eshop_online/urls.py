@@ -24,6 +24,7 @@ from django.urls import path , include
 from eshop_online import settings
 from eshop_online.views import home_page , contact_us , about_us,category
 
+handler404 = 'eshop_online.views.custom_404'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page,name='home'),
