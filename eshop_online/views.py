@@ -1,9 +1,14 @@
 from django.shortcuts import render
+from products.models import Category  # مدل دسته بندی را ایمپورت کنید
 
 
 def home_page(request):
+    # گرفتن دسته‌بندی‌های اصلی (بدون فرزند)
+    main_categories = Category.objects.filter(level=0)
 
-    context = {}
+    context = {
+        'main_categories': main_categories,
+    }
     return render(request, 'home_page.html', context)
 
 def contact_us(request):

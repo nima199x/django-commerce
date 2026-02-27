@@ -1,18 +1,19 @@
 {% extends 'base/base.html' %}
+{% load category_tags %}
+
 {% load static %}
 
 {% block contents %}
 
 <!-- Main Menu Start-->
 <div class="container">
-</div>
 <!-- Main Menu End-->
 <div id="container">
     <div class="container">
         <!-- Breadcrumb Start-->
         <ul class="breadcrumb">
             <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
-            <li><a href="{% url 'category' %}">Electronics</a></li>
+            <li><a href="{% url 'products:category' category.slug %}">{{ category.title }}</a></li>
         </ul>
         <!-- Breadcrumb End-->
         <div class="row">
@@ -20,188 +21,13 @@
             <aside id="column-left" class="col-sm-3 hidden-xs">
                 <h3 class="subtitle">Categories</h3>
                 <div class="box-category">
-                    <ul id="cat_accordion">
-                        <li><a href="{% url 'category' %}">Clothing</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Men</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Women</a></li>
-                                <li><a href="{% url 'category' %}">Girls</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Boys</a></li>
-                                <li><a href="{% url 'category' %}">Baby</a></li>
-                                <li><a href="{% url 'category' %}">Accessories</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a class="active" href="{% url 'category' %}">Electronics</a> <span class="down"></span>
-                            <ul style="display:block;">
-                                <li><a href="{% url 'category' %}">Laptops</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Desktops</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Cameras</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Mobile Phones</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">TV &amp; Home Audio</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories New</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">MP3 Players</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Shoes</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Men</a></li>
-                                <li><a href="{% url 'category' %}">Women</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Girls</a></li>
-                                <li><a href="{% url 'category' %}">Boys</a></li>
-                                <li><a href="{% url 'category' %}">Baby</a></li>
-                                <li><a href="{% url 'category' %}">Accessories</a><span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Watches</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Men's Watches</a></li>
-                                <li><a href="{% url 'category' %}">Women's Watches</a></li>
-                                <li><a href="{% url 'category' %}">Kids' Watches</a></li>
-                                <li><a href="{% url 'category' %}">Accessories</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Jewellery</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Silver</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Gold</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">test 1</a></li>
-                                        <li><a href="{% url 'category' %}">test 2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Diamond</a></li>
-                                <li><a href="{% url 'category' %}">Pearl</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Men's Jewellery</a></li>
-                                <li><a href="{% url 'category' %}">Children's Jewellery</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">New Sub Categories</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Health &amp; Beauty</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Perfumes</a></li>
-                                <li><a href="{% url 'category' %}">Makeup</a></li>
-                                <li><a href="{% url 'category' %}">Sun Care</a></li>
-                                <li><a href="{% url 'category' %}">Skin Care</a></li>
-                                <li><a href="{% url 'category' %}">Eye Care</a></li>
-                                <li><a href="{% url 'category' %}">Hair Care</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Kids &amp; Babies</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Toys</a></li>
-                                <li><a href="{% url 'category' %}">Games</a> <span class="down"></span>
-                                    <ul>
-                                        <li><a href="{% url 'category' %}">test 25</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'category' %}">Puzzles</a></li>
-                                <li><a href="{% url 'category' %}">Hobbies</a></li>
-                                <li><a href="{% url 'category' %}">Strollers</a></li>
-                                <li><a href="{% url 'category' %}">Health &amp; Safety</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Sports</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Cycling</a></li>
-                                <li><a href="{% url 'category' %}">Running</a></li>
-                                <li><a href="{% url 'category' %}">Swimming</a></li>
-                                <li><a href="{% url 'category' %}">Football</a></li>
-                                <li><a href="{% url 'category' %}">Golf</a></li>
-                                <li><a href="{% url 'category' %}">Windsurfing</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Home &amp; Garden</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Bedding</a></li>
-                                <li><a href="{% url 'category' %}">Food</a></li>
-                                <li><a href="{% url 'category' %}">Furniture</a></li>
-                                <li><a href="{% url 'category' %}">Kitchen</a></li>
-                                <li><a href="{% url 'category' %}">Lighting</a></li>
-                                <li><a href="{% url 'category' %}">Tools</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{% url 'category' %}">Wines &amp; Spirits</a> <span class="down"></span>
-                            <ul>
-                                <li><a href="{% url 'category' %}">Wine</a></li>
-                                <li><a href="{% url 'category' %}">Whiskey</a></li>
-                                <li><a href="{% url 'category' %}">Vodka</a></li>
-                                <li><a href="{% url 'category' %}">Liqueurs</a></li>
-                                <li><a href="{% url 'category' %}">Beer</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    {% show_categories %}
                 </div>
                 <h3 class="subtitle">Bestsellers</h3>
                 <div class="side-item">
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg'%}"
                                                         alt="Brand Fashion Cotton T-Shirt"
                                                         title="Brand Fashion Cotton T-Shirt"
                                                         class="img-responsive"/></a>
@@ -214,7 +40,8 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/iphone_1-50x50.jpg' %}" alt="iPhone5"
+                            <a href="product.html"><img src="{%static 'image/product/iphone_1-50x50.jpg'%}"
+                                                        alt="iPhone5"
                                                         title="iPhone5" class="img-responsive"/></a>
                         </div>
                         <div class="caption">
@@ -222,58 +49,66 @@
                             <p class="price"> $123.20 </p>
                             <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                     class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span></div>
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_1-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/macbook_1-50x50.jpg'%}"
                                                         alt="Ideapad Yoga 13-59341124 Laptop"
-                                                        title="Ideapad Yoga 13-59341124 Laptop" class="img-responsive"/></a>
+                                                        title="Ideapad Yoga 13-59341124 Laptop"
+                                                        class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">Ideapad Yoga 13-59341124 Laptop</a></h4>
                             <p class="price"> $2.00 </p>
                             <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                     class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span></div>
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/sony_vaio_1-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/sony_vaio_1-50x50.jpg'%}"
                                                         alt="Xitefun Causal Wear Fancy Shoes"
-                                                        title="Xitefun Causal Wear Fancy Shoes" class="img-responsive"/></a>
+                                                        title="Xitefun Causal Wear Fancy Shoes"
+                                                        class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">Xitefun Causal Wear Fancy Shoes</a></h4>
                             <p class="price"><span class="price-new">$902.00</span> <span
-                                    class="price-old">$1,202.00</span> <span class="saving">-25%</span></p>
+                                    class="price-old">$1,202.00</span>
+                                <span class="saving">-25%</span></p>
                             <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                     class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span></div>
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/FinePix-Long-Zoom-Camera-50x50.jpg' %}"
-                                                        alt="FinePix S8400W Long Zoom Camera"
-                                                        title="FinePix S8400W Long Zoom Camera" class="img-responsive"/></a>
+                            <a href="product.html"><img
+                                    src="{%static 'image/product/FinePix-Long-Zoom-Camera-50x50.jpg'%}"
+                                    alt="FinePix S8400W Long Zoom Camera"
+                                    title="FinePix S8400W Long Zoom Camera"
+                                    class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">FinePix S8400W Long Zoom Camera</a></h4>
@@ -285,7 +120,7 @@
                 <div class="side-item">
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-50x50.jpg'%}"
                                                         alt=" Strategies for Acquiring Your Own Laptop "
                                                         title=" Strategies for Acquiring Your Own Laptop "
                                                         class="img-responsive"/></a>
@@ -293,14 +128,15 @@
                         <div class="caption">
                             <h4><a href="product.html">Strategies for Acquiring Your Own Laptop</a></h4>
                             <p class="price"><span class="price-new">$1,400.00</span> <span
-                                    class="price-old">$1,900.00</span> <span class="saving">-26%</span></p>
+                                    class="price-old">$1,900.00</span>
+                                <span class="saving">-26%</span></p>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-50x50.jpg' %}"
-                                                        alt="Aspire Ultrabook Laptop" title="Aspire Ultrabook Laptop"
-                                                        class="img-responsive"/></a>
+                            <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-50x50.jpg'%}"
+                                                        alt="Aspire Ultrabook Laptop"
+                                                        title="Aspire Ultrabook Laptop" class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">Aspire Ultrabook Laptop</a></h4>
@@ -308,49 +144,50 @@
                                     class="price-old">$241.99</span> <span class="saving">-5%</span></p>
                             <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                     class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star fa-stack-2x"></i><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                        class="fa fa-star-o fa-stack-2x"></i></span></div>
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg'%}"
                                                         alt="Brand Fashion Cotton T-Shirt"
                                                         title="Brand Fashion Cotton T-Shirt"
                                                         class="img-responsive"/></a>
                         </div>
                         <div class="caption">
-                            <h4><a href="https://github.com/amibappy" target="_blank">T-Shirts</a></h4>
+                            <h4><a href="https://github.com/amibappy" target="_blank">Cotton Brand T-Shirt</a></h4>
                             <p class="price"><span class="price-new">$110.00</span> <span
                                     class="price-old">$122.00</span> <span class="saving">-10%</span></p>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-50x50.jpg'%}"
                                                         alt="Digital Camera for Elderly"
                                                         title="Digital Camera for Elderly" class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">Digital Camera for Elderly</a></h4>
-                            <p class="price"><span class="price-new">$92.00</span> <span class="price-old">$98.00</span>
-                                <span class="saving">-6%</span></p>
+                            <p class="price"><span class="price-new">$92.00</span> <span
+                                    class="price-old">$98.00</span> <span class="saving">-6%</span></p>
                         </div>
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_5-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_5-50x50.jpg'%}"
                                                         alt="Hair Care Products" title="Hair Care Products"
                                                         class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">Hair Care Products</a></h4>
-                            <p class="price"><span class="price-new">$66.80</span> <span class="price-old">$90.80</span>
-                                <span class="saving">-27%</span></p>
+                            <p class="price"><span class="price-new">$66.80</span> <span
+                                    class="price-old">$90.80</span> <span class="saving">-27%</span></p>
                             <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
                                     class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
                                     class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
@@ -361,52 +198,174 @@
                     </div>
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_air_1-50x50.jpg' %}"
+                            <a href="product.html"><img src="{%static 'image/product/macbook_air_1-50x50.jpg'%}"
                                                         alt="Laptop Silver black" title="Laptop Silver black"
                                                         class="img-responsive"/></a>
                         </div>
                         <div class="caption">
                             <h4><a href="product.html">Laptop Silver black</a></h4>
                             <p class="price"><span class="price-new">$1,142.00</span> <span
-                                    class="price-old">$1,202.00</span> <span class="saving">-5%</span></p>
+                                    class="price-old">$1,202.00</span>
+                                <span class="saving">-5%</span></p>
                         </div>
                     </div>
                 </div>
+                <div class="list-group">
+                    <h3 class="subtitle">Custom Content</h3>
+                    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images)
+                        Here. </p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has
+                        been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                        galley of type and scrambled it to make a type specimen book. </p>
+                    <p>It has survived not only five centuries, but also the leap into electronic typesetting,
+                        remaining essentially unchanged.</p>
+                </div>
                 <div class="banner owl-carousel">
                     <div class="item">
-                        <a href="#"><img src="{%static 'image/banner/small-banner1-265x350.jpg' %}" alt="small banner"
+                        <a href="#"><img src="{%static 'image/banner/small-banner1-265x350.jpg'%}" alt="small banner"
                                          class="img-responsive"/></a>
                     </div>
                     <div class="item">
-                        <a href="#"><img src="{%static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1"
+                        <a href="#"><img src="{%static 'image/banner/small-banner-265x350.jpg'%}" alt="small banner1"
                                          class="img-responsive"/></a>
+                    </div>
+                </div>
+                <h3 class="subtitle">Latest</h3>
+                <div class="side-item">
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/iphone_6-50x50.jpg'%}"
+                                                        alt="Hair Care Cream for Men"
+                                                        title="Hair Care Cream for Men" class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Hair Care Cream for Men</a></h4>
+                            <p class="price"> $134.00 </p>
+                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/iphone_6-50x50.jpg'%}"
+                                                        alt="Hair Care Products" title="Hair Care Products"
+                                                        class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Hair Care Products</a></h4>
+                            <p class="price"><span class="price-new">$66.80</span> <span
+                                    class="price-old">$90.80</span> <span class="saving">-27%</span></p>
+                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_4-50x50.jpg'%}"
+                                                        alt="Bed Head Foxy Curls Contour Cream"
+                                                        title="Bed Head Foxy Curls Contour Cream"
+                                                        class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Bed Head Foxy Curls Contour Cream</a></h4>
+                            <p class="price"> $88.00 </p>
+                        </div>
+                    </div>
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/macbook_5-50x50.jpg'%}"
+                                                        alt="Shower Gel Perfume for Women"
+                                                        title="Shower Gel Perfume for Women"
+                                                        class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Shower Gel Perfume for Women</a></h4>
+                            <p class="price"><span class="price-new">$95.00</span> <span
+                                    class="price-old">$99.00</span> <span class="saving">-4%</span></p>
+                        </div>
+                    </div>
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/macbook_4-50x50.jpg'%}"
+                                                        alt="Perfumes for Women" title="Perfumes for Women"
+                                                        class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Perfumes for Women</a></h4>
+                            <p class="price"> $85.00 </p>
+                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
+                                    class="fa fa-star fa-stack-2x"></i><i
+                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/macbook_3-50x50.jpg'%}"
+                                                        alt="Make Up for Naturally Beautiful Better"
+                                                        title="Make Up for Naturally Beautiful Better"
+                                                        class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Make Up for Naturally Beautiful Better</a></h4>
+                            <p class="price"> $123.00 </p>
+                        </div>
+                    </div>
+                    <div class="product-thumb clearfix">
+                        <div class="image">
+                            <a href="product.html"><img src="{%static 'image/product/macbook_2-50x50.jpg'%}"
+                                                        alt="Pnina Tornai Perfume" title="Pnina Tornai Perfume"
+                                                        class="img-responsive"/></a>
+                        </div>
+                        <div class="caption">
+                            <h4><a href="product.html">Pnina Tornai Perfume</a></h4>
+                            <p class="price"> $110.00 </p>
+                        </div>
                     </div>
                 </div>
             </aside>
             <!--Left Part End -->
             <!--Middle Part Start-->
             <div id="content" class="col-sm-9">
-                <h1 class="title">Electronics</h1>
+                <h1 class="title">{{ category.title }}</h1>
                 <h3 class="subtitle">Refine Search</h3>
                 <div class="category-list-thumb row">
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Laptops (6)"/></a> <a
-                            href="{% url 'category' %}">Laptops (6)</a></div>
+                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Laptops (6)"/></a> <a
+                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Laptops (6)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Desktops (1)"/></a> <a
-                            href="{% url 'category' %}">Desktops (1)</a></div>
+                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Desktops (1)"/></a> <a
+                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Desktops (1)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Cameras (2)"/></a> <a
-                            href="{% url 'category' %}">Cameras (2)</a></div>
+                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Cameras (2)"/></a> <a
+                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Cameras (2)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="Mobile Phones (4)"/></a> <a
-                            href="{% url 'category' %}">Mobile Phones (4)</a></div>
+                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Mobile Phones (4)"/></a> <a
+                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Mobile Phones (4)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="TV &amp; Home Audio (11)"/></a> <a
-                            href="{% url 'category' %}">TV &amp; Home Audio (11)</a></div>
+                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="TV &amp; Home Audio (11)"/></a> <a
+                            href="{% url 'products:category' category.slug %}">{{ category.title }}>TV &amp; Home Audio (11)</a></div>
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'category' %}"><img src="{%static 'image/no_image.jpg' %}" alt="MP3 Players (2)"/></a> <a
-                            href="{% url 'category' %}">MP3 Players (2)</a></div>
+                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="MP3 Players (2)"/></a> <a
+                            href="{% url 'products:category' category.slug %}">{{ category.title }}>MP3 Players (2)</a></div>
                 </div>
                 <div class="product-filter">
                     <div class="row">

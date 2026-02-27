@@ -29,7 +29,7 @@ urlpatterns = [
     path('', home_page,name='home'),
     path('contact-us/', contact_us,name='contact_us'),
     path('about-us/', about_us,name='about_us'),
-    # path('category/', category,name='category'),
+    path('category/', category,name='category'),
     path('shop/', include('products.urls')),
 
 

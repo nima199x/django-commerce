@@ -1,4 +1,6 @@
 {% extends 'base/base.html' %}
+{% load category_tags %}
+
 
 {%load static%}
 
@@ -44,33 +46,7 @@
             <aside id="column-left" class="col-sm-3 hidden-xs">
                 <h3 class="subtitle">Categories</h3>
                 <div class="box-category">
-                    <ul id="cat_accordion">
-                        {% for cat in categories %}
-                        <li>
-                            <a href="{% url 'category' %}">{{ cat.title }}</a>
-                            {% if cat.children.all %}<span class="down"></span>{% endif %}
-
-                            {% if cat.children.all %}
-                            <ul>
-                                {% for child in cat.children.all %}
-                                <li>
-                                    <a href="{% url 'category' %}">{{ child.title }}</a>
-                                    {% if child.children.all %}<span class="down"></span>{% endif %}
-
-                                    {% if child.children.all %}
-                                    <ul>
-                                        {% for sub_child in child.children.all %}
-                                        <li><a href="{% url 'category' %}">{{ sub_child.title }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
+                    {% show_categories %}
                 </div>
                 <h3 class="subtitle">Bestsellers</h3>
                 <div class="side-item">
@@ -1316,8 +1292,11 @@
                 </div>
                 <!-- Banner End -->
                 <!-- Categories Product Slider Start -->
-                <h3 class="subtitle">Health &amp; Beauty - <a class="viewall" href="{% url 'category' %}">view all</a>
+                {% for category in main_categories|slice:":1" %}
+                <h3 class="subtitle">{{ category.title }} -
+                    <a class="viewall" href="{% url 'products:category' category.slug %}">view all</a>
                 </h3>
+                {% endfor %}
                 <div class="owl-carousel latest_category_carousel">
                     <div class="product-thumb">
                         <div class="image">
@@ -1493,7 +1472,15 @@
                 </div>
                 <!-- Categories Product Slider End -->
                 <!-- Brand Product Slider Start-->
-                <h3 class="subtitle">Apple - <a class="viewall" href="{% url 'category' %}">view all</a></h3>
+                {% for category in featured_categories %}
+                <h3 class="subtitle">
+                    {{ category.title }} -
+                    <a class="viewall" href="{% url 'products:category' category.slug %}">view all</a>
+                </h3>
+
+                <div class="owl-carousel latest_category_carousel">
+                </div>
+                {% endfor %}
                 <div class="owl-carousel latest_brands_carousel">
                     <div class="product-thumb">
                         <div class="image">
