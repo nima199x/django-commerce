@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Product
+from .models import Category, Product, FAQ
 
 
 def category_list(request):
@@ -37,3 +37,14 @@ def category_menu(request, slug):
 def category(request):
     context = {}
     return render(request, 'category.html', context)
+
+def faq_page(request):
+    # گرفتن تمام سوالات از دیتابیس
+    faqs = FAQ.objects.all()
+    return render(request, 'products/faq.html', {'faqs': faqs})
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug, is_active=True)
+    return render(request, 'products/product_detail.html', {
+        'product': product,
+    })

@@ -12,4 +12,6 @@ urlpatterns = [
 
     # ۳. دسته فرزند (والد/فرزند) -> این مسیر کلید حل مشکل است!
     path('categories/<slug:parent_slug>/<slug:child_slug>/', views.category_products, name='category_detail'),
+    path('products/<slug:slug>/', views.product_detail, name='product_detail'),
+    path('faqs/', views.faq_page, name='faq'),
 ]

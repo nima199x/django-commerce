@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+
+<div class="container">
+    <div id="container">
+        <div class="container">
+
+            <!-- Breadcrumb -->
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                {% if product.category.parent %}
+                <li><a href="{% url 'products:category' product.category.parent.slug %}">{{ product.category.parent.title }}</a></li>
+                <li><a href="{% url 'products:category_detail' product.category.parent.slug product.category.slug %}">{{ product.category.title }}</a></li>
+                {% else %}
+                <li><a href="{% url 'products:category' product.category.slug %}">{{ product.category.title }}</a></li>
+                {% endif %}
+                <li>{{ product.name }}</li>
+            </ul>
+
+            <div class="row">
+                <!-- Product Image -->
+                <div class="col-sm-4">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive"/>
+                    {% else %}
+                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" class="img-responsive"/>
+                    {% endif %}
+                </div>
+
+                <!-- Product Info -->
+                <div class="col-sm-8">
+                    <h1 class="title">{{ product.name }}</h1>
+                    <p class="price"><span class="price-new">{{ product.price }}</span></p>
+                    <p>{{ product.description }}</p>
+                    <div class="button-group">
+                        <button class="btn-primary" type="button"><span>Add to Cart</span></button>
+                        <button type="button" data-toggle="tooltip" title="Add to Wish List">
+                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

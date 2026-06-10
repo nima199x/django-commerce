@@ -164,8 +164,13 @@
                     </div>
                     <div id="top-links" class="nav pull-right flip">
                         <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            {% if user.is_authenticated %}
+                            <li><a href="#"><i class="fa fa-user"></i> Hello, {{ user.username }}</a></li>
+                            <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a></li>
+                            <li><a href="{% url 'register' %}"><i class="fa fa-pencil-square-o"></i> Register</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

@@ -1,6 +1,5 @@
 {% extends 'base/base.html' %}
 {% load category_tags %}
-
 {% load static %}
 
 {% block contents %}
@@ -13,7 +12,12 @@
         <!-- Breadcrumb Start-->
         <ul class="breadcrumb">
             <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+            {% if category.parent %}
+            <li><a href="{% url 'products:category' category.parent.slug %}">{{ category.parent.title }}</a></li>
+            <li><a href="{% url 'products:category_detail' category.parent.slug category.slug %}">{{ category.title }}</a></li>
+            {% else %}
             <li><a href="{% url 'products:category' category.slug %}">{{ category.title }}</a></li>
+            {% endif %}
         </ul>
         <!-- Breadcrumb End-->
         <div class="row">
@@ -23,360 +27,119 @@
                 <div class="box-category">
                     {% show_categories %}
                 </div>
+
                 <h3 class="subtitle">Bestsellers</h3>
                 <div class="side-item">
+                    {% for product in products %}
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg'%}"
-                                                        alt="Brand Fashion Cotton T-Shirt"
-                                                        title="Brand Fashion Cotton T-Shirt"
-                                                        class="img-responsive"/></a>
+                            <a href="{% url 'products:product_detail' product.slug %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                {% else %}
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                {% endif %}
+                            </a>
                         </div>
                         <div class="caption">
-                            <h4><a href="product.html">Brand Fashion Cotton T-Shirt</a></h4>
-                            <p class="price"><span class="price-new">$110.00</span> <span
-                                    class="price-old">$122.00</span> <span class="saving">-10%</span></p>
+                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                            <p class="price">{{ product.price }}</p>
                         </div>
                     </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/iphone_1-50x50.jpg'%}"
-                                                        alt="iPhone5"
-                                                        title="iPhone5" class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">iPhone5</a></h4>
-                            <p class="price"> $123.20 </p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_1-50x50.jpg'%}"
-                                                        alt="Ideapad Yoga 13-59341124 Laptop"
-                                                        title="Ideapad Yoga 13-59341124 Laptop"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Ideapad Yoga 13-59341124 Laptop</a></h4>
-                            <p class="price"> $2.00 </p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/sony_vaio_1-50x50.jpg'%}"
-                                                        alt="Xitefun Causal Wear Fancy Shoes"
-                                                        title="Xitefun Causal Wear Fancy Shoes"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Xitefun Causal Wear Fancy Shoes</a></h4>
-                            <p class="price"><span class="price-new">$902.00</span> <span
-                                    class="price-old">$1,202.00</span>
-                                <span class="saving">-25%</span></p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img
-                                    src="{%static 'image/product/FinePix-Long-Zoom-Camera-50x50.jpg'%}"
-                                    alt="FinePix S8400W Long Zoom Camera"
-                                    title="FinePix S8400W Long Zoom Camera"
-                                    class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">FinePix S8400W Long Zoom Camera</a></h4>
-                            <p class="price">$122.00</p>
-                        </div>
-                    </div>
+                    {% empty %}
+                    <p>No products available.</p>
+                    {% endfor %}
                 </div>
+
                 <h3 class="subtitle">Specials</h3>
                 <div class="side-item">
+                    {% for product in products %}
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-50x50.jpg'%}"
-                                                        alt=" Strategies for Acquiring Your Own Laptop "
-                                                        title=" Strategies for Acquiring Your Own Laptop "
-                                                        class="img-responsive"/></a>
+                            <a href="{% url 'products:product_detail' product.slug %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                {% else %}
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                {% endif %}
+                            </a>
                         </div>
                         <div class="caption">
-                            <h4><a href="product.html">Strategies for Acquiring Your Own Laptop</a></h4>
-                            <p class="price"><span class="price-new">$1,400.00</span> <span
-                                    class="price-old">$1,900.00</span>
-                                <span class="saving">-26%</span></p>
+                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                            <p class="price">{{ product.price }}</p>
                         </div>
                     </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-50x50.jpg'%}"
-                                                        alt="Aspire Ultrabook Laptop"
-                                                        title="Aspire Ultrabook Laptop" class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Aspire Ultrabook Laptop</a></h4>
-                            <p class="price"><span class="price-new">$230.00</span> <span
-                                    class="price-old">$241.99</span> <span class="saving">-5%</span></p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/apple_cinema_30-50x50.jpg'%}"
-                                                        alt="Brand Fashion Cotton T-Shirt"
-                                                        title="Brand Fashion Cotton T-Shirt"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="https://github.com/amibappy" target="_blank">Cotton Brand T-Shirt</a></h4>
-                            <p class="price"><span class="price-new">$110.00</span> <span
-                                    class="price-old">$122.00</span> <span class="saving">-10%</span></p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-50x50.jpg'%}"
-                                                        alt="Digital Camera for Elderly"
-                                                        title="Digital Camera for Elderly" class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Digital Camera for Elderly</a></h4>
-                            <p class="price"><span class="price-new">$92.00</span> <span
-                                    class="price-old">$98.00</span> <span class="saving">-6%</span></p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_5-50x50.jpg'%}"
-                                                        alt="Hair Care Products" title="Hair Care Products"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Hair Care Products</a></h4>
-                            <p class="price"><span class="price-new">$66.80</span> <span
-                                    class="price-old">$90.80</span> <span class="saving">-27%</span></p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_air_1-50x50.jpg'%}"
-                                                        alt="Laptop Silver black" title="Laptop Silver black"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Laptop Silver black</a></h4>
-                            <p class="price"><span class="price-new">$1,142.00</span> <span
-                                    class="price-old">$1,202.00</span>
-                                <span class="saving">-5%</span></p>
-                        </div>
-                    </div>
+                    {% empty %}
+                    <p>No specials available.</p>
+                    {% endfor %}
                 </div>
+
                 <div class="list-group">
                     <h3 class="subtitle">Custom Content</h3>
-                    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images)
-                        Here. </p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has
-                        been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled it to make a type specimen book. </p>
-                    <p>It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially unchanged.</p>
+                    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here.</p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                 </div>
                 <div class="banner owl-carousel">
                     <div class="item">
-                        <a href="#"><img src="{%static 'image/banner/small-banner1-265x350.jpg'%}" alt="small banner"
-                                         class="img-responsive"/></a>
+                        <a href="#"><img src="{% static 'image/banner/small-banner1-265x350.jpg' %}" alt="small banner" class="img-responsive"/></a>
                     </div>
                     <div class="item">
-                        <a href="#"><img src="{%static 'image/banner/small-banner-265x350.jpg'%}" alt="small banner1"
-                                         class="img-responsive"/></a>
+                        <a href="#"><img src="{% static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1" class="img-responsive"/></a>
                     </div>
                 </div>
+
                 <h3 class="subtitle">Latest</h3>
                 <div class="side-item">
+                    {% for product in products %}
                     <div class="product-thumb clearfix">
                         <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/iphone_6-50x50.jpg'%}"
-                                                        alt="Hair Care Cream for Men"
-                                                        title="Hair Care Cream for Men" class="img-responsive"/></a>
+                            <a href="{% url 'products:product_detail' product.slug %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                {% else %}
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                {% endif %}
+                            </a>
                         </div>
                         <div class="caption">
-                            <h4><a href="product.html">Hair Care Cream for Men</a></h4>
-                            <p class="price"> $134.00 </p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
+                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                            <p class="price">{{ product.price }}</p>
                         </div>
                     </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/iphone_6-50x50.jpg'%}"
-                                                        alt="Hair Care Products" title="Hair Care Products"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Hair Care Products</a></h4>
-                            <p class="price"><span class="price-new">$66.80</span> <span
-                                    class="price-old">$90.80</span> <span class="saving">-27%</span></p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/nikon_d300_4-50x50.jpg'%}"
-                                                        alt="Bed Head Foxy Curls Contour Cream"
-                                                        title="Bed Head Foxy Curls Contour Cream"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Bed Head Foxy Curls Contour Cream</a></h4>
-                            <p class="price"> $88.00 </p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_5-50x50.jpg'%}"
-                                                        alt="Shower Gel Perfume for Women"
-                                                        title="Shower Gel Perfume for Women"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Shower Gel Perfume for Women</a></h4>
-                            <p class="price"><span class="price-new">$95.00</span> <span
-                                    class="price-old">$99.00</span> <span class="saving">-4%</span></p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_4-50x50.jpg'%}"
-                                                        alt="Perfumes for Women" title="Perfumes for Women"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Perfumes for Women</a></h4>
-                            <p class="price"> $85.00 </p>
-                            <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                    class="fa fa-star fa-stack-2x"></i><i
-                                    class="fa fa-star-o fa-stack-2x"></i></span></div>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_3-50x50.jpg'%}"
-                                                        alt="Make Up for Naturally Beautiful Better"
-                                                        title="Make Up for Naturally Beautiful Better"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Make Up for Naturally Beautiful Better</a></h4>
-                            <p class="price"> $123.00 </p>
-                        </div>
-                    </div>
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="product.html"><img src="{%static 'image/product/macbook_2-50x50.jpg'%}"
-                                                        alt="Pnina Tornai Perfume" title="Pnina Tornai Perfume"
-                                                        class="img-responsive"/></a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="product.html">Pnina Tornai Perfume</a></h4>
-                            <p class="price"> $110.00 </p>
-                        </div>
-                    </div>
+                    {% empty %}
+                    <p>No latest products.</p>
+                    {% endfor %}
                 </div>
             </aside>
             <!--Left Part End -->
+
             <!--Middle Part Start-->
             <div id="content" class="col-sm-9">
                 <h1 class="title">{{ category.title }}</h1>
+
                 <h3 class="subtitle">Refine Search</h3>
                 <div class="category-list-thumb row">
+                    {% for child in category.get_children %}
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Laptops (6)"/></a> <a
-                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Laptops (6)</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Desktops (1)"/></a> <a
-                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Desktops (1)</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Cameras (2)"/></a> <a
-                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Cameras (2)</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="Mobile Phones (4)"/></a> <a
-                            href="{% url 'products:category' category.slug %}">{{ category.title }}>Mobile Phones (4)</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="TV &amp; Home Audio (11)"/></a> <a
-                            href="{% url 'products:category' category.slug %}">{{ category.title }}>TV &amp; Home Audio (11)</a></div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                        <a href="{% url 'products:category' category.slug %}">{{ category.title }}><img src="{%static 'image/no_image.jpg' %}" alt="MP3 Players (2)"/></a> <a
-                            href="{% url 'products:category' category.slug %}">{{ category.title }}>MP3 Players (2)</a></div>
+                        <a href="{% url 'products:category_detail' category.slug child.slug %}">
+                            <img src="{% static 'image/no_image.jpg' %}" alt="{{ child.title }}"/>
+                        </a>
+                        <a href="{% url 'products:category_detail' category.slug child.slug %}">{{ category.title }} > {{ child.title }}</a>
+                    </div>
+                    {% empty %}
+                    <p class="col-xs-12">No subcategories.</p>
+                    {% endfor %}
                 </div>
+
                 <div class="product-filter">
                     <div class="row">
                         <div class="col-md-4 col-sm-5">
                             <div class="btn-group">
-                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip"
-                                        title="List"><i class="fa fa-th-list"></i></button>
-                                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip"
-                                        title="Grid"><i class="fa fa-th"></i></button>
+                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
+                                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
                             </div>
-                            <a href="compare.html" id="compare-total">Product Compare (0)</a></div>
+                            <a href="compare.html" id="compare-total">Product Compare (0)</a>
+                        </div>
                         <div class="col-sm-2 text-right">
                             <label class="control-label" for="input-sort">Sort By:</label>
                         </div>
@@ -408,383 +171,47 @@
                     </div>
                 </div>
                 <br/>
+
                 <div class="row products-category">
+                    {% for product in products %}
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
                             <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/macbook_pro_1-200x200.jpg' %}"
-                                                            alt=" Strategies for Acquiring Your Own Laptop "
-                                                            title=" Strategies for Acquiring Your Own Laptop "
-                                                            class="img-responsive"/></a>
+                                <a href="{% url 'products:product_detail' product.slug %}">
+                                    {% if product.image %}
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                    {% else %}
+                                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                    {% endif %}
+                                </a>
                             </div>
                             <div>
                                 <div class="caption">
-                                    <h4><a href="product.html"> Strategies for Acquiring Your Own Laptop </a></h4>
-                                    <p class="description"> Latest Intel mobile architecture Powered by the most
-                                        advanced mobile processors from Intel, t..</p>
-                                    <p class="price"><span class="price-new">$1,400.00</span> <span class="price-old">$1,900.00</span>
-                                        <span class="saving">-26%</span> <span
-                                                class="price-tax">Ex Tax: $1,400.00</span></p>
+                                    <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                                    <p class="description">{{ product.description|truncatewords:20 }}</p>
+                                    <p class="price">{{ product.price }}</p>
                                 </div>
                                 <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
+                                    <button class="btn-primary" type="button"><span>Add to Cart</span></button>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
+                                        <button type="button" data-toggle="tooltip" title="Add to Wish List">
+                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
+                                        </button>
+                                        <button type="button" data-toggle="tooltip" title="Compare this Product">
+                                            <i class="fa fa-exchange"></i> <span>Compare this Product</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/nikon_d300_1-200x200.jpg' %}"
-                                                            alt="Digital Camera for Elderly"
-                                                            title="Digital Camera for Elderly" class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Digital Camera for Elderly</a></h4>
-                                    <p class="description"> Engineered with pro-level features and performance, the
-                                        12.3-effective-megapixel D300 combines bra..</p>
-                                    <p class="price"><span class="price-new">$92.00</span> <span class="price-old">$98.00</span>
-                                        <span class="saving">-6%</span> <span class="price-tax">Ex Tax: $75.00</span>
-                                    </p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick="cart.add('31');"><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    {% empty %}
+                    <div class="col-xs-12">
+                        <p>No products found in this category.</p>
                     </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/FinePix-Long-Zoom-Camera-200x200.jpg' %}"
-                                                            alt="FinePix S8400W Long Zoom Camera"
-                                                            title="FinePix S8400W Long Zoom Camera"
-                                                            class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">FinePix S8400W Long Zoom Camera</a></h4>
-                                    <p class="description">Product 8 ..
-                                    </p>
-                                    <p class="price"> $122.00 <span class="price-tax">Ex Tax: $100.00</span></p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_shuffle_1-200x200.jpg' %}"
-                                                            alt="Hp Pavilion G6 2314ax Notebok Laptop"
-                                                            title="Hp Pavilion G6 2314ax Notebok Laptop"
-                                                            class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Hp Pavilion G6 2314ax Notebok Laptop</a></h4>
-                                    <p class="description">Born to be worn. Clip on the worlds most wearable music
-                                        player and take up to 240 songs with you an..</p>
-                                    <p class="price"> $122.00 <span class="price-tax">Ex Tax: $100.00</span></p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/palm_treo_pro_1-200x200.jpg' %}"
-                                                            alt="HTC M7 with Stunning Looks"
-                                                            title="HTC M7 with Stunning Looks" class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">HTC M7 with Stunning Looks</a></h4>
-                                    <p class="description">Redefine your workday with the Palm Treo Pro smartphone.
-                                        Perfectly balanced, you can respond to busi..</p>
-                                    <p class="price"> $337.99 <span class="price-tax">Ex Tax: $279.99</span></p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/macbook_1-200x200.jpg' %}"
-                                                            alt="Ideapad Yoga 13-59341124 Laptop"
-                                                            title="Ideapad Yoga 13-59341124 Laptop"
-                                                            class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Ideapad Yoga 13-59341124 Laptop</a></h4>
-                                    <p class="description"> Intel Core 2 Duo processor Powered by an Intel Core 2 Duo
-                                        processor at speeds up to 2.16GHz, th..</p>
-                                    <p class="price"> $2.00 <span class="price-tax">Ex Tax: $0.00</span></p>
-                                    <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    </div>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/iphone_1-200x200.jpg' %}" alt="iPhone5"
-                                                            title="iPhone5" class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">iPhone5</a></h4>
-                                    <p class="description">iPhone is a revolutionary new mobile phone that allows you to
-                                        make a call by simply tapping a name o..</p>
-                                    <p class="price"> $123.20 <span class="price-tax">Ex Tax: $101.00</span></p>
-                                    <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    </div>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/macbook_air_1-200x200.jpg' %}"
-                                                            alt="Laptop Silver black" title="Laptop Silver black"
-                                                            class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Laptop Silver black</a></h4>
-                                    <p class="description">MacBook Air is ultrathin, ultraportable, and ultra unlike
-                                        anything else. But you don’t lose inches a..</p>
-                                    <p class="price"><span class="price-new">$1,142.00</span> <span class="price-old">$1,202.00</span>
-                                        <span class="saving">-5%</span> <span class="price-tax">Ex Tax: $950.00</span>
-                                    </p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_nano_1-200x200.jpg' %}" alt="Mp3 Player"
-                                                            title="Mp3 Player" class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Mp3 Player</a></h4>
-                                    <p class="description"> Video in your pocket. Its the small iPod with one very big
-                                        idea: video. The worlds most popular..</p>
-                                    <p class="price"> $122.00 <span class="price-tax">Ex Tax: $100.00</span></p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_classic_1-200x200.jpg' %}"
-                                                            alt="Portable Mp3 Player" title="Portable Mp3 Player"
-                                                            class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Portable Mp3 Player</a></h4>
-                                    <p class="description"> More room to move. With 80GB or 160GB of storage and up to
-                                        40 hours of battery life, the new ..</p>
-                                    <p class="price"> $122.00 <span class="price-tax">Ex Tax: $100.00</span></p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/ipod_touch_1-200x200.jpg' %}"
-                                                            alt="Samsung Galaxy S4" title="Samsung Galaxy S4"
-                                                            class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Samsung Galaxy S4</a></h4>
-                                    <p class="description">Revolutionary multi-touch interface. iPod touch features the
-                                        same multi-touch screen technology as ..</p>
-                                    <p class="price"><span class="price-new">$62.00</span> <span class="price-old">$122.00</span>
-                                        <span class="saving">-50%</span> <span class="price-tax">Ex Tax: $50.00</span>
-                                    </p>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-layout product-list col-xs-12">
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="product.html"><img src="{%static 'image/product/samsung_tab_1-200x200.jpg' %}"
-                                                            alt="Aspire Ultrabook Laptop"
-                                                            title="Aspire Ultrabook Laptop" class="img-responsive"/></a>
-                            </div>
-                            <div>
-                                <div class="caption">
-                                    <h4><a href="product.html">Aspire Ultrabook Laptop</a></h4>
-                                    <p class="description">Samsung Galaxy Tab 10.1, is the world’s thinnest tablet,
-                                        measuring 8.6 mm thickness, running with An..</p>
-                                    <p class="price"><span class="price-new">$230.00</span> <span class="price-old">$241.99</span>
-                                        <span class="saving">-5%</span> <span class="price-tax">Ex Tax: $190.00</span>
-                                    </p>
-                                    <div class="rating"><span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                            class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i
-                                            class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                        <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i
-                                                class="fa fa-star-o fa-stack-2x"></i></span> <span
-                                                class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
-                                    </div>
-                                </div>
-                                <div class="button-group">
-                                    <button class="btn-primary" type="button" onClick=""><span>Add to Cart</span>
-                                    </button>
-                                    <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List" onClick="">
-                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span></button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product"
-                                                onClick=""><i class="fa fa-exchange"></i>
-                                            <span>Compare this Product</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
+
                 <div class="row">
                     <div class="col-sm-6 text-left">
                         <ul class="pagination">
@@ -802,4 +229,4 @@
     </div>
 </div>
 
-{%endblock%}
+{% endblock %}
