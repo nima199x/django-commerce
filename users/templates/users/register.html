@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block contents %}
+<div id="container">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+            <li><a href="{% url 'login' %}">Account</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+        </ul>
+        <div class="row">
+            <div class="col-sm-9" id="content">
+                <h1 class="title">Register Account</h1>
+                <p>If you already have an account with us, please login at the <a href="{% url 'login' %}">Login Page</a>.</p>
+
+                <form class="form-horizontal" method="POST">
+                    {% csrf_token %}
+
+                    <fieldset id="account">
+                        <legend>Your Personal Details</legend>
+                        {{ form|crispy }}
+                    </fieldset>
+
+                    <div class="buttons">
+                        <div class="pull-right">
+                            <input type="checkbox" name="agree" value="1"> &nbsp;
+                            I have read and agree to the <a href="#" class="agree"><b>Privacy Policy</b></a> &nbsp;
+                            <input type="submit" value="Register" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <aside id="column-right" class="col-sm-3 hidden-xs">
+                <h3 class="subtitle">Account</h3>
+                <div class="list-group">
+                    <ul class="list-item">
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                        <li><a href="#">Forgotten Password</a></li>
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">Address Books</a></li>
+                        <li><a href="#">Order History</a></li>
+                        <li><a href="#">Newsletter</a></li>
+                    </ul>
+                </div>
+            </aside>
+            </div>
+    </div>
+</div>
+{% endblock %}

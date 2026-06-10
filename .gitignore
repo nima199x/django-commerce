@@ -12,3 +12,23 @@ db.sqlite3
 
 # OS files
 .DS_Store
+
+# Media files (مهم!)
+statics/media_root/
+media/
+media_root/
+
+# Django specific
+*.log
+local_settings.py
+.env
+.env.*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Migrations (اختیاری - فعلاً نگه دار)
+# products/migrations/0000*__*.py   # اگر خواستی فقط اولیه‌ها رو نادیده بگیری
