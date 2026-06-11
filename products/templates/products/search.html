@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+
+<div class="container">
+    <div id="container">
+        <div class="container">
+
+            <!-- Breadcrumb -->
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                <li>Search results for "{{ query }}"</li>
+            </ul>
+
+            <h1 class="title">Search results for "{{ query }}"</h1>
+
+            <div class="row products-category">
+                {% for product in products %}
+                <div class="product-layout product-list col-xs-12">
+                    <div class="product-thumb">
+                        <div class="image">
+                            <a href="{% url 'products:product_detail' product.slug %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive"/>
+                                {% else %}
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" class="img-responsive"/>
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div>
+                            <div class="caption">
+                                <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+                                <p class="description">{{ product.description|truncatewords:20 }}</p>
+                                <p class="price">{{ product.price }}</p>
+                            </div>
+                            <div class="button-group">
+                                <button class="btn-primary" type="button"><span>Add to Cart</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-xs-12">
+                    <p>No products found for "{{ query }}".</p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

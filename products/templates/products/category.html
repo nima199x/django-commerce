@@ -192,7 +192,7 @@
                                     <p class="price">{{ product.price }}</p>
                                 </div>
                                 <div class="button-group">
-                                    <button class="btn-primary" type="button"><span>Add to Cart</span></button>
+                                    <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
                                     <div class="add-to-links">
                                         <button type="button" data-toggle="tooltip" title="Add to Wish List">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span>

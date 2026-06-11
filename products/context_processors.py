@@ -6,3 +6,9 @@ def include_categories(request):
     return {
         'categories': categories # 🎁 این نام در تمام قالب‌ها در دسترس خواهد بود
     }
+def cart_context(request):
+    from .models import Cart
+    cart = None
+    if request.session.session_key:
+        cart = Cart.objects.filter(session_key=request.session.session_key).first()
+    return {'cart': cart}

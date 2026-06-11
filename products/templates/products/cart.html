@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+
+<div class="container">
+    <div id="container">
+        <div class="container">
+
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                <li>Shopping Cart</li>
+            </ul>
+
+            <h1 class="title">Shopping Cart</h1>
+
+            {% if cart and cart.items.all %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Image</td>
+                        <td>Product</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Subtotal</td>
+                        <td>Remove</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.items.all %}
+                    <tr>
+                        <td>
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="50"/>
+                            {% else %}
+                            <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ item.product.name }}" width="50"/>
+                            {% endif %}
+                        </td>
+                        <td><a href="{% url 'products:product_detail' item.product.slug %}">{{ item.product.name }}</a></td>
+                        <td>{{ item.product.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.get_subtotal }}</td>
+                        <td>
+                            <a href="{% url 'products:cart_remove' item.id %}" class="btn btn-danger btn-sm">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                        <td colspan="2"><strong>{{ cart.get_total }}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="text-right">
+                <a href="{% url 'home' %}" class="btn btn-default">Continue Shopping</a>
+                <a href="#" class="btn btn-primary">Checkout</a>
+            </div>
+
+            {% else %}
+            <p>Your cart is empty. <a href="{% url 'home' %}">Continue Shopping</a></p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

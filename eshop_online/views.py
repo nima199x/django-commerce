@@ -6,9 +6,21 @@ def home_page(request):
     main_categories = Category.objects.filter(level=0)
     featured_products = Product.objects.filter(is_active=True)[:6]
 
+    categories_with_products = []
+    for cat in main_categories:
+        products = Product.objects.filter(
+            category__in=cat.get_descendants(include_self=True),
+            is_active=True
+        )[:8]
+        categories_with_products.append({
+            'category': cat,
+            'products': products,
+        })
+
     context = {
         'main_categories': main_categories,
         'featured_products': featured_products,
+        'categories_with_products': categories_with_products,
     }
     return render(request, 'home_page.html', context)
 def contact_us(request):

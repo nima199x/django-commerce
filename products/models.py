@@ -57,3 +57,36 @@ class FAQ(models.Model):
     class Meta:
         verbose_name = 'FAQ'
         verbose_name_plural = 'FAQs'
+
+class Cart(models.Model):
+    session_key = models.CharField(max_length=40, verbose_name='Session Key')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Cart'
+        verbose_name_plural = 'Carts'
+
+    def __str__(self):
+        return f"Cart {self.session_key}"
+
+    def get_total(self):
+        return sum(item.get_subtotal() for item in self.items.all())
+
+    def get_count(self):
+        return sum(item.quantity for item in self.items.all())
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = 'Cart Item'
+        verbose_name_plural = 'Cart Items'
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name}"
+
+    def get_subtotal(self):
+        return self.product.price * self.quantity

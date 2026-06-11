@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Product, FAQ
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Category, Product, FAQ , Cart, CartItem
+
 
 
 def category_list(request):
@@ -48,3 +49,36 @@ def product_detail(request, slug):
     return render(request, 'products/product_detail.html', {
         'product': product,
     })
+def search(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(
+        name__icontains=query,
+        is_active=True
+    ) if query else Product.objects.none()
+    return render(request, 'products/search.html', {
+        'products': products,
+        'query': query,
+    })
+def cart_add(request, product_id):
+    product = get_object_or_404(Product, id=product_id, is_active=True)
+    if not request.session.session_key:
+        request.session.create()
+    cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+def cart_remove(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart_item.delete()
+    return redirect('products:cart_detail')
+
+
+def cart_detail(request):
+    if not request.session.session_key:
+        request.session.create()
+    cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
+    return render(request, 'products/cart.html', {'cart': cart})
