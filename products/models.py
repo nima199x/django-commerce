@@ -15,6 +15,7 @@ class Category(MPTTModel):
     slug = models.SlugField(max_length=200, unique=False)
     # اضافه کردن فیلد برای حل خطای ادمین
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
+    image = models.ImageField(upload_to='categories/', null=True, blank=True, verbose_name='Image')
 
     class MPTTMeta:
         order_insertion_by = ['title']

@@ -35,9 +35,9 @@
                         <div class="image">
                             <a href="{% url 'products:product_detail' product.slug %}">
                                 {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% endif %}
                             </a>
                         </div>
@@ -58,9 +58,9 @@
                         <div class="image">
                             <a href="{% url 'products:product_detail' product.slug %}">
                                 {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% endif %}
                             </a>
                         </div>
@@ -94,9 +94,9 @@
                         <div class="image">
                             <a href="{% url 'products:product_detail' product.slug %}">
                                 {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% endif %}
                             </a>
                         </div>
@@ -121,7 +121,11 @@
                     {% for child in category.get_children %}
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                         <a href="{% url 'products:category_detail' category.slug child.slug %}">
-                            <img src="{% static 'image/no_image.jpg' %}" alt="{{ child.title }}"/>
+                            {% if child.image %}
+                            <img src="{{ child.image.url }}" alt="{{ child.title }}" class="img-responsive"/>
+                            {% else %}
+                            <img src="{% static 'image/no_image.jpg' %}" alt="{{ child.title }}" class="img-responsive"/>
+                            {% endif %}
                         </a>
                         <a href="{% url 'products:category_detail' category.slug child.slug %}">{{ category.title }} > {{ child.title }}</a>
                     </div>
@@ -178,9 +182,9 @@
                             <div class="image">
                                 <a href="{% url 'products:product_detail' product.slug %}">
                                     {% if product.image %}
-                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                     {% else %}
-                                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive"/>
+                                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                     {% endif %}
                                 </a>
                             </div>
