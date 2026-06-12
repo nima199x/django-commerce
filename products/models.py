@@ -36,7 +36,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name='Category')
     name = models.CharField(max_length=200, verbose_name='Product Name')
     slug = models.SlugField(max_length=200, unique=True, verbose_name='Slug')
-    price = models.IntegerField(verbose_name='Price')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')
     description = models.TextField(verbose_name='Description')
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
     image = models.ImageField(upload_to='products/', null=True, blank=True, verbose_name='Image')

@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, FAQ , Cart, CartItem
+from django.core.paginator import Paginator
+
 
 
 
@@ -9,26 +11,27 @@ def category_list(request):
 
 
 def category_products(request, parent_slug, child_slug=None):
-    # ۱. اگر child_slug وجود داشت، یعنی آدرس دو مرحله‌ای است (والد/فرزند)
     if child_slug:
-        # پیدا کردن فرزند با توجه به اسلاگ والد و فرزند (کل مسیر)
         category = get_object_or_404(
             Category,
             slug=child_slug,
             parent__slug=parent_slug
         )
-    # ۲. اگر child_slug وجود نداشت، یعنی فقط دسته اصلی (ریشه) است
     else:
         category = get_object_or_404(Category, slug=parent_slug)
 
-    # گرفتن محصولات (با استفاده از MPTT برای گرفتن محصولات زیرمجموعه‌ها)
-    products = Product.objects.filter(
+    products_list = Product.objects.filter(
         category__in=category.get_descendants(include_self=True)
     )
 
+    paginator = Paginator(products_list, 6)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+
     return render(request, 'products/category.html', {
         'category': category,
-        'products': products
+        'products': products,
+        'paginator': paginator,
     })
 
 def category_menu(request, slug):

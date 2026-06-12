@@ -74,10 +74,9 @@
                     {% endfor %}
                 </div>
 
-                <div class="list-group">
-                    <h3 class="subtitle">Custom Content</h3>
-                    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <div class="list-group">
+                    <h3 class="subtitle">DjangoMart</h3>
+                    <p>Welcome to DjangoMart — your one-stop online shop.</p>
                 </div>
                 <div class="banner owl-carousel">
                     <div class="item">
@@ -213,16 +212,34 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6 text-left">
-                        <ul class="pagination">
-                            <li class="active"><span>1</span></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">&gt;</a></li>
-                            <li><a href="#">&gt;|</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 text-right">Showing 1 to 12 of 15 (2 Pages)</div>
-                </div>
+                    <div class="row">
+    <div class="col-sm-6 text-left">
+        <ul class="pagination">
+            {% if products.has_previous %}
+            <li><a href="?page=1">&laquo;</a></li>
+            <li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
+            {% endif %}
+
+            {% for num in products.paginator.page_range %}
+            {% if products.number == num %}
+            <li class="active"><span>{{ num }}</span></li>
+            {% else %}
+            <li><a href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if products.has_next %}
+            <li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
+            <li><a href="?page={{ products.paginator.num_pages }}">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col-sm-6 text-right">
+        Showing {{ products.start_index }} to {{ products.end_index }} of {{ products.paginator.count }} products
+        ({{ products.paginator.num_pages }} Pages)
+    </div>
+</div>
+
             </div>
             <!--Middle Part End -->
         </div>
