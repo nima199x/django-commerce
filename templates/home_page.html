@@ -45,54 +45,11 @@
                 <div class="box-category">
                     {% show_categories %}
                 </div>
-                <h3 class="subtitle">Bestsellers</h3>
-                <div class="side-item">
-                    {% for product in featured_products %}
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:100px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:100px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No products available.</p>
-                    {% endfor %}
-                </div>
-                <h3 class="subtitle">Specials</h3>
-                <div class="side-item">
-                    {% for product in featured_products %}
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:100px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:100px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No specials available.</p>
-                    {% endfor %}
-                </div>
+                    {% include 'includes/sidebar.html' %}
+
                 <div class="list-group">
-                    <h3 class="subtitle">Custom Content</h3>
-                    <p>This is a CMS block edited from admin. You can insert any content (HTML, Text, Images) Here.</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <h3 class="subtitle">DjangoMart</h3>
+                    <p>Welcome to DjangoMart — your one-stop online shop.</p>
                 </div>
                 <div class="banner owl-carousel">
                     <div class="item">
@@ -102,28 +59,7 @@
                         <a href="#"><img src="{% static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1" class="img-responsive"/></a>
                     </div>
                 </div>
-                <h3 class="subtitle">Latest</h3>
-                <div class="side-item">
-                    {% for product in featured_products %}
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:100px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:100px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No latest products.</p>
-                    {% endfor %}
-                </div>
+
             </aside>
             <!-- Left Part End-->
             <!--Middle Part Start-->

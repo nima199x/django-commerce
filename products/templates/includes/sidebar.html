@@ -1,0 +1,70 @@
+{% load static %}
+
+<h3 class="subtitle">Bestsellers</h3>
+<div class="side-item">
+    {% for product in sidebar_products %}
+    <div class="product-thumb clearfix" style="margin-bottom:10px;">
+        <div class="image" style="float:left; margin-right:10px;">
+            <a href="{% url 'products:product_detail' product.slug %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;"/>
+                {% else %}
+                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;"/>
+                {% endif %}
+            </a>
+        </div>
+        <div class="caption">
+            <h4 style="font-size:13px;"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+            <p class="price">{{ product.price }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No products available.</p>
+    {% endfor %}
+</div>
+
+<h3 class="subtitle">Specials</h3>
+<div class="side-item">
+    {% for product in sidebar_products %}
+    <div class="product-thumb clearfix" style="margin-bottom:10px;">
+        <div class="image" style="float:left; margin-right:10px;">
+            <a href="{% url 'products:product_detail' product.slug %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;"/>
+                {% else %}
+                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;"/>
+                {% endif %}
+            </a>
+        </div>
+        <div class="caption">
+            <h4 style="font-size:13px;"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+            <p class="price">{{ product.price }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No specials available.</p>
+    {% endfor %}
+</div>
+
+<h3 class="subtitle">Latest</h3>
+<div class="side-item">
+    {% for product in sidebar_products %}
+    <div class="product-thumb clearfix" style="margin-bottom:10px;">
+        <div class="image" style="float:left; margin-right:10px;">
+            <a href="{% url 'products:product_detail' product.slug %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;"/>
+                {% else %}
+                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;"/>
+                {% endif %}
+            </a>
+        </div>
+        <div class="caption">
+            <h4 style="font-size:13px;"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
+            <p class="price">{{ product.price }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No latest products.</p>
+    {% endfor %}
+</div>

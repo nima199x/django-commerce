@@ -10,17 +10,17 @@
                     <div class="dropdown-menu">
                         {% for cat in categories %}
                         <div class="column col-lg-2 col-md-3">
-                            <a href="{% url 'category' %}">{{ cat.title }}</a>
+                            <a href="{% url 'products:category' cat.slug %}">{{ cat.title }}</a>
                             <div>
                                 <ul>
                                     {% for child in cat.children.all %}
                                     <li>
-                                        <a href="{% url 'category' %}">{{ child.title }} {% if child.children.all %}<span>&rsaquo;</span>{% endif %}</a>
+                                        <a href="{% url 'products:category_detail' cat.slug child.slug %}">{{ child.title }} {% if child.children.all %}<span>&rsaquo;</span>{% endif %}</a>
                                         {% if child.children.all %}
                                         <div class="dropdown-menu">
                                             <ul>
                                                 {% for sub_child in child.children.all %}
-                                                <li><a href="{% url 'category' %}">{{ sub_child.title }}</a></li>
+                                                <li><a href="{% url 'products:category_detail' child.slug sub_child.slug %}">{{ sub_child.title }}</a></li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
@@ -116,23 +116,21 @@
                 <li class="dropdown information-link"><a>Pages</a>
                     <div class="dropdown-menu">
                         <ul>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="{% url 'category' %}">Category (Grid/List)</a></li>
-                            <li><a href="product.html">Product</a></li>
-                            <li><a href="cart.html">Shopping Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="compare.html">Compare</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
-                            <li><a href="search.html">Search</a></li>
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                            <li><a href="{% url 'products:category_list' %}">Category</a></li>
+                            <li><a href="#">Product</a></li>
+                            <li><a href="{% url 'products:cart_detail' %}">Shopping Cart</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="#">Compare</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="{% url 'products:search' %}">Search</a></li>
                         </ul>
                         <ul>
-                            <li><a href="{% url 'about_us' %}">About Us</a></li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li><a href="faq.html">Faq</a></li>
-                            <li><a href="sitemap.html">Sitemap</a></li>
-                            <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
+                            <li><a href="#">404</a></li>
+                            <li><a href="#">Elements</a></li>
+                            <li><a href="{% url 'products:faq' %}">Faq</a></li>
+                            <li><a href="#">Sitemap</a></li>
                         </ul>
                     </div>
                 </li>

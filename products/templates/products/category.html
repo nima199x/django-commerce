@@ -1,9 +1,11 @@
+
+Category · HTML
 {% extends 'base/base.html' %}
 {% load category_tags %}
 {% load static %}
-
+ 
 {% block contents %}
-
+ 
 <!-- Main Menu Start-->
 <div class="container">
 <!-- Main Menu End-->
@@ -27,54 +29,10 @@
                 <div class="box-category">
                     {% show_categories %}
                 </div>
-
-                <h3 class="subtitle">Bestsellers</h3>
-                <div class="side-item">
-                    {% for product in products %}
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No products available.</p>
-                    {% endfor %}
-                </div>
-
-                <h3 class="subtitle">Specials</h3>
-                <div class="side-item">
-                    {% for product in products %}
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No specials available.</p>
-                    {% endfor %}
-                </div>
-
-                    <div class="list-group">
+ 
+                {% include 'includes/sidebar.html' %}
+ 
+                <div class="list-group">
                     <h3 class="subtitle">DjangoMart</h3>
                     <p>Welcome to DjangoMart — your one-stop online shop.</p>
                 </div>
@@ -86,45 +44,22 @@
                         <a href="#"><img src="{% static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1" class="img-responsive"/></a>
                     </div>
                 </div>
-
-                <h3 class="subtitle">Latest</h3>
-                <div class="side-item">
-                    {% for product in products %}
-                    <div class="product-thumb clearfix">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No latest products.</p>
-                    {% endfor %}
-                </div>
             </aside>
             <!--Left Part End -->
-
+ 
             <!--Middle Part Start-->
             <div id="content" class="col-sm-9">
                 <h1 class="title">{{ category.title }}</h1>
-
+ 
                 <h3 class="subtitle">Refine Search</h3>
                 <div class="category-list-thumb row">
                     {% for child in category.get_children %}
                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                         <a href="{% url 'products:category_detail' category.slug child.slug %}">
                             {% if child.image %}
-                            <img src="{{ child.image.url }}" alt="{{ child.title }}" class="img-responsive"/>
+                            <img src="{{ child.image.url }}" alt="{{ child.title }}" class="img-responsive" style="width:80px; height:80px; object-fit:cover;"/>
                             {% else %}
-                            <img src="{% static 'image/no_image.jpg' %}" alt="{{ child.title }}" class="img-responsive"/>
+                            <img src="{% static 'image/no_image.jpg' %}" alt="{{ child.title }}" class="img-responsive" style="width:80px; height:80px; object-fit:cover;"/>
                             {% endif %}
                         </a>
                         <a href="{% url 'products:category_detail' category.slug child.slug %}">{{ category.title }} > {{ child.title }}</a>
@@ -133,7 +68,7 @@
                     <p class="col-xs-12">No subcategories.</p>
                     {% endfor %}
                 </div>
-
+ 
                 <div class="product-filter">
                     <div class="row">
                         <div class="col-md-4 col-sm-5">
@@ -174,7 +109,7 @@
                     </div>
                 </div>
                 <br/>
-
+ 
                 <div class="row products-category">
                     {% for product in products %}
                     <div class="product-layout product-list col-xs-12">
@@ -214,40 +149,36 @@
                     </div>
                     {% endfor %}
                 </div>
-
+ 
                 <div class="row">
-                    <div class="row">
-    <div class="col-sm-6 text-left">
-        <ul class="pagination">
-            {% if products.has_previous %}
-            <li><a href="?page=1">&laquo;</a></li>
-            <li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
-            {% endif %}
-
-            {% for num in products.paginator.page_range %}
-            {% if products.number == num %}
-            <li class="active"><span>{{ num }}</span></li>
-            {% else %}
-            <li><a href="?page={{ num }}">{{ num }}</a></li>
-            {% endif %}
-            {% endfor %}
-
-            {% if products.has_next %}
-            <li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
-            <li><a href="?page={{ products.paginator.num_pages }}">&raquo;</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    <div class="col-sm-6 text-right">
-        Showing {{ products.start_index }} to {{ products.end_index }} of {{ products.paginator.count }} products
-        ({{ products.paginator.num_pages }} Pages)
-    </div>
-</div>
-
+                    <div class="col-sm-6 text-left">
+                        <ul class="pagination">
+                            {% if products.has_previous %}
+                            <li><a href="?page=1">&laquo;</a></li>
+                            <li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
+                            {% endif %}
+                            {% for num in products.paginator.page_range %}
+                            {% if products.number == num %}
+                            <li class="active"><span>{{ num }}</span></li>
+                            {% else %}
+                            <li><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if products.has_next %}
+                            <li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
+                            <li><a href="?page={{ products.paginator.num_pages }}">&raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        Showing {{ products.start_index }} to {{ products.end_index }} of {{ products.paginator.count }} products
+                        ({{ products.paginator.num_pages }} Pages)
+                    </div>
+                </div>
             </div>
             <!--Middle Part End -->
         </div>
     </div>
 </div>
-
+ 
 {% endblock %}

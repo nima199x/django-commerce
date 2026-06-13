@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container">
+    <div id="container">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                <li>Categories</li>
+            </ul>
+            <h1 class="title">All Categories</h1>
+            <div class="row">
+                {% for category in categories %}
+                <div class="col-sm-3">
+                    <a href="{% url 'products:category' category.slug %}">
+                        {% if category.image %}
+                        <img src="{{ category.image.url }}" alt="{{ category.title }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
+                        {% else %}
+                        <img src="{% static 'image/no_image.jpg' %}" alt="{{ category.title }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
+                        {% endif %}
+                        <h4>{{ category.title }}</h4>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

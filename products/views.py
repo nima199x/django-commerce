@@ -7,8 +7,7 @@ from django.core.paginator import Paginator
 
 def category_list(request):
     categories = Category.objects.filter(parent=None, is_active=True)
-    return render(request, 'products/category.html', {'categories': categories})
-
+    return render(request, 'products/category_list.html', {'categories': categories})
 
 def category_products(request, parent_slug, child_slug=None):
     if child_slug:

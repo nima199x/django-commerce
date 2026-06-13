@@ -12,3 +12,7 @@ def cart_context(request):
     if request.session.session_key:
         cart = Cart.objects.filter(session_key=request.session.session_key).first()
     return {'cart': cart}
+def sidebar_context(request):
+    from .models import Product
+    sidebar_products = Product.objects.filter(is_active=True)[:5]
+    return {'sidebar_products': sidebar_products}
