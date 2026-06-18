@@ -32,5 +32,7 @@ env.
 *.swp
 *.swo
 
-# Migrations (اختیاری - فعلاً نگه دار)
-# products/migrations/0000*__*.py   # اگر خواستی فقط اولیه‌ها رو نادیده بگیری
+# Heavy static folders
+assets/
+statics/statics-main/admin/
+statics/statics-main/revolution/
