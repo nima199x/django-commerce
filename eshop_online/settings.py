@@ -73,6 +73,7 @@ TEMPLATES = [
                 'products.context_processors.include_categories',
                 'products.context_processors.cart_context',
                 'products.context_processors.sidebar_context',
+                'products.context_processors.banners_context',
             ],
         },
     },
@@ -129,10 +130,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "assets",
-
-]
-STATIC_ROOT = os.path.join(BASE_DIR, "statics", "statics-main")
+    BASE_DIR / "statics" / "statics-main",
+    ]
+STATIC_ROOT = os.path.join(BASE_DIR, "statics", "static-collected")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "statics", "media_root")

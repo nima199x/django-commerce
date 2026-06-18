@@ -1,48 +1,6 @@
+
 {% load static %}<!--
-//////////////////////////////////////////////////////////////////////////////////////////
-//										                                            	//
-// Project:	 MarketShop - Responsive E-Commerce HTML5 Template                          //
-//		                                                                                //
-// File:  index.html       							                                    //
-//											                                            //
-// Version: 1.0										                                    //
-//										                                            	//
-// Description:                                                                        	//
-//											                                            //
-//		    Responsive E-Commerce HTML5 Template    					                //
-//											                                            //
-//											                                            //
-//											                                            //
-//											                                            //
-// Author: Ami Bappy [amibappy77@gmail.com]						                        //
-//                                                                                      //
-// Github: https://github.com/amibappy                                                  //
-//                                                                                      //
-//        										                                        //
-//  .______       .___      .______   .______   ____.  .____ 				            //
-//  |   _  \      /   \     |   _  \  |   _  \  \   \  /   / 				            //
-//  |  |_)  |    /  ^  \    |  |_)  | |  |_)  |  \   \/   /  				            //
-//  |   _  <    /  /_\  \   |   ___/  |   ___/    \_    _/   				            //
-//  |  |_)  |  /  _____  \  |  |      |  |          |  |     				            //
-//  |______/  /__/     \__\ | _|      | _|          |__|     				            //
-//                                                       				                //
-//											                                            //
-//											                                            //
-//////////////////////////////////////////////////////////////////////////////////////////
-//											                                            //
-// Copyright (c) 2017 Bappy [amibappy77@gmail.com]					                    //
-// All Rights Reserved.									                                //
-//											                                            //
-//////////////////////////////////////////////////////////////////////////////////////////
-//											                                            //
-// Unauthorized copying of this file, via any medium is strictly prohibited	            //
-// Proprietary and confidential								                            //
-//											                                            //
-//////////////////////////////////////////////////////////////////////////////////////////
-//											                                            //
-// DO NOT REMOVE THIS AREA                                                              //
-//                                                                                      //
-//////////////////////////////////////////////////////////////////////////////////////////
+
 -->
 
 
@@ -80,46 +38,9 @@
                                 <li class="mobile"><i class="fa fa-phone"></i>+98 912 000 0000</li>
                                 <li class="email"><a href="mailto:Nimasaket6@gmail.com"><i class="fa fa-envelope"></i>Nimasaket6@gmail.com</a></li>
                                 </li>
-                                <li class="wrap_custom_block hidden-sm hidden-xs"><a>Custom Block<b></b></a>
-                                    <div class="dropdown-menu custom_block">
-                                        <ul>
-                                            <li>
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td><img alt="" src="{% static 'image/banner/cms-block.jpg' %}">
-                                                        </td>
-                                                        <td><img alt=""
-                                                                 src="{% static 'image/banner/responsive.jpg' %}"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h4>CMS Blocks</h4></td>
-                                                        <td>
-                                                            <h4>Responsive Template</h4></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>This is a CMS block. You can insert any content (HTML, Text,
-                                                            Images) Here.
-                                                        </td>
-                                                        <td>This is a CMS block. You can insert any content (HTML, Text,
-                                                            Images) Here.
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong><a class="btn btn-default btn-sm" href="#">Read
-                                                            More</a></strong></td>
-                                                        <td><strong><a class="btn btn-default btn-sm" href="#">Read
-                                                            More</a></strong></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="#">Wish List (0)</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="#"><i class="fa fa-truck"></i> Track Order</a></li>
+                                <li><a href="{% url 'products:cart_detail' %}"><i class="fa fa-heart"></i> Wish List (0)</a></li>
+                                <li><a href="{% url 'products:cart_detail' %}"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
                             </ul>
                         </div>
                         <div id="language" class="btn-group">
@@ -178,7 +99,7 @@
         </nav>
         <!-- Top Bar End-->
         <!-- Header Start-->
-        <header class="header-row">
+        <header class="header-row" style="padding-top: 10px; padding-bottom: 10px;">
             <div class="container">
                 <div class="table-container">
                     <!-- Logo Start -->

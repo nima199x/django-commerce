@@ -1,3 +1,5 @@
+
+Navigation · HTML
 {% load static %}
 <div class="container">
     <nav id="menu" class="navbar">
@@ -36,83 +38,20 @@
 
                 <li class="menu_brands dropdown"><a href="#">Brands</a>
                     <div class="dropdown-menu">
+                        {% for brand in brands %}
                         <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="Apple" alt="Apple"/></a><a href="#">Apple</a>
+                            {% if brand.logo %}
+                            <a href="#"><img src="{{ brand.logo.url }}" title="{{ brand.name }}" alt="{{ brand.name }}" style="width:60px;height:60px;object-fit:contain;"/></a>
+                            {% endif %}
+                            <a href="#">{{ brand.name }}</a>
                         </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="Canon" alt="Canon"/></a><a href="#">Canon</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/hp_logo-60x60.jpg' %}" title="Hewlett-Packard" alt="Hewlett-Packard"/></a><a href="#">Hewlett-Packard</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/htc_logo-60x60.jpg' %}" title="HTC" alt="HTC"/></a><a href="#">HTC</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/palm_logo-60x60.jpg' %}" title="Palm" alt="Palm"/></a><a href="#">Palm</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/sony_logo-60x60.jpg' %}" title="Sony" alt="Sony"/></a><a href="#">Sony</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test" alt="test"/></a><a href="#">test</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test 3" alt="test 3"/></a><a href="#">test 3</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test 5" alt="test 5"/></a><a href="#">test 5</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test 6" alt="test 6"/></a><a href="#">test 6</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test 7" alt="test 7"/></a><a href="#">test 7</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/canon_logo-60x60.jpg' %}" title="test1" alt="test1"/></a><a href="#">test1</a>
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3 col-xs-6">
-                            <a href="#"><img src="{% static 'image/product/apple_logo-60x60.jpg' %}" title="test2" alt="test2"/></a><a href="#">test2</a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </li>
 
-                <li class="custom-link"><a href="#">Custom Links</a></li>
+                <li class="custom-link"><a href="#">New Arrivals</a></li>
 
-                <li class="dropdown wrap_custom_block hidden-sm hidden-xs"><a>Custom Block</a>
-                    <div class="dropdown-menu custom_block">
-                        <ul>
-                            <li>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td><img alt="" src="{% static 'image/banner/cms-block.jpg' %}"></td>
-                                        <td><img alt="" src="{% static 'image/banner/responsive.jpg' %}"></td>
-                                        <td><img alt="" src="{% static 'image/banner/cms-block.jpg' %}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4>CMS Blocks</h4></td>
-                                        <td><h4>Responsive Template</h4></td>
-                                        <td><h4>Dedicated Support</h4></td>
-                                    </tr>
-                                    <tr>
-                                        <td>This is a CMS block. You can insert any content (HTML, Text, Images) Here.</td>
-                                        <td>This is a CMS block. You can insert any content (HTML, Text, Images) Here.</td>
-                                        <td>This is a CMS block. You can insert any content (HTML, Text, Images) Here.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">Read More</a></strong></td>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">Read More</a></strong></td>
-                                        <td><strong><a class="btn btn-primary btn-sm" href="#">Read More</a></strong></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
+                <li class="custom-link"><a href="#">Best Sellers</a></li>
                 <li class="dropdown information-link"><a>Pages</a>
                     <div class="dropdown-menu">
                         <ul>

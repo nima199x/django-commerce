@@ -1,48 +1,49 @@
+
 /*
 //////////////////////////////////////////////////////////////////////////////////////////
-//										                                            	
-// Project:	MarketShop - Responsive E-Commerce HTML5 Template                                
-//		                                                                                
-// File: custom.js             							                                    
-//											                                            
-// Version: 1.0										                                    
-//										                                            	
-// Description:                                                                        	
-//											                                           
-//		   Responsive E-Commerce HTML5 Template                              
-//		                                  							                
-//											                                           
-//											                                            
-//											                                            
-//											                                            
-// Author: Ami Bappy [amibappy77@gmail.com]						                       
-//                                                                                     
-// Github: https://github.com/amibappy                                                 
-//                                                                                     
-//        										                                       
-//  .______       .___      .______   .______   ____.  .____ 				           
-//  |   _  \      /   \     |   _  \  |   _  \  \   \  /   / 				           
-//  |  |_)  |    /  ^  \    |  |_)  | |  |_)  |  \   \/   /  				            
-//  |   _  <    /  /_\  \   |   ___/  |   ___/    \_    _/   				            
-//  |  |_)  |  /  _____  \  |  |      |  |          |  |     				            
-//  |______/  /__/     \__\ | _|      | _|          |__|     				           
-//                                                       				                
-//											                                           
+//
+// Project:	MarketShop - Responsive E-Commerce HTML5 Template
+//
+// File: custom.js
+//
+// Version: 1.0
+//
+// Description:
+//
+//		   Responsive E-Commerce HTML5 Template
+//
+//
+//
+//
+//
+// Author: Ami Bappy [amibappy77@gmail.com]
+//
+// Github: https://github.com/amibappy
+//
+//
+//  .______       .___      .______   .______   ____.  .____
+//  |   _  \      /   \     |   _  \  |   _  \  \   \  /   /
+//  |  |_)  |    /  ^  \    |  |_)  | |  |_)  |  \   \/   /
+//  |   _  <    /  /_\  \   |   ___/  |   ___/    \_    _/
+//  |  |_)  |  /  _____  \  |  |      |  |          |  |
+//  |______/  /__/     \__\ | _|      | _|          |__|
+//
+//
 //////////////////////////////////////////////////////////////////////////////////////////
-//											                                           
-// Copyright (c) 2017 Bappy [amibappy77@gmail.com]					                    
-// All Rights Reserved.									                                
-//											                                            
+//
+// Copyright (c) 2017 Bappy [amibappy77@gmail.com]
+// All Rights Reserved.
+//
 //////////////////////////////////////////////////////////////////////////////////////////
-//											                                            
-// Unauthorized copying of this file, via any medium is strictly prohibited	           
-// Proprietary and confidential								                           
-//											                                           
+//
+// Unauthorized copying of this file, via any medium is strictly prohibited
+// Proprietary and confidential
+//
 //////////////////////////////////////////////////////////////////////////////////////////
-//											                                            
-// DO NOT REMOVE THIS AREA                                                             
-//                                                                                     
-////////////////////////////////////////////////////////////////////////////////////////// 
+//
+// DO NOT REMOVE THIS AREA
+//
+//////////////////////////////////////////////////////////////////////////////////////////
 */
 
 
@@ -77,37 +78,38 @@ $('.banner').owlCarousel({
      Product Slider (with owl-carousel)
 ----------------------------------------------------- */
 $(".owl-carousel.product_carousel, .owl-carousel.latest_category_carousel, .owl-carousel.latest_brands_carousel, .owl-carousel.related_pro").owlCarousel({
-		itemsCustom : [[320, 1],[600, 2],[768, 3],[992, 5],[1199, 5]],											   
+		itemsCustom : [[320, 1],[600, 2],[768, 3],[992, 5],[1199, 5]],
 		lazyLoad : true,
 		navigation : true,
 		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
 		scrollPerPage : true
-    }); 
+    });
 
 /*---------------------------------------------------
      Product Carousel Slider with Tab
 ----------------------------------------------------- */
-$("#latest_category .owl-carousel.latest_category_tabs").owlCarousel({
-		itemsCustom : [[320, 1],[600, 2],[768, 3],[992, 5],[1199, 5]],											   
+$(".category-module[id^='cat-module-'] .owl-carousel.latest_category_tabs").owlCarousel({
+		itemsCustom : [[320, 1],[600, 2],[768, 3],[992, 5],[1199, 5]],
 		lazyLoad : true,
 		navigation : true,
 		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
 		scrollPerPage : true,
 });
-$("#latest_category .tab_content").addClass("deactive");
-$("#latest_category .tab_content:first").show();
-	//Default Action
-    $("#latest_category ul#sub-cat li:first").addClass("active").show(); //Activate first tab
-    //On Click Event
-    $("#latest_category ul#sub-cat li").on("click", function() {
-        $("#latest_category ul#sub-cat li").removeClass("active"); //Remove any "active" class
-        $(this).addClass("active"); //Add "active" class to selected tab
-		$("#latest_category .tab_content").hide(); 
-        var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-        $(activeTab).fadeIn(); //Fade in the active content
+$(".category-module[id^='cat-module-']").each(function() {
+    var $module = $(this);
+    $module.find(".tab_content").hide();
+    $module.find(".tab_content:first").show();
+    $module.find(".tabs li:first").addClass("active");
+    $module.find(".tabs li").on("click", function() {
+        $module.find(".tabs li").removeClass("active");
+        $(this).addClass("active");
+        $module.find(".tab_content").hide();
+        var activeTab = $(this).find("a").attr("href");
+        $module.find(activeTab).fadeIn();
         return false;
     });
-	
+});
+
 
 /*---------------------------------------------------
      Brand Slider (Default Owl Carousel)
@@ -125,12 +127,12 @@ $('#carousel').owlCarousel({
      Product Tab Carousel Slider(Featured,Latest,specila,etc..)
 ----------------------------------------------------- */
 $("#product-tab .product_carousel_tab").owlCarousel({
-		itemsCustom : [[320, 1],[600, 2],[768, 3],[992, 5],[1199, 5]],											   
+		itemsCustom : [[320, 1],[600, 2],[768, 3],[992, 5],[1199, 5]],
 		lazyLoad : true,
 		navigation : true,
 		navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
 		scrollPerPage : true
-    }); 
+    });
 	$("#product-tab .tab_content").addClass("deactive");
 	$("#product-tab .tab_content:first").show();
     //Default Action
@@ -139,7 +141,7 @@ $("#product-tab .product_carousel_tab").owlCarousel({
     $("ul#tabs li").on("click", function() {
         $("ul#tabs li").removeClass("active"); //Remove any "active" class
         $(this).addClass("active"); //Add "active" class to selected tab
-		$("#product-tab .tab_content").hide(); 
+		$("#product-tab .tab_content").hide();
         var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
         $(activeTab).fadeIn(); //Fade in the active content
         return false;
@@ -169,10 +171,10 @@ $('#menu .nav > li > .dropdown-menu').each(function() {
 
 var $screensize = $(window).width();
 $('#menu .nav > li, #header .links > ul > li').on("mouseover", function() {
-																		
+
 			if ($screensize > 991) {
 			$(this).find('> .dropdown-menu').stop(true, true).slideDown('fast');
-			}			
+			}
 			$(this).bind('mouseleave', function() {
 
 			if ($screensize > 991) {
@@ -182,7 +184,7 @@ $('#menu .nav > li, #header .links > ul > li').on("mouseover", function() {
 $('#menu .nav > li div > ul > li').on("mouseover", function() {
 			if ($screensize > 991) {
 			$(this).find('> div').css('display', 'block');
-			}			
+			}
 			$(this).bind('mouseleave', function() {
 			if ($screensize > 991) {
 				$(this).find('> div').css('display', 'none');
@@ -205,7 +207,7 @@ $( window ).resize(function() {
     if ($screensize > 1199) {
         $("#menu .nav > li.mega-menu > div .clearfix.visible-lg-block").remove();
         $('#menu .nav > li.mega-menu > div > .column:nth-child(6n)').after('<div class="clearfix visible-lg-block"></div>');
-    } 
+    }
     if ($screensize < 1199) {
         $("#menu .nav > li.mega-menu > div .clearfix.visible-lg-block").remove();
         $('#menu .nav > li.mega-menu > div > .column:nth-child(4n)').after('<div class="clearfix visible-lg-block visible-md-block"></div>');
@@ -237,7 +239,7 @@ $( window ).resize(function() {
     if ($screensize > 1199) {
         $("#menu .nav > li.menu_brands > div > .clearfix.visible-lg-block").remove();
         $('#menu .nav > li.menu_brands > div > div:nth-child(12n)').after('<div class="clearfix visible-lg-block"></div>');
-    } 
+    }
     if ($screensize < 1199) {
         $("#menu .nav > li.menu_brands > div > .clearfix.visible-lg-block").remove();
         $('#menu .nav > li.menu_brands > div > div:nth-child(6n)').after('<div class="clearfix visible-lg-block visible-md-block"></div>');
@@ -267,7 +269,7 @@ $('#currency, #language, #my_account').hover(function() {
     Mobile Main Menu
 ----------------------------------------------------- */
 $('#menu .navbar-header > span').on("click", function() {
-	  $(this).toggleClass("active");  
+	  $(this).toggleClass("active");
 	  $("#menu .navbar-collapse").slideToggle('medium');
 	  return false;
 	});
@@ -303,7 +305,7 @@ $(".qtyBtn").on("click", function() {
 			}
 		}
 		return false;
-	});	
+	});
 
 /*---------------------------------------------------
     Product List
@@ -311,7 +313,7 @@ $(".qtyBtn").on("click", function() {
 $('#list-view').on("click", function() {
 	$(".products-category > .clearfix.visible-lg-block").remove();
 	$('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
-  localStorage.setItem('display', 'list');		
+  localStorage.setItem('display', 'list');
 	$('.btn-group').find('#list-view').addClass('selected');
 	$('.btn-group').find('#grid-view').removeClass('selected');
 	return false;
@@ -322,7 +324,7 @@ $('#list-view').on("click", function() {
 ----------------------------------------------------- */
 $(document).on('click', '#grid-view', function(e){
 	$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-5ths col-md-5ths col-sm-3 col-xs-12');
-		
+
 $screensize = $(window).width();
     if ($screensize > 1199) {
 		$(".products-category > .clearfix").remove();
@@ -341,7 +343,7 @@ $( window ).resize(function() {
     if ($screensize > 1199) {
         $(".products-category > .clearfix").remove();
         $('.product-grid:nth-child(5n)').after('<span class="clearfix visible-lg-block"></span>');
-    } 
+    }
     if ($screensize < 1199) {
         $(".products-category > .clearfix").remove();
         $('.product-grid:nth-child(5n)').after('<span class="clearfix visible-lg-block visible-md-block"></span>');
@@ -389,81 +391,81 @@ $('#back-top').on("click", function() {
 /*---------------------------------------------------
    Facebook Side Block
 ----------------------------------------------------- */
-$(function(){        
-        $("#facebook.fb-left").hover(function(){            
-        $(this).stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#facebook.fb-left").hover(function(){
+        $(this).stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({left: "-241px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({left: "-241px" }, 800, 'easeInQuint' );
+        },1000);
   });
-$(function(){        
-        $("#facebook.fb-right").hover(function(){            
-        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#facebook.fb-right").hover(function(){
+        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({right: "-241px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({right: "-241px" }, 800, 'easeInQuint' );
+        },1000);
   });
 
 /*---------------------------------------------------
    Twitter Side Block
 ----------------------------------------------------- */
-$(function(){        
-        $("#twitter_footer.twit-left").hover(function(){            
-        $(this).stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#twitter_footer.twit-left").hover(function(){
+        $(this).stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({left: "-215px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({left: "-215px" }, 800, 'easeInQuint' );
+        },1000);
   });
-$(function(){        
-        $("#twitter_footer.twit-right").hover(function(){            
-        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#twitter_footer.twit-right").hover(function(){
+        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({right: "-215px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({right: "-215px" }, 800, 'easeInQuint' );
+        },1000);
   });
 
 /*---------------------------------------------------
    Video Side Block
 ----------------------------------------------------- */
-$(function(){        
-        $("#video_box.vb-left").hover(function(){            
-        $(this).stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#video_box.vb-left").hover(function(){
+        $(this).stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({left: "-566px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({left: "-566px" }, 800, 'easeInQuint' );
+        },1000);
   });
-$(function(){        
-        $("#video_box.vb-right").hover(function(){            
-        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#video_box.vb-right").hover(function(){
+        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({right: "-566px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({right: "-566px" }, 800, 'easeInQuint' );
+        },1000);
   });
 
 /*---------------------------------------------------
    Custom Side Block
 ----------------------------------------------------- */
-$(function(){        
-        $('#custom_side_block.custom_side_block_left').hover(function(){            
-        $(this).stop(true, false).animate({left: '0' }, 800, 'easeOutQuint' );        
+$(function(){
+        $('#custom_side_block.custom_side_block_left').hover(function(){
+        $(this).stop(true, false).animate({left: '0' }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({left: '-215px' }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({left: '-215px' }, 800, 'easeInQuint' );
+        },1000);
   });
-$(function(){        
-        $("#custom_side_block.custom_side_block_right").hover(function(){            
-        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );        
+$(function(){
+        $("#custom_side_block.custom_side_block_right").hover(function(){
+        $(this).stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );
         },
-  function(){            
-        $(this).stop(true, false).animate({right: "-215px" }, 800, 'easeInQuint' );        
-        },1000);    
+  function(){
+        $(this).stop(true, false).animate({right: "-215px" }, 800, 'easeInQuint' );
+        },1000);
   });
 
 })(jQuery);

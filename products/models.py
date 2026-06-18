@@ -35,6 +35,8 @@ class Category(MPTTModel):
 # کلاس Product بدون تغییر باقی می‌ماند
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name='Category')
+    brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, null=True, blank=True, related_name='products',
+                              verbose_name='Brand')
     name = models.CharField(max_length=200, verbose_name='Product Name')
     slug = models.SlugField(max_length=200, unique=True, verbose_name='Slug')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')
@@ -48,6 +50,8 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+
 class FAQ(models.Model):
     question = models.CharField(max_length=500, verbose_name='Question')
     answer = models.TextField(verbose_name='Answer')
@@ -58,6 +62,7 @@ class FAQ(models.Model):
     class Meta:
         verbose_name = 'FAQ'
         verbose_name_plural = 'FAQs'
+
 
 class Cart(models.Model):
     session_key = models.CharField(max_length=40, verbose_name='Session Key')
@@ -91,3 +96,58 @@ class CartItem(models.Model):
 
     def get_subtotal(self):
         return self.product.price * self.quantity
+
+
+class Brand(models.Model):
+    name = models.CharField(max_length=200, verbose_name='Brand Name')
+    slug = models.SlugField(max_length=200, unique=True, verbose_name='Slug')
+    logo = models.ImageField(upload_to='brands/', null=True, blank=True, verbose_name='Logo')
+    is_active = models.BooleanField(default=True, verbose_name='Is Active')
+    order = models.PositiveIntegerField(default=0, verbose_name='Display Order')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Brand'
+        verbose_name_plural = 'Brands'
+        ordering = ['order', 'name']
+
+
+class Slider(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Title', blank=True)
+    image = models.ImageField(upload_to='sliders/', verbose_name='Image')
+    link = models.URLField(blank=True, verbose_name='Link URL')
+    is_active = models.BooleanField(default=True, verbose_name='Is Active')
+    order = models.PositiveIntegerField(default=0, verbose_name='Display Order')
+
+    def __str__(self):
+        return self.title or f'Slide {self.pk}'
+
+    class Meta:
+        verbose_name = 'Slider'
+        verbose_name_plural = 'Sliders'
+        ordering = ['order']
+
+
+class Banner(models.Model):
+    POSITION_CHOICES = [
+        ('top', 'Top Banner'),
+        ('middle', 'Middle Banner'),
+        ('bottom', 'Bottom Banner'),
+        ('side', 'Side Banner'),
+    ]
+    title = models.CharField(max_length=200, verbose_name='Title', blank=True)
+    image = models.ImageField(upload_to='banners/', verbose_name='Image')
+    link = models.URLField(blank=True, verbose_name='Link URL')
+    position = models.CharField(max_length=20, choices=POSITION_CHOICES, default='top', verbose_name='Position')
+    is_active = models.BooleanField(default=True, verbose_name='Is Active')
+    order = models.PositiveIntegerField(default=0, verbose_name='Display Order')
+
+    def __str__(self):
+        return self.title or f'Banner {self.pk}'
+
+    class Meta:
+        verbose_name = 'Banner'
+        verbose_name_plural = 'Banners'
+        ordering = ['position', 'order']

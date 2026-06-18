@@ -1,3 +1,5 @@
+
+Home page · HTML
 {% extends 'base/base.html' %}
 {% load category_tags %}
 {% load static %}
@@ -51,14 +53,17 @@
                     <h3 class="subtitle">DjangoMart</h3>
                     <p>Welcome to DjangoMart — your one-stop online shop.</p>
                 </div>
+                {% if side_banners %}
                 <div class="banner owl-carousel">
+                    {% for banner in side_banners %}
                     <div class="item">
-                        <a href="#"><img src="{% static 'image/banner/small-banner1-265x350.jpg' %}" alt="small banner" class="img-responsive"/></a>
+                        <a href="{{ banner.link|default:'#' }}">
+                            <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="img-responsive"/>
+                        </a>
                     </div>
-                    <div class="item">
-                        <a href="#"><img src="{% static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1" class="img-responsive"/></a>
-                    </div>
+                    {% endfor %}
                 </div>
+                {% endif %}
 
             </aside>
             <!-- Left Part End-->
@@ -66,15 +71,17 @@
             <div id="content" class="col-sm-9">
                 <!-- Slideshow Start-->
                 <div class="slideshow single-slider owl-carousel">
+                    {% for slide in sliders %}
                     <div class="item">
-                        <a href="#"><img class="img-responsive" src="{% static 'image/slider/banner-1.jpg' %}" alt="banner 1"/></a>
+                        <a href="{{ slide.link|default:'#' }}">
+                            <img class="img-responsive" src="{{ slide.image.url }}" alt="{{ slide.title }}"/>
+                        </a>
                     </div>
+                    {% empty %}
                     <div class="item">
-                        <a href="#"><img class="img-responsive" src="{% static 'image/slider/banner-2.jpg' %}" alt="banner 2"/></a>
+                        <img class="img-responsive" src="{% static 'image/slider/banner-1.jpg' %}" alt="banner"/>
                     </div>
-                    <div class="item">
-                        <a href="#"><img class="img-responsive" src="{% static 'image/slider/banner-3.jpg' %}" alt="banner 3"/></a>
-                    </div>
+                    {% endfor %}
                 </div>
                 <!-- Slideshow End-->
                 <!-- Featured Product Start-->
@@ -108,33 +115,33 @@
                     {% endfor %}
                 </div>
                 <!-- Featured Product End-->
+                {% if middle_banners %}
                 <div class="marketshop-banner">
                     <div class="row">
+                        {% for banner in middle_banners %}
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <a href="#"><img src="{% static 'image/banner/sample-banner-3-400x200.jpg' %}" alt="Sample Banner 3" title="Sample Banner 3" class="img-responsive"/></a>
+                            <a href="{{ banner.link|default:'#' }}">
+                                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="img-responsive"/>
+                            </a>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <a href="#"><img src="{% static 'image/banner/sample-banner-1-400x200.jpg' %}" alt="Sample Banner" title="Sample Banner" class="img-responsive"/></a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                            <a href="#"><img src="{% static 'image/banner/sample-banner-2-400x200.jpg' %}" alt="Sample Banner 2" title="Sample Banner 2" class="img-responsive"/></a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
                 <!-- Categories Product Slider Start-->
-                <div class="category-module" id="latest_category">
-                    {% for item in categories_with_products %}
+                {% for item in categories_with_products %}
+                <div class="category-module" id="cat-module-{{ item.category.slug }}">
                     <h3 class="subtitle">{{ item.category.title }} - <a class="viewall" href="{% url 'products:category' item.category.slug %}">view all</a></h3>
                     <div class="category-module-content">
-                        <ul id="sub-cat" class="tabs">
-                            {% for child in item.category.get_children %}
-                            <li><a href="#tab-{{ child.slug }}">{{ child.title }}</a></li>
+                        <ul id="sub-cat-{{ item.category.slug }}" class="tabs">
+                            {% for cwp in item.children_with_products %}
+                            <li><a href="#tab-{{ cwp.child.slug }}">{{ cwp.child.title }}</a></li>
                             {% endfor %}
                         </ul>
-                        {% for child in item.category.get_children %}
-                        <div id="tab-{{ child.slug }}" class="tab_content">
+                        {% for cwp in item.children_with_products %}
+                        <div id="tab-{{ cwp.child.slug }}" class="tab_content">
                             <div class="owl-carousel latest_category_tabs">
-                                {% for product in item.products %}
+                                {% for product in cwp.products %}
                                 <div class="product-thumb">
                                     <div class="image">
                                         <a href="{% url 'products:product_detail' product.slug %}">
@@ -164,27 +171,32 @@
                         </div>
                         {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
                 <!-- Categories Product Slider End-->
                 <!-- Banner Start -->
+                {% if bottom_banners %}
                 <div class="marketshop-banner">
                     <div class="row">
+                        {% for banner in bottom_banners %}
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#"><img src="{% static 'image/banner/sample-banner-4-400x150.jpg' %}" alt="2 Block Banner" title="2 Block Banner"/></a>
+                            <a href="{{ banner.link|default:'#' }}">
+                                <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="img-responsive"/>
+                            </a>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#"><img src="{% static 'image/banner/sample-banner-5-400x150.jpg' %}" alt="2 Block Banner 1" title="2 Block Banner 1"/></a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
+                {% endif %}
                 <!-- Banner End -->
                 <!-- Categories Product Slider Start -->
                 {% for item in categories_with_products %}
                 <div class="category-module">
                     <h3 class="subtitle">{{ item.category.title }} - <a class="viewall" href="{% url 'products:category' item.category.slug %}">view all</a></h3>
+                    {% for cwp in item.children_with_products %}
+                    <h4 style="margin: 10px 0 5px; color: #555;">{{ cwp.child.title }}</h4>
                     <div class="owl-carousel latest_category_carousel">
-                        {% for product in item.products %}
+                        {% for product in cwp.products %}
                         <div class="product-thumb">
                             <div class="image">
                                 <a href="{% url 'products:product_detail' product.slug %}">
@@ -211,6 +223,7 @@
                         <p>No products available.</p>
                         {% endfor %}
                     </div>
+                    {% endfor %}
                 </div>
                 {% endfor %}
                 <!-- Categories Product Slider End -->
@@ -244,30 +257,26 @@
                     {% endfor %}
                 </div>
                 <!-- Brand Product Slider End -->
+                {% if brands %}
                 <div id="carousel" class="owl-carousel nxt">
+                    {% for brand in brands %}
                     <div class="item text-center">
-                        <a href="#"><img src="{% static 'image/product/apple_logo-100x100.jpg' %}" alt="Palm" class="img-responsive"/></a>
+                        <a href="#">
+                            {% if brand.logo %}
+                            <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-responsive"/>
+                            {% else %}
+                            <span>{{ brand.name }}</span>
+                            {% endif %}
+                        </a>
                     </div>
-                    <div class="item text-center">
-                        <a href="#"><img src="{% static 'image/product/canon_logo-100x100.jpg' %}" alt="Sony" class="img-responsive"/></a>
-                    </div>
-                    <div class="item text-center">
-                        <a href="#"><img src="{% static 'image/product/apple_logo-100x100.jpg' %}" alt="Canon" class="img-responsive"/></a>
-                    </div>
-                    <div class="item text-center">
-                        <a href="#"><img src="{% static 'image/product/canon_logo-100x100.jpg' %}" alt="Apple" class="img-responsive"/></a>
-                    </div>
-                    <div class="item text-center">
-                        <a href="#"><img src="{% static 'image/product/apple_logo-100x100.jpg' %}" alt="HTC" class="img-responsive"/></a>
-                    </div>
-                    <div class="item text-center">
-                        <a href="#"><img src="{% static 'image/product/canon_logo-100x100.jpg' %}" alt="HP" class="img-responsive"/></a>
-                    </div>
+                    {% endfor %}
                 </div>
+                {% endif %}
             </div>
             <!--Middle Part End-->
         </div>
     </div>
 </div>
-
+ 
 {% endblock %}
+ 
