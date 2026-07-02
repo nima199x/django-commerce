@@ -74,6 +74,7 @@ TEMPLATES = [
                 'products.context_processors.cart_context',
                 'products.context_processors.sidebar_context',
                 'products.context_processors.banners_context',
+                'products.context_processors.site_settings_context',
             ],
         },
     },

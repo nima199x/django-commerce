@@ -1,5 +1,4 @@
 
-Navigation · HTML
 {% load static %}
 <div class="container">
     <nav id="menu" class="navbar">
@@ -49,9 +48,8 @@ Navigation · HTML
                     </div>
                 </li>
 
-                <li class="custom-link"><a href="#">New Arrivals</a></li>
-
-                <li class="custom-link"><a href="#">Best Sellers</a></li>
+                <li class="custom-link"><a href="{% url 'products:new_arrivals' %}">New Arrivals</a></li>
+                <li class="custom-link"><a href="{% url 'products:best_sellers' %}">Best Sellers</a></li>
                 <li class="dropdown information-link"><a>Pages</a>
                     <div class="dropdown-menu">
                         <ul>

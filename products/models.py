@@ -151,3 +151,23 @@ class Banner(models.Model):
         verbose_name = 'Banner'
         verbose_name_plural = 'Banners'
         ordering = ['position', 'order']
+
+
+class SiteSettings(models.Model):
+    logo = models.ImageField(upload_to='site/', null=True, blank=True, verbose_name='Logo')
+    favicon = models.ImageField(upload_to='site/', null=True, blank=True, verbose_name='Favicon')
+    site_name = models.CharField(max_length=100, default='DjangoMart', verbose_name='Site Name')
+    phone = models.CharField(max_length=20, blank=True, verbose_name='Phone')
+    email = models.EmailField(blank=True, verbose_name='Email')
+    address = models.CharField(max_length=200, blank=True, verbose_name='Address')
+
+    def __str__(self):
+        return self.site_name
+
+    class Meta:
+        verbose_name = 'Site Settings'
+        verbose_name_plural = 'Site Settings'
+
+    @classmethod
+    def get_settings(cls):
+        return cls.objects.first()

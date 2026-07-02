@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Product, Brand, Slider, Banner
+from .models import Category, Product, Brand, Slider, Banner, SiteSettings
 
 
 @admin.register(Category)
@@ -88,3 +88,12 @@ class BannerAdmin(admin.ModelAdmin):
         return '—'
 
     image_preview.short_description = 'Preview'
+
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    list_display = ('site_name', 'phone', 'email')
+
+    def has_add_permission(self, request):
+        # فقط یه رکورد مجاز باشه
+        return not SiteSettings.objects.exists()

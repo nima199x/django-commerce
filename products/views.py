@@ -84,3 +84,11 @@ def cart_detail(request):
         request.session.create()
     cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
     return render(request, 'products/cart.html', {'cart': cart})
+
+def new_arrivals(request):
+    products = Product.objects.filter(is_active=True).order_by('-id')[:12]
+    return render(request, 'products/new_arrivals.html', {'products': products})
+
+def best_sellers(request):
+    products = Product.objects.filter(is_active=True)[:12]
+    return render(request, 'products/best_sellers.html', {'products': products})

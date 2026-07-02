@@ -1,8 +1,4 @@
-
-{% load static %}<!--
-
--->
-
+{% load static %}
 
 <!DOCTYPE html>
 <html>
@@ -105,10 +101,19 @@
                     <!-- Logo Start -->
                     <div class="col-table-cell col-lg-6 col-md-6 col-sm-12 col-xs-12 inner">
                         <div id="logo">
-                            <a href="{% url 'home' %}"><img src="{% static 'image/logo.png' %}"
-                                                            title="DjangoMart"
-                                                            alt="DjangoMart"
-                                                            style="height: 80px; width: auto;"/></a>
+                            <a href="{% url 'home' %}">
+                            {% if site_settings and site_settings.logo %}
+                                <img src="{{ site_settings.logo.url }}"
+                                     title="{{ site_settings.site_name }}"
+                                     alt="{{ site_settings.site_name }}"
+                                     style="height: 80px; width: auto;"/>
+                            {% else %}
+                                <img src="{% static 'image/logo.png' %}"
+                                     title="DjangoMart"
+                                     alt="DjangoMart"
+                                     style="height: 80px; width: auto;"/>
+                            {% endif %}
+                        </a>
                         </div>
                     </div>
                     <!-- Logo End -->

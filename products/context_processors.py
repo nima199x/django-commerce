@@ -1,4 +1,4 @@
-from .models import Category  # 📂 چون در همان پوشه هستی از نقطه استفاده می‌کنیم
+from .models import Category, SiteSettings  # 📂 چون در همان پوشه هستی از نقطه استفاده می‌کنیم
 
 
 def include_categories(request):
@@ -24,7 +24,7 @@ def sidebar_context(request):
 
 
 def banners_context(request):
-    from .models import Banner, Slider, Brand
+    from .models import Banner, Slider, Brand, SiteSettings
     return {
         'top_banners': Banner.objects.filter(position='top', is_active=True).order_by('order'),
         'middle_banners': Banner.objects.filter(position='middle', is_active=True).order_by('order'),
@@ -33,3 +33,7 @@ def banners_context(request):
         'sliders': Slider.objects.filter(is_active=True).order_by('order'),
         'brands': Brand.objects.filter(is_active=True).order_by('order'),
     }
+
+
+def site_settings_context(request):
+    return {'site_settings': SiteSettings.get_settings()}
