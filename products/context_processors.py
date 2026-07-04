@@ -36,4 +36,5 @@ def banners_context(request):
 
 
 def site_settings_context(request):
+    from .models import SiteSettings
     return {'site_settings': SiteSettings.get_settings()}
