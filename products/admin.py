@@ -18,7 +18,6 @@ class CategoryAdmin(DraggableMPTTAdmin):
             return format_html('<img src="{}" width="50" height="50" style="object-fit:cover; border-radius:4px;"/>',
                                obj.image.url)
         return '—'
-
     image_preview.short_description = 'Image'
 
     def get_queryset(self, request):
@@ -27,20 +26,32 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('image_preview', 'name', 'category', 'brand', 'price', 'is_active')
+    list_display = ('image_preview', 'name', 'category','brand', 'price', 'discount', 'final_price', 'is_featured', 'is_active')
     list_display_links = ('name',)
-    list_filter = ('is_active', 'category', 'brand')
+    list_filter = ('is_active', 'is_featured', 'category', 'brand')
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
-    list_editable = ('price', 'is_active')
+    list_editable = ('price', 'discount', 'is_featured', 'is_active')
+
+    class Media:
+        css = {'all': ('css/admin_compact.css',)}
+        js = ('js/admin_product.js',)
 
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="50" height="50" style="object-fit:cover; border-radius:4px;"/>',
+            return format_html('<img src="{}" width="40" height="40" style="object-fit:cover; border-radius:4px;"/>',
                                obj.image.url)
         return '—'
+    image_preview.short_description = ''
 
-    image_preview.short_description = 'Image'
+    def final_price(self, obj):
+        if obj.discount:
+            return format_html(
+                '<span style="color:green; font-weight:bold;">${}</span>',
+                obj.get_discounted_price()
+            )
+        return f'${obj.price}'
+    final_price.short_description = 'Final'
 
 
 @admin.register(Brand)
@@ -55,7 +66,6 @@ class BrandAdmin(admin.ModelAdmin):
         if obj.logo:
             return format_html('<img src="{}" width="60" height="40" style="object-fit:contain;"/>', obj.logo.url)
         return '—'
-
     logo_preview.short_description = 'Logo'
 
 
@@ -70,7 +80,6 @@ class SliderAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="120" height="50" style="object-fit:cover; border-radius:4px;"/>',
                                obj.image.url)
         return '—'
-
     image_preview.short_description = 'Preview'
 
 
@@ -86,7 +95,6 @@ class BannerAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="120" height="50" style="object-fit:cover; border-radius:4px;"/>',
                                obj.image.url)
         return '—'
-
     image_preview.short_description = 'Preview'
 
 
@@ -95,5 +103,4 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     list_display = ('site_name', 'phone', 'email')
 
     def has_add_permission(self, request):
-        # فقط یه رکورد مجاز باشه
         return not SiteSettings.objects.exists()

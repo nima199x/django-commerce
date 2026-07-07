@@ -1,0 +1,13 @@
+/* فشرده کردن ستون‌های ادمین */
+#result_list td, #result_list th {
+    padding: 4px 8px !important;
+    white-space: nowrap;
+}
+#result_list input[type="text"],
+#result_list input[type="number"] {
+    width: 70px !important;
+    padding: 2px 4px !important;
+}
+#result_list select {
+    width: auto !important;
+}

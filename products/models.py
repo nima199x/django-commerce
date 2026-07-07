@@ -13,7 +13,6 @@ class Category(MPTTModel):
     )
     title = models.CharField(max_length=200, verbose_name='Category Title')
     slug = models.SlugField(max_length=200, unique=False)
-    # اضافه کردن فیلد برای حل خطای ادمین
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
     image = models.ImageField(upload_to='categories/', null=True, blank=True, verbose_name='Image')
 
@@ -21,18 +20,15 @@ class Category(MPTTModel):
         order_insertion_by = ['title']
 
     class Meta:
-        # حالا اسلاگ و والد با هم ست می‌شوند
         unique_together = [['parent', 'slug']]
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
     def __str__(self):
-        # دریافت مسیر کامل از ریشه تا این دسته
         ancestors = self.get_ancestors(include_self=True)
         return ' > '.join([node.title for node in ancestors])
 
 
-# کلاس Product بدون تغییر باقی می‌ماند
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name='Category')
     brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, null=True, blank=True, related_name='products',
@@ -43,6 +39,14 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Description')
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
     image = models.ImageField(upload_to='products/', null=True, blank=True, verbose_name='Image')
+    discount = models.PositiveIntegerField(default=0, verbose_name='Discount (%)', help_text='0-100')
+    rating = models.DecimalField(max_digits=3, decimal_places=1, default=0, verbose_name='Rating (0-5)')
+    is_featured = models.BooleanField(default=False, verbose_name='Featured')
+
+    def get_discounted_price(self):
+        if self.discount:
+            return round(self.price * (1 - self.discount / 100), 2)
+        return self.price
 
     def __str__(self):
         return self.name

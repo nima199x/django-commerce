@@ -4,8 +4,6 @@
 
 {% block contents %}
 
-<!-- Main Menu Start-->
-<!-- Main Menu End-->
 <div id="container">
     <!-- Feature Box Start-->
     <div class="container">
@@ -37,6 +35,7 @@
         </div>
     </div>
     <!-- Feature Box End-->
+
     <div class="container">
         <div class="row">
             <!-- Left Part Start-->
@@ -45,8 +44,7 @@
                 <div class="box-category">
                     {% show_categories %}
                 </div>
-                    {% include 'includes/sidebar.html' %}
-
+                {% include 'includes/sidebar.html' %}
                 <div class="list-group">
                     <h3 class="subtitle">DjangoMart</h3>
                     <p>Welcome to DjangoMart — your one-stop online shop.</p>
@@ -62,11 +60,12 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-
             </aside>
             <!-- Left Part End-->
+
             <!--Middle Part Start-->
             <div id="content" class="col-sm-9">
+
                 <!-- Slideshow Start-->
                 <div class="slideshow single-slider owl-carousel">
                     {% for slide in sliders %}
@@ -82,23 +81,45 @@
                     {% endfor %}
                 </div>
                 <!-- Slideshow End-->
+
                 <!-- Featured Product Start-->
                 <h3 class="subtitle">Featured</h3>
                 <div class="owl-carousel product_carousel">
                     {% for product in featured_products %}
                     <div class="product-thumb">
+                        {% if product.discount %}
+                        <div class="sale-label">-{{ product.discount }}%</div>
+                        {% endif %}
                         <div class="image">
                             <a href="{% url 'products:product_detail' product.slug %}">
                                 {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
+                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                 {% endif %}
                             </a>
                         </div>
                         <div class="caption">
                             <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
+                            {% if product.discount %}
+                            <p class="price">
+                                <span class="price-new">${{ product.get_discounted_price }}</span>
+                                <span class="price-old">${{ product.price }}</span>
+                            </p>
+                            {% else %}
+                            <p class="price">${{ product.price }}</p>
+                            {% endif %}
+                            {% if product.rating %}
+                            <div class="rating">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= product.rating %}
+                                    <span class="fa fa-star" style="color:#f39c12;"></span>
+                                    {% else %}
+                                    <span class="fa fa-star-o" style="color:#ccc;"></span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="button-group">
                             <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
@@ -113,6 +134,7 @@
                     {% endfor %}
                 </div>
                 <!-- Featured Product End-->
+
                 {% if middle_banners %}
                 <div class="marketshop-banner">
                     <div class="row">
@@ -126,6 +148,7 @@
                     </div>
                 </div>
                 {% endif %}
+
                 <!-- Categories Product Slider Start-->
                 {% for item in categories_with_products %}
                 <div class="category-module" id="cat-module-{{ item.category.slug }}">
@@ -141,18 +164,39 @@
                             <div class="owl-carousel latest_category_tabs">
                                 {% for product in cwp.products %}
                                 <div class="product-thumb">
+                                    {% if product.discount %}
+                                    <div class="sale-label">-{{ product.discount }}%</div>
+                                    {% endif %}
                                     <div class="image">
                                         <a href="{% url 'products:product_detail' product.slug %}">
                                             {% if product.image %}
-                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
+                                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                             {% else %}
-                                            <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
+                                            <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
                                             {% endif %}
                                         </a>
                                     </div>
                                     <div class="caption">
                                         <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                                        <p class="price">{{ product.price }}</p>
+                                        {% if product.discount %}
+                                        <p class="price">
+                                            <span class="price-new">${{ product.get_discounted_price }}</span>
+                                            <span class="price-old">${{ product.price }}</span>
+                                        </p>
+                                        {% else %}
+                                        <p class="price">${{ product.price }}</p>
+                                        {% endif %}
+                                        {% if product.rating %}
+                                        <div class="rating">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= product.rating %}
+                                                <span class="fa fa-star" style="color:#f39c12;"></span>
+                                                {% else %}
+                                                <span class="fa fa-star-o" style="color:#ccc;"></span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
                                     </div>
                                     <div class="button-group">
                                         <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
@@ -172,6 +216,7 @@
                 </div>
                 {% endfor %}
                 <!-- Categories Product Slider End-->
+
                 <!-- Banner Start -->
                 {% if bottom_banners %}
                 <div class="marketshop-banner">
@@ -187,74 +232,8 @@
                 </div>
                 {% endif %}
                 <!-- Banner End -->
-                <!-- Categories Product Slider Start -->
-                {% for item in categories_with_products %}
-                <div class="category-module">
-                    <h3 class="subtitle">{{ item.category.title }} - <a class="viewall" href="{% url 'products:category' item.category.slug %}">view all</a></h3>
-                    {% for cwp in item.children_with_products %}
-                    <h4 style="margin: 10px 0 5px; color: #555;">{{ cwp.child.title }}</h4>
-                    <div class="owl-carousel latest_category_carousel">
-                        {% for product in cwp.products %}
-                        <div class="product-thumb">
-                            <div class="image">
-                                <a href="{% url 'products:product_detail' product.slug %}">
-                                    {% if product.image %}
-                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                    {% else %}
-                                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                    {% endif %}
-                                </a>
-                            </div>
-                            <div class="caption">
-                                <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                                <p class="price">{{ product.price }}</p>
-                            </div>
-                            <div class="button-group">
-                                <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
-                                <div class="add-to-links">
-                                    <button type="button" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></button>
-                                    <button type="button" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <p>No products available.</p>
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endfor %}
-                <!-- Categories Product Slider End -->
-                <!-- Brand Product Slider Start-->
-                <div class="owl-carousel latest_brands_carousel">
-                    {% for product in featured_products %}
-                    <div class="product-thumb">
-                        <div class="image">
-                            <a href="{% url 'products:product_detail' product.slug %}">
-                                {% if product.image %}
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% else %}
-                                <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" style="width:200px; height:200px; object-fit:cover;"/>
-                                {% endif %}
-                            </a>
-                        </div>
-                        <div class="caption">
-                            <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                        <div class="button-group">
-                            <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
-                            <div class="add-to-links">
-                                <button type="button" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></button>
-                                <button type="button" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p>No products available.</p>
-                    {% endfor %}
-                </div>
-                <!-- Brand Product Slider End -->
+
+                <!-- Brand Carousel Start-->
                 {% if brands %}
                 <div id="carousel" class="owl-carousel nxt">
                     {% for brand in brands %}
@@ -270,11 +249,12 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+                <!-- Brand Carousel End -->
+
             </div>
             <!--Middle Part End-->
         </div>
     </div>
 </div>
- 
+
 {% endblock %}
- 
