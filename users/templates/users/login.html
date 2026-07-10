@@ -27,6 +27,7 @@
                             {{ form|crispy }}
                             <input type="submit" value="Login" class="btn btn-primary" />
                         </form>
+                        <p style="margin-top:10px;"><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
                     </div>
                 </div>
             </div>
@@ -37,6 +38,7 @@
                     <ul class="list-item">
                         <li><a href="{% url 'login' %}">Login</a></li>
                         <li><a href="{% url 'register' %}">Register</a></li>
+                        <li><a href="{% url 'password_reset' %}">Forgotten Password</a></li>
                     </ul>
                 </div>
             </aside>

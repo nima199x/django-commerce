@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+        <li>Compare Products</li>
+    </ul>
+
+    <h1 class="title">Compare Products</h1>
+
+    {% if products %}
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th style="width:150px;">Image</th>
+                {% for product in products %}
+                <td class="text-center">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:120px; height:120px; object-fit:cover;"/>
+                    {% else %}
+                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ product.name }}" style="width:120px; height:120px; object-fit:cover;"/>
+                    {% endif %}
+                    <br>
+                    <a href="{% url 'products:compare_remove' product.id %}" class="btn btn-danger btn-sm" style="margin-top:8px;">
+                        <i class="fa fa-times"></i> Remove
+                    </a>
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Name</th>
+                {% for product in products %}
+                <td class="text-center"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Price</th>
+                {% for product in products %}
+                <td class="text-center">
+                    {% if product.discount %}
+                    <span style="color:green; font-weight:bold;">${{ product.get_discounted_price }}</span>
+                    <br><span style="text-decoration:line-through; color:#999; font-size:12px;">${{ product.price }}</span>
+                    {% else %}
+                    ${{ product.price }}
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Rating</th>
+                {% for product in products %}
+                <td class="text-center">
+                    {% if product.get_rating %}
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= product.get_rating %}
+                        <span class="fa fa-star" style="color:#f39c12;"></span>
+                        {% else %}
+                        <span class="fa fa-star-o" style="color:#ccc;"></span>
+                        {% endif %}
+                    {% endfor %}
+                    ({{ product.get_review_count }})
+                    {% else %}
+                    <span style="color:#999;">No reviews</span>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Brand</th>
+                {% for product in products %}
+                <td class="text-center">{{ product.brand.name|default:"—" }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Category</th>
+                {% for product in products %}
+                <td class="text-center">{{ product.category.title }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th>Description</th>
+                {% for product in products %}
+                <td style="font-size:13px;">{{ product.description|truncatewords:30 }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th></th>
+                {% for product in products %}
+                <td class="text-center">
+                    <a href="{% url 'products:cart_add' product.id %}" class="btn-primary">
+                        <span>Add to Cart</span>
+                    </a>
+                </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products to compare. <a href="{% url 'home' %}">Continue Shopping</a></p>
+    {% endif %}
+</div>
+{% endblock %}

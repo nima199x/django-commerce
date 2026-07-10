@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class RegisterForm(forms.ModelForm):
     password_confirm = forms.CharField(
         widget=forms.PasswordInput,
@@ -24,11 +25,15 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match!")
         return cleaned_data
 
-    # این متد اضافه شده است
     def save(self, commit=True):
         user = super().save(commit=False)
-        # تنظیم رمز عبور به صورت هش شده
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
         return user
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']

@@ -7,8 +7,8 @@
                 <div class="contact col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <h5>Contact Details</h5>
                     <ul>
-                        <li class="address"><i class="fa fa-map-marker"></i>Iran</li>
-                        <li class="mobile"><i class="fa fa-phone"></i>+98 912 000 0000</li>
+                        <li class="address"><i class="fa fa-map-marker"></i>{{ site_settings.address|default:"Iran" }}</li>
+                        <li class="mobile"><i class="fa fa-phone"></i>{{ site_settings.phone|default:"+98 912 000 0000" }}</li>
                         <li class="email"><i class="fa fa-envelope"></i>Send email via our <a href="{% url 'contact_us' %}">Contact
                             Us</a>
                     </ul>
@@ -36,15 +36,15 @@
                         <li><a href="#">Brands</a></li>
                         <li><a href="#">Gift Vouchers</a></li>
                         <li><a href="#">Affiliates</a></li>
-                        <li><a href="#">Specials</a></li>
+                        <li><a href="{% url 'products:specials' %}">Specials</a></li>
                     </ul>
                 </div>
                 <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
                     <h5>My Account</h5>
                     <ul>
                         <li><a href="#">My Account</a></li>
-                        <li><a href="#">Order History</a></li>
-                        <li><a href="#">Wish List</a></li>
+                        <li><a href="{% url 'products:order_history' %}">Order History</a></li>
+                        <li><a href="{% url 'products:wishlist_detail' %}">Wish List</a></li>
                         <li><a href="#">Newsletter</a></li>
                     </ul>
                 </div>
@@ -55,7 +55,7 @@
         <div class="container">
             <div id="powered" class="clearfix">
                 <div class="powered_text pull-left flip">
-                    <p>DjangoMart © 2026 | <a href="mailto:Nimasaket6@gmail.com">Nimasaket6@gmail.com</a></p>
+                    <p>{{ site_settings.site_name|default:"DjangoMart" }} © 2026 | <a href="mailto:{{ site_settings.email|default:'Nimasaket6@gmail.com' }}">{{ site_settings.email|default:"Nimasaket6@gmail.com" }}</a></p>
                 </div>
                 <div class="social pull-right flip">
                     <a href="#" target="_blank"> <img data-toggle="tooltip"
@@ -77,7 +77,7 @@
             </div>
             <div class="bottom-row">
                 <div class="custom-text text-center">
-                    <p>Welcome to DjangoMart — your one-stop online shop.</p>
+                    <p>Welcome to {{ site_settings.site_name|default:"DjangoMart" }} — your one-stop online shop.</p>
                 </div>
                 <div class="payments_types">
                     <a href="#" target="_blank">

@@ -3,7 +3,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
+from django.db.models import Sum, Q
 from .models import Category, Product, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem
+
+
+COMPARE_SESSION_KEY = 'compare_list'
+COMPARE_MAX_ITEMS = 4
 
 
 def get_or_create_cart(request):
@@ -239,16 +244,60 @@ def wishlist_detail(request):
     return render(request, 'products/wishlist.html', {'items': items})
 
 
+def compare_add(request, product_id):
+    product = get_object_or_404(Product, id=product_id, is_active=True)
+    compare_list = request.session.get(COMPARE_SESSION_KEY, [])
+
+    if product.id in compare_list:
+        messages.info(request, f'{product.name} is already in your compare list.')
+    elif len(compare_list) >= COMPARE_MAX_ITEMS:
+        messages.warning(request, f'You can compare up to {COMPARE_MAX_ITEMS} products at a time.')
+    else:
+        compare_list.append(product.id)
+        request.session[COMPARE_SESSION_KEY] = compare_list
+        messages.success(request, f'{product.name} added to compare.')
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+def compare_remove(request, product_id):
+    compare_list = request.session.get(COMPARE_SESSION_KEY, [])
+    if product_id in compare_list:
+        compare_list.remove(product_id)
+        request.session[COMPARE_SESSION_KEY] = compare_list
+    return redirect(request.META.get('HTTP_REFERER', 'products:compare_detail'))
+
+
+def compare_detail(request):
+    compare_list = request.session.get(COMPARE_SESSION_KEY, [])
+    products = Product.objects.filter(id__in=compare_list)
+    return render(request, 'products/compare.html', {'products': products})
+
+
 def new_arrivals(request):
     products = Product.objects.filter(is_active=True).order_by('-id')[:12]
     return render(request, 'products/new_arrivals.html', {'products': products})
 
 
 def best_sellers(request):
-    products = list(Product.objects.filter(is_active=True))
-    products.sort(key=lambda p: p.get_sales_count(), reverse=True)
-    products = products[:12]
+    products = Product.objects.filter(is_active=True).annotate(
+        sales_count=Sum(
+            'order_items__quantity',
+            filter=Q(order_items__order__status='completed')
+        )
+    ).order_by('-sales_count')[:12]
     return render(request, 'products/best_sellers.html', {'products': products})
+
+
+def track_order(request):
+    order = None
+    searched = False
+    if request.method == 'POST':
+        order_id = request.POST.get('order_id')
+        phone = request.POST.get('phone')
+        searched = True
+        order = Order.objects.filter(id=order_id, phone=phone).first()
+    return render(request, 'products/track_order.html', {'order': order, 'searched': searched})
 
 
 def specials(request):

@@ -20,13 +20,17 @@ def cart_context(request):
 
 def sidebar_context(request):
     from .models import Product
+    from django.db.models import Sum, Q
 
     latest_products = Product.objects.filter(is_active=True).order_by('-id')[:5]
     special_products = Product.objects.filter(is_active=True, discount__gt=0).order_by('-discount')[:5]
 
-    all_active = list(Product.objects.filter(is_active=True))
-    all_active.sort(key=lambda p: p.get_sales_count(), reverse=True)
-    bestseller_products = [p for p in all_active if p.get_sales_count() > 0][:5]
+    bestseller_products = Product.objects.filter(is_active=True).annotate(
+        sales_count=Sum(
+            'order_items__quantity',
+            filter=Q(order_items__order__status='completed')
+        )
+    ).filter(sales_count__gt=0).order_by('-sales_count')[:5]
 
     return {
         'latest_products': latest_products,
@@ -53,6 +57,11 @@ def wishlist_context(request):
     if request.user.is_authenticated:
         count = WishlistItem.objects.filter(user=request.user).count()
     return {'wishlist_count': count}
+
+
+def compare_context(request):
+    compare_list = request.session.get('compare_list', [])
+    return {'compare_count': len(compare_list)}
 
 
 def site_settings_context(request):

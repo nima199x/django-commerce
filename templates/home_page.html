@@ -130,7 +130,7 @@
                                 {% else %}
                                 <a href="{% url 'login' %}" data-toggle="tooltip" title="Login to add to Wish List"><i class="fa fa-heart"></i></a>
                                 {% endif %}
-                                <button type="button" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
+                                <a href="{% url 'products:compare_add' product.id %}" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></a>
                             </div>
                         </div>
                     </div>
@@ -212,7 +212,7 @@
                                             {% else %}
                                             <a href="{% url 'login' %}" data-toggle="tooltip" title="Login to add to Wish List"><i class="fa fa-heart"></i></a>
                                             {% endif %}
-                                            <button type="button" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
+                                            <a href="{% url 'products:compare_add' product.id %}" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></a>
                                         </div>
                                     </div>
                                 </div>

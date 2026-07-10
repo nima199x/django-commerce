@@ -1,4 +1,3 @@
-
 """
 Django settings for eshop_online project.
 
@@ -76,6 +75,7 @@ TEMPLATES = [
                 'products.context_processors.banners_context',
                 'products.context_processors.site_settings_context',
                 'products.context_processors.wishlist_context',
+                'products.context_processors.compare_context',
             ],
         },
     },
@@ -141,5 +141,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "statics", "media_root")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

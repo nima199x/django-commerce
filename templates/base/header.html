@@ -40,8 +40,11 @@
                                 <li class="mobile"><i class="fa fa-phone"></i>+98 912 000 0000</li>
                                 <li class="email"><a href="mailto:Nimasaket6@gmail.com"><i class="fa fa-envelope"></i>Nimasaket6@gmail.com</a></li>
                                 </li>
-                                <li><a href="#"><i class="fa fa-truck"></i> Track Order</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url 'products:order_history' %}"><i class="fa fa-truck"></i> My Orders</a></li>
+                                {% endif %}
                                 <li><a href="{% url 'products:wishlist_detail' %}"><i class="fa fa-heart"></i> Wish List ({{ wishlist_count }})</a></li>
+                                <li><a href="{% url 'products:compare_detail' %}"><i class="fa fa-exchange"></i> Compare ({{ compare_count }})</a></li>
                                 <li><a href="{% url 'products:checkout' %}"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
                             </ul>
                         </div>
@@ -88,7 +91,7 @@
                     <div id="top-links" class="nav pull-right flip">
                         <ul>
                             {% if user.is_authenticated %}
-                            <li><a href="#"><i class="fa fa-user"></i> Hello, {{ user.username }}</a></li>
+                            <li><a href="{% url 'profile' %}"><i class="fa fa-user"></i> Hello, {{ user.username }}</a></li>
                             <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
                             {% else %}
                             <li><a href="{% url 'login' %}"><i class="fa fa-lock"></i> Login</a></li>
