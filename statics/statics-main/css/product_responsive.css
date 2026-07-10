@@ -1,0 +1,12 @@
+/* Responsive product images */
+.product-thumb .image img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+/* Fix Bootstrap grid gaps from uneven row heights */
+.products-category .product-layout:nth-child(4n+1) {
+    clear: left;
+}

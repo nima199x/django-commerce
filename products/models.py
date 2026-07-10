@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from mptt.models import MPTTModel, TreeForeignKey
 
 
@@ -40,13 +41,25 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
     image = models.ImageField(upload_to='products/', null=True, blank=True, verbose_name='Image')
     discount = models.PositiveIntegerField(default=0, verbose_name='Discount (%)', help_text='0-100')
-    rating = models.DecimalField(max_digits=3, decimal_places=1, default=0, verbose_name='Rating (0-5)')
     is_featured = models.BooleanField(default=False, verbose_name='Featured')
 
     def get_discounted_price(self):
         if self.discount:
             return round(self.price * (100 - self.discount) / 100, 2)
         return self.price
+
+    def get_rating(self):
+        avg = self.reviews.aggregate(models.Avg('rating'))['rating__avg']
+        return round(avg, 1) if avg else 0
+
+    def get_review_count(self):
+        return self.reviews.count()
+
+    def get_sales_count(self):
+        return OrderItem.objects.filter(
+            order__status='completed',
+            product=self
+        ).aggregate(total=models.Sum('quantity'))['total'] or 0
 
     def __str__(self):
         return self.name
@@ -69,7 +82,8 @@ class FAQ(models.Model):
 
 
 class Cart(models.Model):
-    session_key = models.CharField(max_length=40, verbose_name='Session Key')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True, related_name='carts', verbose_name='User')
+    session_key = models.CharField(max_length=40, null=True, blank=True, verbose_name='Session Key')
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -77,7 +91,7 @@ class Cart(models.Model):
         verbose_name_plural = 'Carts'
 
     def __str__(self):
-        return f"Cart {self.session_key}"
+        return f"Cart {self.user or self.session_key}"
 
     def get_total(self):
         return sum(item.get_subtotal() for item in self.items.all())
@@ -99,7 +113,82 @@ class CartItem(models.Model):
         return f"{self.quantity} x {self.product.name}"
 
     def get_subtotal(self):
-        return self.product.price * self.quantity
+        price = self.product.get_discounted_price()
+        return price * self.quantity
+
+
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders', verbose_name='Customer')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='Status')
+    full_name = models.CharField(max_length=200, verbose_name='Full Name')
+    address = models.CharField(max_length=300, verbose_name='Address')
+    phone = models.CharField(max_length=20, verbose_name='Phone')
+    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created At')
+
+    class Meta:
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.user.username}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='order_items')
+    product_name = models.CharField(max_length=200, verbose_name='Product Name')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price at Purchase')
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        verbose_name = 'Order Item'
+        verbose_name_plural = 'Order Items'
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product_name}"
+
+    def get_subtotal(self):
+        return self.price * self.quantity
+
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews', verbose_name='Product')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews', verbose_name='Customer')
+    order_item = models.ForeignKey(OrderItem, on_delete=models.CASCADE, related_name='review', verbose_name='Purchased Item')
+    rating = models.PositiveIntegerField(verbose_name='Rating (1-5)')
+    comment = models.TextField(blank=True, verbose_name='Comment')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created At')
+
+    class Meta:
+        verbose_name = 'Review'
+        verbose_name_plural = 'Reviews'
+        unique_together = [['user', 'order_item']]
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name} ({self.rating}★)"
+
+
+class WishlistItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wishlist_items', verbose_name='User')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='wishlisted_by', verbose_name='Product')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Wishlist Item'
+        verbose_name_plural = 'Wishlist Items'
+        unique_together = [['user', 'product']]
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name}"
 
 
 class Brand(models.Model):

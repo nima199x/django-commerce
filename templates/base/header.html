@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.transitions.css' %}">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <link rel="stylesheet" href="{% static 'css/discount_badge.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_responsive.css' %}">
     <!-- CSS Part End-->
 </head>
 
@@ -40,8 +41,8 @@
                                 <li class="email"><a href="mailto:Nimasaket6@gmail.com"><i class="fa fa-envelope"></i>Nimasaket6@gmail.com</a></li>
                                 </li>
                                 <li><a href="#"><i class="fa fa-truck"></i> Track Order</a></li>
-                                <li><a href="{% url 'products:cart_detail' %}"><i class="fa fa-heart"></i> Wish List (0)</a></li>
-                                <li><a href="{% url 'products:cart_detail' %}"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
+                                <li><a href="{% url 'products:wishlist_detail' %}"><i class="fa fa-heart"></i> Wish List ({{ wishlist_count }})</a></li>
+                                <li><a href="{% url 'products:checkout' %}"><i class="fa fa-shopping-cart"></i> Checkout</a></li>
                             </ul>
                         </div>
                         <div id="language" class="btn-group">
@@ -187,7 +188,7 @@
                                                 <i class="fa fa-shopping-cart"></i> View Cart
                                             </a>
                                             &nbsp;&nbsp;&nbsp;
-                                            <a href="#" class="btn btn-primary">
+                                            <a href="{% url 'products:checkout' %}" class="btn btn-primary">
                                                 <i class="fa fa-share"></i> Checkout
                                             </a>
                                         </p>

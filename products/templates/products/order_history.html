@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+        <li>Order History</li>
+    </ul>
+
+    <h1 class="title">Order History</h1>
+
+    {% if orders %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.created_at|date:"N j, Y" }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>${{ order.total }}</td>
+                <td><a href="{% url 'products:order_detail' order.id %}" class="btn-primary btn-sm">View</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>You have no orders yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

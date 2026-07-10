@@ -7,13 +7,16 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
-                <li>New Arrivals</li>
+                <li>Best Sellers</li>
             </ul>
             <h1 class="title">Best Sellers</h1>
             <div class="row products-category">
                 {% for product in products %}
                 <div class="product-layout col-sm-3">
                     <div class="product-thumb">
+                        {% if product.discount %}
+                        <div class="sale-label">-{{ product.discount }}%</div>
+                        {% endif %}
                         <div class="image">
                             <a href="{% url 'products:product_detail' product.slug %}">
                                 {% if product.image %}
@@ -25,7 +28,25 @@
                         </div>
                         <div class="caption">
                             <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            <p class="price">{{ product.price }}</p>
+                            {% if product.discount %}
+                            <p class="price">
+                                <span class="price-new">${{ product.get_discounted_price }}</span>
+                                <span class="price-old">${{ product.price }}</span>
+                            </p>
+                            {% else %}
+                            <p class="price">${{ product.price }}</p>
+                            {% endif %}
+                            {% if product.get_rating %}
+                            <div class="rating">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= product.get_rating %}
+                                    <span class="fa fa-star" style="color:#f39c12;"></span>
+                                    {% else %}
+                                    <span class="fa fa-star-o" style="color:#ccc;"></span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="button-group">
                             <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>

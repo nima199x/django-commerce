@@ -109,22 +109,27 @@
                             {% else %}
                             <p class="price">${{ product.price }}</p>
                             {% endif %}
-                            {% if product.rating %}
+                            {% if product.get_rating %}
                             <div class="rating">
                                 {% for i in "12345" %}
-                                    {% if forloop.counter <= product.rating %}
+                                    {% if forloop.counter <= product.get_rating %}
                                     <span class="fa fa-star" style="color:#f39c12;"></span>
                                     {% else %}
                                     <span class="fa fa-star-o" style="color:#ccc;"></span>
                                     {% endif %}
                                 {% endfor %}
+                                <span style="font-size:11px; color:#999;">({{ product.get_review_count }})</span>
                             </div>
                             {% endif %}
                         </div>
                         <div class="button-group">
                             <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
                             <div class="add-to-links">
-                                <button type="button" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></button>
+                                {% if request.user.is_authenticated %}
+                                <a href="{% url 'products:wishlist_add' product.id %}" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></a>
+                                {% else %}
+                                <a href="{% url 'login' %}" data-toggle="tooltip" title="Login to add to Wish List"><i class="fa fa-heart"></i></a>
+                                {% endif %}
                                 <button type="button" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
                             </div>
                         </div>
@@ -186,22 +191,27 @@
                                         {% else %}
                                         <p class="price">${{ product.price }}</p>
                                         {% endif %}
-                                        {% if product.rating %}
+                                        {% if product.get_rating %}
                                         <div class="rating">
                                             {% for i in "12345" %}
-                                                {% if forloop.counter <= product.rating %}
+                                                {% if forloop.counter <= product.get_rating %}
                                                 <span class="fa fa-star" style="color:#f39c12;"></span>
                                                 {% else %}
                                                 <span class="fa fa-star-o" style="color:#ccc;"></span>
                                                 {% endif %}
                                             {% endfor %}
+                                            <span style="font-size:11px; color:#999;">({{ product.get_review_count }})</span>
                                         </div>
                                         {% endif %}
                                     </div>
                                     <div class="button-group">
                                         <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
                                         <div class="add-to-links">
-                                            <button type="button" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></button>
+                                            {% if request.user.is_authenticated %}
+                                            <a href="{% url 'products:wishlist_add' product.id %}" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></a>
+                                            {% else %}
+                                            <a href="{% url 'login' %}" data-toggle="tooltip" title="Login to add to Wish List"><i class="fa fa-heart"></i></a>
+                                            {% endif %}
                                             <button type="button" data-toggle="tooltip" title="Compare this Product"><i class="fa fa-exchange"></i></button>
                                         </div>
                                     </div>

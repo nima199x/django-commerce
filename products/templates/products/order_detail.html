@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+        <li><a href="{% url 'products:order_history' %}">Orders</a></li>
+        <li>Order #{{ order.id }}</li>
+    </ul>
+
+    <h1 class="title">Order #{{ order.id }}</h1>
+
+    {% if messages %}
+    <div class="alert-messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Date:</strong> {{ order.created_at|date:"N j, Y" }}</p>
+    <p><strong>Shipping to:</strong> {{ order.full_name }}, {{ order.address }}, {{ order.phone }}</p>
+
+    <table class="table table-bordered" style="margin-top:20px;">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                {% if order.status == 'completed' %}
+                <th>Review</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>
+                    {% if item.product %}
+                    <a href="{% url 'products:product_detail' item.product.slug %}">{{ item.product_name }}</a>
+                    {% else %}
+                    {{ item.product_name }}
+                    {% endif %}
+                </td>
+                <td>${{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.get_subtotal }}</td>
+                {% if order.status == 'completed' %}
+                <td>
+                    {% if item.review.all %}
+                        <span style="color:#f39c12;">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= item.review.first.rating %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                        </span>
+                    {% else %}
+                    <form method="POST" action="{% url 'products:submit_review' item.id %}">
+                        {% csrf_token %}
+                        <select name="rating" required>
+                            <option value="">Rate</option>
+                            <option value="1">1 ★</option>
+                            <option value="2">2 ★★</option>
+                            <option value="3">3 ★★★</option>
+                            <option value="4">4 ★★★★</option>
+                            <option value="5">5 ★★★★★</option>
+                        </select>
+                        <input type="text" name="comment" placeholder="Comment (optional)" style="width:150px;">
+                        <button type="submit" class="btn-primary btn-sm">Submit</button>
+                    </form>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" class="text-right"><strong>Total</strong></td>
+                <td colspan="{% if order.status == 'completed' %}2{% else %}1{% endif %}"><strong>${{ order.total }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

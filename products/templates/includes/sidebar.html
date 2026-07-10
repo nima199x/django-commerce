@@ -2,7 +2,7 @@
 
 <h3 class="subtitle">Bestsellers</h3>
 <div class="side-item">
-    {% for product in sidebar_products %}
+    {% for product in bestseller_products %}
     <div class="product-thumb clearfix" style="margin-bottom:10px;">
         <div class="image" style="float:left; margin-right:10px;">
             <a href="{% url 'products:product_detail' product.slug %}">
@@ -15,17 +15,32 @@
         </div>
         <div class="caption">
             <h4 style="font-size:13px;"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-            <p class="price">{{ product.price }}</p>
+            {% if product.discount %}
+            <p class="price"><span style="color:green;">${{ product.get_discounted_price }}</span> <span style="text-decoration:line-through; color:#999; font-size:11px;">${{ product.price }}</span></p>
+            {% else %}
+            <p class="price">${{ product.price }}</p>
+            {% endif %}
+            {% if product.get_rating %}
+            <div class="rating" style="font-size:11px;">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= product.get_rating %}
+                    <span class="fa fa-star" style="color:#f39c12;"></span>
+                    {% else %}
+                    <span class="fa fa-star-o" style="color:#ccc;"></span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
     {% empty %}
-    <p>No products available.</p>
+    <p>No sales yet.</p>
     {% endfor %}
 </div>
 
 <h3 class="subtitle">Specials</h3>
 <div class="side-item">
-    {% for product in sidebar_products %}
+    {% for product in special_products %}
     <div class="product-thumb clearfix" style="margin-bottom:10px;">
         <div class="image" style="float:left; margin-right:10px;">
             <a href="{% url 'products:product_detail' product.slug %}">
@@ -38,7 +53,18 @@
         </div>
         <div class="caption">
             <h4 style="font-size:13px;"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-            <p class="price">{{ product.price }}</p>
+            <p class="price"><span style="color:green;">${{ product.get_discounted_price }}</span> <span style="text-decoration:line-through; color:#999; font-size:11px;">${{ product.price }}</span></p>
+            {% if product.get_rating %}
+            <div class="rating" style="font-size:11px;">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= product.get_rating %}
+                    <span class="fa fa-star" style="color:#f39c12;"></span>
+                    {% else %}
+                    <span class="fa fa-star-o" style="color:#ccc;"></span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
     {% empty %}
@@ -48,7 +74,7 @@
 
 <h3 class="subtitle">Latest</h3>
 <div class="side-item">
-    {% for product in sidebar_products %}
+    {% for product in latest_products %}
     <div class="product-thumb clearfix" style="margin-bottom:10px;">
         <div class="image" style="float:left; margin-right:10px;">
             <a href="{% url 'products:product_detail' product.slug %}">
@@ -61,7 +87,22 @@
         </div>
         <div class="caption">
             <h4 style="font-size:13px;"><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-            <p class="price">{{ product.price }}</p>
+            {% if product.discount %}
+            <p class="price"><span style="color:green;">${{ product.get_discounted_price }}</span> <span style="text-decoration:line-through; color:#999; font-size:11px;">${{ product.price }}</span></p>
+            {% else %}
+            <p class="price">${{ product.price }}</p>
+            {% endif %}
+            {% if product.get_rating %}
+            <div class="rating" style="font-size:11px;">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= product.get_rating %}
+                    <span class="fa fa-star" style="color:#f39c12;"></span>
+                    {% else %}
+                    <span class="fa fa-star-o" style="color:#ccc;"></span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
     {% empty %}

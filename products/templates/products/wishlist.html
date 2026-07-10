@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block contents %}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+        <li>Wish List</li>
+    </ul>
+
+    <h1 class="title">Wish List</h1>
+
+    {% if items %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th></th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="50"/>
+                    {% else %}
+                    <img src="{% static 'image/product/no-image.jpg' %}" alt="{{ item.product.name }}" width="50"/>
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'products:product_detail' item.product.slug %}">{{ item.product.name }}</a></td>
+                <td>
+                    {% if item.product.discount %}
+                    <span style="color:green;">${{ item.product.get_discounted_price }}</span>
+                    <span style="text-decoration:line-through; color:#999; font-size:12px;">${{ item.product.price }}</span>
+                    {% else %}
+                    ${{ item.product.price }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'products:cart_add' item.product.id %}" class="btn-primary btn-sm">
+                        <span>Add to Cart</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'products:wishlist_remove' item.id %}" class="btn btn-danger btn-sm">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Your wish list is empty. <a href="{% url 'home' %}">Continue Shopping</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -37,9 +37,22 @@
                             {% endif %}
                         </td>
                         <td><a href="{% url 'products:product_detail' item.product.slug %}">{{ item.product.name }}</a></td>
-                        <td>{{ item.product.price }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.get_subtotal }}</td>
+                        <td>
+                            {% if item.product.discount %}
+                            <span style="color:green;">${{ item.product.get_discounted_price }}</span>
+                            <span style="text-decoration:line-through; color:#999; font-size:12px;">${{ item.product.price }}</span>
+                            {% else %}
+                            ${{ item.product.price }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <a href="{% url 'products:cart_update' item.id %}?action=decrease" class="btn btn-default btn-sm">−</a>
+                                <span>{{ item.quantity }}</span>
+                                <a href="{% url 'products:cart_update' item.id %}?action=increase" class="btn btn-default btn-sm">+</a>
+                            </div>
+                        </td>
+                        <td>${{ item.get_subtotal }}</td>
                         <td>
                             <a href="{% url 'products:cart_remove' item.id %}" class="btn btn-danger btn-sm">
                                 <i class="fa fa-times"></i>
@@ -51,14 +64,14 @@
                 <tfoot>
                     <tr>
                         <td colspan="4" class="text-right"><strong>Total:</strong></td>
-                        <td colspan="2"><strong>{{ cart.get_total }}</strong></td>
+                        <td colspan="2"><strong>${{ cart.get_total }}</strong></td>
                     </tr>
                 </tfoot>
             </table>
 
             <div class="text-right">
                 <a href="{% url 'home' %}" class="btn btn-default">Continue Shopping</a>
-                <a href="#" class="btn btn-primary">Checkout</a>
+                <a href="{% url 'products:checkout' %}" class="btn btn-primary">Checkout</a>
             </div>
 
             {% else %}

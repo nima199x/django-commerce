@@ -1,30 +1,42 @@
-from .models import Category, SiteSettings  # 📂 چون در همان پوشه هستی از نقطه استفاده می‌کنیم
+from .models import Category, SiteSettings
 
 
 def include_categories(request):
-    # 🔍 فقط دسته‌هایی که والد ندارند (سرشاخه‌ها) را می‌گیریم
     categories = Category.objects.filter(parent=None, is_active=True)
     return {
-        'categories': categories  # 🎁 این نام در تمام قالب‌ها در دسترس خواهد بود
+        'categories': categories
     }
 
 
 def cart_context(request):
     from .models import Cart
     cart = None
-    if request.session.session_key:
-        cart = Cart.objects.filter(session_key=request.session.session_key).first()
+    if request.user.is_authenticated:
+        cart = Cart.objects.filter(user=request.user).first()
+    elif request.session.session_key:
+        cart = Cart.objects.filter(session_key=request.session.session_key, user=None).first()
     return {'cart': cart}
 
 
 def sidebar_context(request):
     from .models import Product
-    sidebar_products = Product.objects.filter(is_active=True)[:5]
-    return {'sidebar_products': sidebar_products}
+
+    latest_products = Product.objects.filter(is_active=True).order_by('-id')[:5]
+    special_products = Product.objects.filter(is_active=True, discount__gt=0).order_by('-discount')[:5]
+
+    all_active = list(Product.objects.filter(is_active=True))
+    all_active.sort(key=lambda p: p.get_sales_count(), reverse=True)
+    bestseller_products = [p for p in all_active if p.get_sales_count() > 0][:5]
+
+    return {
+        'latest_products': latest_products,
+        'special_products': special_products,
+        'bestseller_products': bestseller_products,
+    }
 
 
 def banners_context(request):
-    from .models import Banner, Slider, Brand, SiteSettings
+    from .models import Banner, Slider, Brand
     return {
         'top_banners': Banner.objects.filter(position='top', is_active=True).order_by('order'),
         'middle_banners': Banner.objects.filter(position='middle', is_active=True).order_by('order'),
@@ -33,6 +45,14 @@ def banners_context(request):
         'sliders': Slider.objects.filter(is_active=True).order_by('order'),
         'brands': Brand.objects.filter(is_active=True).order_by('order'),
     }
+
+
+def wishlist_context(request):
+    from .models import WishlistItem
+    count = 0
+    if request.user.is_authenticated:
+        count = WishlistItem.objects.filter(user=request.user).count()
+    return {'wishlist_count': count}
 
 
 def site_settings_context(request):
