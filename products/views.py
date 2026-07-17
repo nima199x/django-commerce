@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Sum, Q
-from .models import Category, Product, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem
+from .models import Category, Product, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand
 
 
 COMPARE_SESSION_KEY = 'compare_list'
@@ -20,6 +20,17 @@ def get_or_create_cart(request):
         request.session.create()
     cart, created = Cart.objects.get_or_create(session_key=request.session.session_key, user=None)
     return cart
+
+
+def apply_sort(products, sort_key):
+    sort_map = {
+        'price_asc': 'price',
+        'price_desc': '-price',
+        'newest': '-id',
+        'name_asc': 'name',
+        'name_desc': '-name',
+    }
+    return products.order_by(sort_map.get(sort_key, '-id'))
 
 
 def category_list(request):
@@ -38,10 +49,33 @@ def category_products(request, parent_slug, child_slug=None):
         category = get_object_or_404(Category, slug=parent_slug)
 
     products_list = Product.objects.filter(
-        category__in=category.get_descendants(include_self=True)
+        category__in=category.get_descendants(include_self=True),
+        is_active=True
     )
 
-    paginator = Paginator(products_list, 6)
+    # Filter by brand
+    brand_id = request.GET.get('brand')
+    if brand_id:
+        products_list = products_list.filter(brand_id=brand_id)
+
+    # Filter by price range
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products_list = products_list.filter(price__gte=min_price)
+    if max_price:
+        products_list = products_list.filter(price__lte=max_price)
+
+    # Sort
+    sort_key = request.GET.get('sort', 'newest')
+    products_list = apply_sort(products_list, sort_key)
+
+    # Available brands for this category (for the filter dropdown)
+    available_brands = Brand.objects.filter(
+        products__category__in=category.get_descendants(include_self=True)
+    ).distinct()
+
+    paginator = Paginator(products_list, 9)
     page_number = request.GET.get('page')
     products = paginator.get_page(page_number)
 
@@ -49,6 +83,11 @@ def category_products(request, parent_slug, child_slug=None):
         'category': category,
         'products': products,
         'paginator': paginator,
+        'available_brands': available_brands,
+        'current_sort': sort_key,
+        'current_brand': brand_id,
+        'current_min_price': min_price,
+        'current_max_price': max_price,
     })
 
 
@@ -275,31 +314,29 @@ def compare_detail(request):
 
 
 def new_arrivals(request):
-    products = Product.objects.filter(is_active=True).order_by('-id')[:12]
-    return render(request, 'products/new_arrivals.html', {'products': products})
+    products_list = Product.objects.filter(is_active=True).order_by('-id')
+    paginator = Paginator(products_list, 12)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+    return render(request, 'products/new_arrivals.html', {'products': products, 'paginator': paginator})
 
 
 def best_sellers(request):
-    products = Product.objects.filter(is_active=True).annotate(
+    products_list = Product.objects.filter(is_active=True).annotate(
         sales_count=Sum(
             'order_items__quantity',
             filter=Q(order_items__order__status='completed')
         )
-    ).order_by('-sales_count')[:12]
-    return render(request, 'products/best_sellers.html', {'products': products})
-
-
-def track_order(request):
-    order = None
-    searched = False
-    if request.method == 'POST':
-        order_id = request.POST.get('order_id')
-        phone = request.POST.get('phone')
-        searched = True
-        order = Order.objects.filter(id=order_id, phone=phone).first()
-    return render(request, 'products/track_order.html', {'order': order, 'searched': searched})
+    ).order_by('-sales_count')
+    paginator = Paginator(products_list, 12)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+    return render(request, 'products/best_sellers.html', {'products': products, 'paginator': paginator})
 
 
 def specials(request):
-    products = Product.objects.filter(is_active=True, discount__gt=0).order_by('-discount')[:12]
-    return render(request, 'products/specials.html', {'products': products})
+    products_list = Product.objects.filter(is_active=True, discount__gt=0).order_by('-discount')
+    paginator = Paginator(products_list, 12)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+    return render(request, 'products/specials.html', {'products': products, 'paginator': paginator})
