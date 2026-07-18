@@ -313,6 +313,24 @@ def compare_detail(request):
     return render(request, 'products/compare.html', {'products': products})
 
 
+def brand_detail(request, slug):
+    brand = get_object_or_404(Brand, slug=slug, is_active=True)
+    products_list = Product.objects.filter(brand=brand, is_active=True)
+
+    sort_key = request.GET.get('sort', 'newest')
+    products_list = apply_sort(products_list, sort_key)
+
+    paginator = Paginator(products_list, 12)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+
+    return render(request, 'products/brand_detail.html', {
+        'brand': brand,
+        'products': products,
+        'current_sort': sort_key,
+    })
+
+
 def new_arrivals(request):
     products_list = Product.objects.filter(is_active=True).order_by('-id')
     paginator = Paginator(products_list, 12)

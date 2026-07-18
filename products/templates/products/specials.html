@@ -7,9 +7,9 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
-                <li>New Arrivals</li>
+                <li>Specials</li>
             </ul>
-            <h1 class="title">New Arrivals</h1>
+            <h1 class="title">Specials</h1>
             <div class="row products-category">
                 {% for product in products %}
                 <div class="product-layout col-sm-3">
@@ -28,14 +28,10 @@
                         </div>
                         <div class="caption">
                             <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
-                            {% if product.discount %}
                             <p class="price">
                                 <span class="price-new">${{ product.get_discounted_price }}</span>
                                 <span class="price-old">${{ product.price }}</span>
                             </p>
-                            {% else %}
-                            <p class="price">${{ product.price }}</p>
-                            {% endif %}
                             {% if product.get_rating %}
                             <div class="rating">
                                 {% for i in "12345" %}
@@ -54,7 +50,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <p>No products available.</p>
+                <p>No special offers right now.</p>
                 {% endfor %}
             </div>
 

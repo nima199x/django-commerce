@@ -1,14 +1,10 @@
-
-Category · HTML
 {% extends 'base/base.html' %}
 {% load category_tags %}
 {% load static %}
- 
+
 {% block contents %}
- 
-<!-- Main Menu Start-->
+
 <div class="container">
-<!-- Main Menu End-->
 <div id="container">
     <div class="container">
         <!-- Breadcrumb Start-->
@@ -29,28 +25,62 @@ Category · HTML
                 <div class="box-category">
                     {% show_categories %}
                 </div>
- 
+
+                {% if available_brands %}
+                <h3 class="subtitle">Brand</h3>
+                <div class="list-group">
+                    <ul style="list-style:none; padding-left:0;">
+                        <li>
+                            <a href="?{% if current_sort %}sort={{ current_sort }}{% endif %}"
+                               style="{% if not current_brand %}font-weight:bold;{% endif %}">All Brands</a>
+                        </li>
+                        {% for brand in available_brands %}
+                        <li>
+                            <a href="?brand={{ brand.id }}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                               style="{% if current_brand == brand.id|stringformat:'s' %}font-weight:bold;{% endif %}">
+                                {{ brand.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <h3 class="subtitle">Price Range</h3>
+                <form method="GET" style="margin-bottom:15px;">
+                    {% if current_brand %}<input type="hidden" name="brand" value="{{ current_brand }}">{% endif %}
+                    {% if current_sort %}<input type="hidden" name="sort" value="{{ current_sort }}">{% endif %}
+                    <div style="display:flex; gap:5px; margin-bottom:8px;">
+                        <input type="number" name="min_price" placeholder="Min" value="{{ current_min_price }}" class="form-control" style="width:70px;">
+                        <input type="number" name="max_price" placeholder="Max" value="{{ current_max_price }}" class="form-control" style="width:70px;">
+                    </div>
+                    <button type="submit" class="btn-primary btn-sm"><span>Apply</span></button>
+                </form>
+
                 {% include 'includes/sidebar.html' %}
- 
+
                 <div class="list-group">
                     <h3 class="subtitle">DjangoMart</h3>
                     <p>Welcome to DjangoMart — your one-stop online shop.</p>
                 </div>
+                {% if side_banners %}
                 <div class="banner owl-carousel">
+                    {% for banner in side_banners %}
                     <div class="item">
-                        <a href="#"><img src="{% static 'image/banner/small-banner1-265x350.jpg' %}" alt="small banner" class="img-responsive"/></a>
+                        <a href="{{ banner.link|default:'#' }}">
+                            <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="img-responsive"/>
+                        </a>
                     </div>
-                    <div class="item">
-                        <a href="#"><img src="{% static 'image/banner/small-banner-265x350.jpg' %}" alt="small banner1" class="img-responsive"/></a>
-                    </div>
+                    {% endfor %}
                 </div>
+                {% endif %}
             </aside>
             <!--Left Part End -->
- 
+
             <!--Middle Part Start-->
             <div id="content" class="col-sm-9">
                 <h1 class="title">{{ category.title }}</h1>
- 
+
                 <h3 class="subtitle">Refine Search</h3>
                 <div class="category-list-thumb row">
                     {% for child in category.get_children %}
@@ -68,52 +98,40 @@ Category · HTML
                     <p class="col-xs-12">No subcategories.</p>
                     {% endfor %}
                 </div>
- 
+
                 <div class="product-filter">
                     <div class="row">
                         <div class="col-md-4 col-sm-5">
-                            <div class="btn-group">
-                                <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
-                                <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="Grid"><i class="fa fa-th"></i></button>
-                            </div>
-                            <a href="compare.html" id="compare-total">Product Compare (0)</a>
+                            <a href="{% url 'products:compare_detail' %}" id="compare-total">Product Compare ({{ compare_count }})</a>
                         </div>
                         <div class="col-sm-2 text-right">
                             <label class="control-label" for="input-sort">Sort By:</label>
                         </div>
                         <div class="col-md-3 col-sm-2 text-right">
-                            <select id="input-sort" class="form-control col-sm-3">
-                                <option value="" selected="selected">Default</option>
-                                <option value="">Name (A - Z)</option>
-                                <option value="">Name (Z - A)</option>
-                                <option value="">Price (Low &gt; High)</option>
-                                <option value="">Price (High &gt; Low)</option>
-                                <option value="">Rating (Highest)</option>
-                                <option value="">Rating (Lowest)</option>
-                                <option value="">Model (A - Z)</option>
-                                <option value="">Model (Z - A)</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-1 text-right">
-                            <label class="control-label" for="input-limit">Show:</label>
-                        </div>
-                        <div class="col-sm-2 text-right">
-                            <select id="input-limit" class="form-control">
-                                <option value="" selected="selected">20</option>
-                                <option value="">25</option>
-                                <option value="">50</option>
-                                <option value="">75</option>
-                                <option value="">100</option>
-                            </select>
+                            <form method="GET" id="sort-form">
+                                {% if current_brand %}<input type="hidden" name="brand" value="{{ current_brand }}">{% endif %}
+                                {% if current_min_price %}<input type="hidden" name="min_price" value="{{ current_min_price }}">{% endif %}
+                                {% if current_max_price %}<input type="hidden" name="max_price" value="{{ current_max_price }}">{% endif %}
+                                <select id="input-sort" name="sort" class="form-control col-sm-3" onchange="document.getElementById('sort-form').submit()">
+                                    <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Newest</option>
+                                    <option value="name_asc" {% if current_sort == 'name_asc' %}selected{% endif %}>Name (A - Z)</option>
+                                    <option value="name_desc" {% if current_sort == 'name_desc' %}selected{% endif %}>Name (Z - A)</option>
+                                    <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>Price (Low &gt; High)</option>
+                                    <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>Price (High &gt; Low)</option>
+                                </select>
+                            </form>
                         </div>
                     </div>
                 </div>
                 <br/>
- 
+
                 <div class="row products-category">
                     {% for product in products %}
                     <div class="product-layout product-list col-xs-12">
                         <div class="product-thumb">
+                            {% if product.discount %}
+                            <div class="sale-label">-{{ product.discount }}%</div>
+                            {% endif %}
                             <div class="image">
                                 <a href="{% url 'products:product_detail' product.slug %}">
                                     {% if product.image %}
@@ -127,17 +145,42 @@ Category · HTML
                                 <div class="caption">
                                     <h4><a href="{% url 'products:product_detail' product.slug %}">{{ product.name }}</a></h4>
                                     <p class="description">{{ product.description|truncatewords:20 }}</p>
-                                    <p class="price">{{ product.price }}</p>
+                                    {% if product.discount %}
+                                    <p class="price">
+                                        <span class="price-new">${{ product.get_discounted_price }}</span>
+                                        <span class="price-old">${{ product.price }}</span>
+                                    </p>
+                                    {% else %}
+                                    <p class="price">${{ product.price }}</p>
+                                    {% endif %}
+                                    {% if product.get_rating %}
+                                    <div class="rating">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= product.get_rating %}
+                                            <span class="fa fa-star" style="color:#f39c12;"></span>
+                                            {% else %}
+                                            <span class="fa fa-star-o" style="color:#ccc;"></span>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <span style="font-size:11px; color:#999;">({{ product.get_review_count }})</span>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 <div class="button-group">
                                     <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
                                     <div class="add-to-links">
-                                        <button type="button" data-toggle="tooltip" title="Add to Wish List">
+                                        {% if request.user.is_authenticated %}
+                                        <a href="{% url 'products:wishlist_add' product.id %}" data-toggle="tooltip" title="Add to Wish List">
                                             <i class="fa fa-heart"></i> <span>Add to Wish List</span>
-                                        </button>
-                                        <button type="button" data-toggle="tooltip" title="Compare this Product">
+                                        </a>
+                                        {% else %}
+                                        <a href="{% url 'login' %}" data-toggle="tooltip" title="Login to add to Wish List">
+                                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
+                                        </a>
+                                        {% endif %}
+                                        <a href="{% url 'products:compare_add' product.id %}" data-toggle="tooltip" title="Compare this Product">
                                             <i class="fa fa-exchange"></i> <span>Compare this Product</span>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -145,28 +188,28 @@ Category · HTML
                     </div>
                     {% empty %}
                     <div class="col-xs-12">
-                        <p>No products found in this category.</p>
+                        <p>No products found matching your filters.</p>
                     </div>
                     {% endfor %}
                 </div>
- 
+
                 <div class="row">
                     <div class="col-sm-6 text-left">
                         <ul class="pagination">
                             {% if products.has_previous %}
-                            <li><a href="?page=1">&laquo;</a></li>
-                            <li><a href="?page={{ products.previous_page_number }}">&lt;</a></li>
+                            <li><a href="?page=1{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_brand %}&brand={{ current_brand }}{% endif %}">&laquo;</a></li>
+                            <li><a href="?page={{ products.previous_page_number }}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_brand %}&brand={{ current_brand }}{% endif %}">&lt;</a></li>
                             {% endif %}
                             {% for num in products.paginator.page_range %}
                             {% if products.number == num %}
                             <li class="active"><span>{{ num }}</span></li>
                             {% else %}
-                            <li><a href="?page={{ num }}">{{ num }}</a></li>
+                            <li><a href="?page={{ num }}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_brand %}&brand={{ current_brand }}{% endif %}">{{ num }}</a></li>
                             {% endif %}
                             {% endfor %}
                             {% if products.has_next %}
-                            <li><a href="?page={{ products.next_page_number }}">&gt;</a></li>
-                            <li><a href="?page={{ products.paginator.num_pages }}">&raquo;</a></li>
+                            <li><a href="?page={{ products.next_page_number }}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_brand %}&brand={{ current_brand }}{% endif %}">&gt;</a></li>
+                            <li><a href="?page={{ products.paginator.num_pages }}{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_brand %}&brand={{ current_brand }}{% endif %}">&raquo;</a></li>
                             {% endif %}
                         </ul>
                     </div>
@@ -180,5 +223,6 @@ Category · HTML
         </div>
     </div>
 </div>
- 
+</div>
+
 {% endblock %}

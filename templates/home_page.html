@@ -248,7 +248,7 @@
                 <div id="carousel" class="owl-carousel nxt">
                     {% for brand in brands %}
                     <div class="item text-center">
-                        <a href="#">
+                        <a href="{% url 'products:brand_detail' brand.slug %}">
                             {% if brand.logo %}
                             <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-responsive"/>
                             {% else %}
