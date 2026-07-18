@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Sum, Q
-from .models import Category, Product, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand
+from .models import Category, Product, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand, NewsletterSubscriber
 
 
 COMPARE_SESSION_KEY = 'compare_list'
@@ -181,6 +181,8 @@ def checkout(request):
         messages.warning(request, 'Your cart is empty.')
         return redirect('products:cart_detail')
 
+    last_order = Order.objects.filter(user=request.user).first()
+
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
         address = request.POST.get('address')
@@ -188,7 +190,7 @@ def checkout(request):
 
         if not full_name or not address or not phone:
             messages.error(request, 'Please fill in all fields.')
-            return render(request, 'products/checkout.html', {'cart': cart})
+            return render(request, 'products/checkout.html', {'cart': cart, 'last_order': last_order})
 
         with transaction.atomic():
             order = Order.objects.create(
@@ -212,7 +214,7 @@ def checkout(request):
         messages.success(request, f'Order #{order.id} placed successfully!')
         return redirect('products:order_detail', order_id=order.id)
 
-    return render(request, 'products/checkout.html', {'cart': cart})
+    return render(request, 'products/checkout.html', {'cart': cart, 'last_order': last_order})
 
 
 @login_required
@@ -311,6 +313,25 @@ def compare_detail(request):
     compare_list = request.session.get(COMPARE_SESSION_KEY, [])
     products = Product.objects.filter(id__in=compare_list)
     return render(request, 'products/compare.html', {'products': products})
+
+
+def newsletter_subscribe(request):
+    if request.method == 'POST':
+        email = request.POST.get('email', '').strip()
+        if email:
+            subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)
+            if created:
+                messages.success(request, 'Thanks for subscribing to our newsletter!')
+            else:
+                messages.info(request, 'You are already subscribed.')
+        else:
+            messages.error(request, 'Please enter a valid email address.')
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+def brand_list(request):
+    brands = Brand.objects.filter(is_active=True)
+    return render(request, 'products/brand_list.html', {'brands': brands})
 
 
 def brand_detail(request, slug):

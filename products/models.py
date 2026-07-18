@@ -191,6 +191,20 @@ class WishlistItem(models.Model):
         return f"{self.user.username} - {self.product.name}"
 
 
+class NewsletterSubscriber(models.Model):
+    email = models.EmailField(unique=True, verbose_name='Email')
+    is_active = models.BooleanField(default=True, verbose_name='Is Active')
+    subscribed_at = models.DateTimeField(auto_now_add=True, verbose_name='Subscribed At')
+
+    class Meta:
+        verbose_name = 'Newsletter Subscriber'
+        verbose_name_plural = 'Newsletter Subscribers'
+        ordering = ['-subscribed_at']
+
+    def __str__(self):
+        return self.email
+
+
 class Brand(models.Model):
     name = models.CharField(max_length=200, verbose_name='Brand Name')
     slug = models.SlugField(max_length=200, unique=True, verbose_name='Slug')

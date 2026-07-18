@@ -6,7 +6,13 @@ from .models import (
     Order, OrderItem, Review, WishlistItem
 )
 
+from .models import NewsletterSubscriber
 
+@admin.register(NewsletterSubscriber)
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email', 'is_active', 'subscribed_at')
+    list_editable = ('is_active',)
+    search_fields = ('email',)
 @admin.register(Category)
 class CategoryAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "title"
