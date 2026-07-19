@@ -42,6 +42,10 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True, verbose_name='Image')
     discount = models.PositiveIntegerField(default=0, verbose_name='Discount (%)', help_text='0-100')
     is_featured = models.BooleanField(default=False, verbose_name='Featured')
+    stock = models.PositiveIntegerField(default=0, verbose_name='Stock Quantity')
+
+    def is_in_stock(self):
+        return self.stock > 0
 
     def get_discounted_price(self):
         if self.discount:

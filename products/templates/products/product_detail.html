@@ -64,18 +64,22 @@
                     <p class="price"><span class="price-new">${{ product.price }}</span></p>
                     {% endif %}
 
+                    {% if product.is_in_stock %}
+                    <p style="color:green; font-weight:bold;"><i class="fa fa-check-circle"></i> In Stock ({{ product.stock }} available)</p>
+                    {% else %}
+                    <p style="color:#c0392b; font-weight:bold;"><i class="fa fa-times-circle"></i> Out of Stock</p>
+                    {% endif %}
+
                     <p>{{ product.description }}</p>
                     <div class="button-group">
+                        {% if product.is_in_stock %}
                         <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
-                        {% if request.user.is_authenticated %}
-                        <a href="{% url 'products:wishlist_add' product.id %}" class="btn btn-default" data-toggle="tooltip" title="Add to Wish List">
-                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
-                        </a>
                         {% else %}
-                        <a href="{% url 'login' %}" class="btn btn-default" data-toggle="tooltip" title="Login to add to Wish List">
-                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
-                        </a>
+                        <span class="btn-primary" style="background:#999; cursor:not-allowed;"><span>Out of Stock</span></span>
                         {% endif %}
+                        <button type="button" data-toggle="tooltip" title="Add to Wish List">
+                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
+                        </button>
                     </div>
                 </div>
             </div>
