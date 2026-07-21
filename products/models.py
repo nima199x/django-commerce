@@ -42,10 +42,20 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True, verbose_name='Image')
     discount = models.PositiveIntegerField(default=0, verbose_name='Discount (%)', help_text='0-100')
     is_featured = models.BooleanField(default=False, verbose_name='Featured')
-    stock = models.PositiveIntegerField(default=0, verbose_name='Stock Quantity')
+    stock = models.PositiveIntegerField(default=0, verbose_name='Stock Quantity', help_text='Ignored if this product has variants below')
+
+    def has_variants(self):
+        return self.variants.exists()
 
     def is_in_stock(self):
+        if self.has_variants():
+            return self.variants.filter(stock__gt=0).exists()
         return self.stock > 0
+
+    def get_total_stock(self):
+        if self.has_variants():
+            return sum(v.stock for v in self.variants.all())
+        return self.stock
 
     def get_discounted_price(self):
         if self.discount:
@@ -71,6 +81,53 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+
+class ProductVariant(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants', verbose_name='Product')
+    size = models.CharField(max_length=50, blank=True, verbose_name='Size', help_text='e.g. S, M, L, XL, 42, 43')
+    color = models.CharField(max_length=50, blank=True, verbose_name='Color', help_text='e.g. Black, Red')
+    stock = models.PositiveIntegerField(default=0, verbose_name='Stock Quantity')
+    price_override = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True,
+        verbose_name='Price Override', help_text='Leave blank to use the base product price'
+    )
+    discount_override = models.PositiveIntegerField(
+        null=True, blank=True, verbose_name='Discount Override (%)',
+        help_text='0-100. Leave blank to use the base product discount'
+    )
+    sku = models.CharField(max_length=100, blank=True, verbose_name='SKU')
+
+    class Meta:
+        verbose_name = 'Product Variant'
+        verbose_name_plural = 'Product Variants'
+        unique_together = [['product', 'size', 'color']]
+        ordering = ['size', 'color']
+
+    def __str__(self):
+        parts = [p for p in [self.size, self.color] if p]
+        label = ' / '.join(parts) if parts else 'Default'
+        return f"{self.product.name} ({label})"
+
+    def is_in_stock(self):
+        return self.stock > 0
+
+    def get_price(self):
+        if self.price_override is not None:
+            return self.price_override
+        return self.product.price
+
+    def get_discount(self):
+        if self.discount_override is not None:
+            return self.discount_override
+        return self.product.discount
+
+    def get_discounted_price(self):
+        price = self.get_price()
+        discount = self.get_discount()
+        if discount:
+            return round(price * (100 - discount) / 100, 2)
+        return price
 
 
 class FAQ(models.Model):
@@ -107,18 +164,26 @@ class Cart(models.Model):
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variant = models.ForeignKey('ProductVariant', on_delete=models.CASCADE, null=True, blank=True, related_name='cart_items')
     quantity = models.PositiveIntegerField(default=1)
 
     class Meta:
         verbose_name = 'Cart Item'
         verbose_name_plural = 'Cart Items'
+        unique_together = [['cart', 'product', 'variant']]
 
     def __str__(self):
+        if self.variant:
+            return f"{self.quantity} x {self.product.name} ({self.variant})"
         return f"{self.quantity} x {self.product.name}"
 
+    def get_unit_price(self):
+        if self.variant:
+            return self.variant.get_discounted_price()
+        return self.product.get_discounted_price()
+
     def get_subtotal(self):
-        price = self.product.get_discounted_price()
-        return price * self.quantity
+        return self.get_unit_price() * self.quantity
 
 
 class Order(models.Model):
@@ -147,7 +212,9 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, related_name='order_items')
+    variant = models.ForeignKey('ProductVariant', on_delete=models.SET_NULL, null=True, blank=True, related_name='order_items')
     product_name = models.CharField(max_length=200, verbose_name='Product Name')
+    variant_label = models.CharField(max_length=100, blank=True, verbose_name='Variant')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price at Purchase')
     quantity = models.PositiveIntegerField(default=1)
 
@@ -156,6 +223,8 @@ class OrderItem(models.Model):
         verbose_name_plural = 'Order Items'
 
     def __str__(self):
+        if self.variant_label:
+            return f"{self.quantity} x {self.product_name} ({self.variant_label})"
         return f"{self.quantity} x {self.product_name}"
 
     def get_subtotal(self):

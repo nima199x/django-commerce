@@ -42,7 +42,7 @@
                     <h1 class="title">{{ product.name }}</h1>
 
                     {% if product.get_rating %}
-                    <div class="rating" style="margin-bottom:10px;">
+                    <div class="rating" style="margin-bottom:12px;">
                         {% for i in "12345" %}
                             {% if forloop.counter <= product.get_rating %}
                             <span class="fa fa-star" style="color:#f39c12;"></span>
@@ -54,35 +54,241 @@
                     </div>
                     {% endif %}
 
-                    {% if product.discount %}
-                    <p class="price">
-                        <span class="price-new">${{ product.get_discounted_price }}</span>
-                        <span class="price-old">${{ product.price }}</span>
-                        <span style="background:#e74c3c; color:#fff; padding:2px 8px; border-radius:12px; font-size:12px; margin-left:8px;">-{{ product.discount }}%</span>
-                    </p>
-                    {% else %}
-                    <p class="price"><span class="price-new">${{ product.price }}</span></p>
-                    {% endif %}
-
-                    {% if product.is_in_stock %}
-                    <p style="color:green; font-weight:bold;"><i class="fa fa-check-circle"></i> In Stock ({{ product.stock }} available)</p>
-                    {% else %}
-                    <p style="color:#c0392b; font-weight:bold;"><i class="fa fa-times-circle"></i> Out of Stock</p>
-                    {% endif %}
-
-                    <p>{{ product.description }}</p>
-                    <div class="button-group">
-                        {% if product.is_in_stock %}
-                        <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
-                        {% else %}
-                        <span class="btn-primary" style="background:#999; cursor:not-allowed;"><span>Out of Stock</span></span>
-                        {% endif %}
-                        <button type="button" data-toggle="tooltip" title="Add to Wish List">
-                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
-                        </button>
+                    <!-- Price / Stock Card -->
+                    <div id="pv-price-card" style="background:#f9f9f9; border:1px solid #ececec; border-radius:8px; padding:16px 20px; margin-bottom:20px; display:inline-block; min-width:280px;">
+                        <div id="pv-price-row" style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;">
+                            {% if product.has_variants %}
+                            <span id="pv-price-new" style="font-size:26px; font-weight:700; color:#2c3e50;">${{ product.price }}</span>
+                            <span id="pv-price-old" style="font-size:15px; color:#aaa; text-decoration:line-through; display:none;"></span>
+                            <span id="pv-discount-badge" style="background:#e74c3c; color:#fff; padding:2px 9px; border-radius:12px; font-size:12px; font-weight:600; display:none;"></span>
+                            {% elif product.discount %}
+                            <span id="pv-price-new" style="font-size:26px; font-weight:700; color:#2c3e50;">${{ product.get_discounted_price }}</span>
+                            <span id="pv-price-old" style="font-size:15px; color:#aaa; text-decoration:line-through;">${{ product.price }}</span>
+                            <span style="background:#e74c3c; color:#fff; padding:2px 9px; border-radius:12px; font-size:12px; font-weight:600;">-{{ product.discount }}%</span>
+                            {% else %}
+                            <span id="pv-price-new" style="font-size:26px; font-weight:700; color:#2c3e50;">${{ product.price }}</span>
+                            {% endif %}
+                        </div>
+                        <div id="pv-stock-row" style="font-size:13px; font-weight:600;">
+                            {% if not product.has_variants %}
+                                {% if product.is_in_stock %}
+                                <span style="color:#27ae60;"><i class="fa fa-check-circle"></i> In Stock &middot; {{ product.stock }} available</span>
+                                {% else %}
+                                <span style="color:#c0392b;"><i class="fa fa-times-circle"></i> Out of Stock</span>
+                                {% endif %}
+                            {% else %}
+                            <span style="color:#999;">Select options to see availability</span>
+                            {% endif %}
+                        </div>
                     </div>
+
+                    {% if product.has_variants %}
+                    <div id="variant-selector" style="margin-bottom:20px;">
+                        {% if sizes %}
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block; font-weight:600; font-size:13px; color:#555; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Size</label>
+                            <div id="size-options" style="display:flex; gap:8px; flex-wrap:wrap;">
+                                {% for size in sizes %}
+                                <button type="button" class="pv-swatch size-option" data-size="{{ size }}">{{ size }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if colors %}
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block; font-weight:600; font-size:13px; color:#555; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">Color</label>
+                            <div id="color-options" style="display:flex; gap:8px; flex-wrap:wrap;">
+                                {% for color in colors %}
+                                <button type="button" class="pv-swatch color-option" data-color="{{ color }}">{{ color }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <p style="color:#555; line-height:1.6;">{{ product.description }}</p>
+
+                    <div class="button-group" style="margin-top:15px;">
+                        {% if product.has_variants %}
+                        <a href="#" id="add-to-cart-btn" class="btn-primary" style="pointer-events:none; opacity:0.5;"><span>Select options</span></a>
+                        {% else %}
+                            {% if product.is_in_stock %}
+                            <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
+                            {% else %}
+                            <span class="btn-primary" style="background:#999; cursor:not-allowed;"><span>Out of Stock</span></span>
+                            {% endif %}
+                        {% endif %}
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'products:wishlist_add' product.id %}" data-toggle="tooltip" title="Add to Wish List">
+                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}" data-toggle="tooltip" title="Login to add to Wish List">
+                            <i class="fa fa-heart"></i> <span>Add to Wish List</span>
+                        </a>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
+
+            <style>
+                .pv-swatch {
+                    min-width: 44px;
+                    height: 40px;
+                    padding: 0 14px;
+                    border: 1px solid #d5d5d5;
+                    background: #fff;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #333;
+                    cursor: pointer;
+                    transition: all 0.15s ease;
+                }
+                .pv-swatch:hover {
+                    border-color: #4a90d9;
+                }
+                .pv-swatch.selected {
+                    background: #2c3e50;
+                    border-color: #2c3e50;
+                    color: #fff;
+                }
+                .pv-swatch.unavailable {
+                    color: #ccc;
+                    text-decoration: line-through;
+                    background: #f7f7f7;
+                    cursor: not-allowed;
+                }
+            </style>
+
+            {% if product.has_variants %}
+            <script>
+            (function() {
+                var variants = [
+                    {% for v in variants %}
+                    {
+                        id: {{ v.id }},
+                        size: "{{ v.size|escapejs }}",
+                        color: "{{ v.color|escapejs }}",
+                        stock: {{ v.stock }},
+                        price: {{ v.get_discounted_price }},
+                        basePrice: {{ v.get_price }},
+                        discount: {{ v.get_discount }}
+                    }{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ];
+
+                var selectedSize = null;
+                var selectedColor = null;
+
+                var sizeButtons = document.querySelectorAll('.size-option');
+                var colorButtons = document.querySelectorAll('.color-option');
+                var priceNewEl = document.getElementById('pv-price-new');
+                var priceOldEl = document.getElementById('pv-price-old');
+                var discountBadgeEl = document.getElementById('pv-discount-badge');
+                var priceCard = document.getElementById('pv-price-card');
+                var stockRow = document.getElementById('pv-stock-row');
+                var addBtn = document.getElementById('add-to-cart-btn');
+
+                function findMatch() {
+                    return variants.find(function(v) {
+                        return (!sizeButtons.length || v.size === selectedSize) &&
+                               (!colorButtons.length || v.color === selectedColor);
+                    });
+                }
+
+                function markAvailability() {
+                    // Mark size buttons unavailable if no in-stock variant exists for that size given current color
+                    sizeButtons.forEach(function(btn) {
+                        var size = btn.dataset.size;
+                        var anyStock = variants.some(function(v) {
+                            return v.size === size && (!colorButtons.length || !selectedColor || v.color === selectedColor) && v.stock > 0;
+                        });
+                        btn.classList.toggle('unavailable', !anyStock);
+                    });
+                    colorButtons.forEach(function(btn) {
+                        var color = btn.dataset.color;
+                        var anyStock = variants.some(function(v) {
+                            return v.color === color && (!sizeButtons.length || !selectedSize || v.size === selectedSize) && v.stock > 0;
+                        });
+                        btn.classList.toggle('unavailable', !anyStock);
+                    });
+                }
+
+                function updateState() {
+                    markAvailability();
+                    var match = findMatch();
+
+                    if (!match) {
+                        stockRow.innerHTML = '<span style="color:#999;">Select options to see availability</span>';
+                        addBtn.href = '#';
+                        addBtn.style.pointerEvents = 'none';
+                        addBtn.style.opacity = '0.5';
+                        addBtn.querySelector('span').textContent = 'Select options';
+                        return;
+                    }
+
+                    priceNewEl.textContent = '$' + match.price.toFixed(2);
+                    if (match.discount > 0) {
+                        if (priceOldEl) {
+                            priceOldEl.textContent = '$' + match.basePrice.toFixed(2);
+                            priceOldEl.style.display = 'inline';
+                        }
+                        if (discountBadgeEl) {
+                            discountBadgeEl.textContent = '-' + match.discount + '%';
+                            discountBadgeEl.style.display = 'inline';
+                        }
+                    } else {
+                        if (priceOldEl) { priceOldEl.style.display = 'none'; }
+                        if (discountBadgeEl) { discountBadgeEl.style.display = 'none'; }
+                    }
+
+                    if (match.stock > 0) {
+                        stockRow.innerHTML = '<span style="color:#27ae60;"><i class="fa fa-check-circle"></i> In Stock &middot; ' + match.stock + ' available</span>';
+                        addBtn.href = "{% url 'products:cart_add' product.id %}?variant=" + match.id;
+                        addBtn.style.pointerEvents = 'auto';
+                        addBtn.style.opacity = '1';
+                        addBtn.querySelector('span').textContent = 'Add to Cart';
+                        priceCard.style.opacity = '1';
+                    } else {
+                        stockRow.innerHTML = '<span style="color:#c0392b;"><i class="fa fa-times-circle"></i> Out of Stock</span>';
+                        addBtn.href = '#';
+                        addBtn.style.pointerEvents = 'none';
+                        addBtn.style.opacity = '0.5';
+                        addBtn.querySelector('span').textContent = 'Out of Stock';
+                        priceCard.style.opacity = '0.5';
+                    }
+                }
+
+                sizeButtons.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        if (btn.classList.contains('unavailable') && btn.dataset.size !== selectedSize) {
+                            // allow selecting to see it's unavailable, but don't block
+                        }
+                        sizeButtons.forEach(function(b) { b.classList.remove('selected'); });
+                        btn.classList.add('selected');
+                        selectedSize = btn.dataset.size;
+                        updateState();
+                    });
+                });
+
+                colorButtons.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        colorButtons.forEach(function(b) { b.classList.remove('selected'); });
+                        btn.classList.add('selected');
+                        selectedColor = btn.dataset.color;
+                        updateState();
+                    });
+                });
+
+                if (!sizeButtons.length) { selectedSize = ''; }
+                if (!colorButtons.length) { selectedColor = ''; }
+                markAvailability();
+            })();
+            </script>
+            {% endif %}
 
             <!-- Reviews Section -->
             <div class="row" style="margin-top:40px;">

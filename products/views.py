@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db import transaction
+from django.db import transaction, models
 from django.db.models import Sum, Q
-from .models import Category, Product, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand, NewsletterSubscriber
+from .models import Category, Product, ProductVariant, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand, NewsletterSubscriber
 
 
 COMPARE_SESSION_KEY = 'compare_list'
@@ -118,10 +118,17 @@ def product_detail(request, slug):
         ).exclude(review__isnull=False)
         can_review = purchased_items.exists()
 
+    variants = product.variants.all()
+    sizes = sorted(set(v.size for v in variants if v.size))
+    colors = sorted(set(v.color for v in variants if v.color))
+
     return render(request, 'products/product_detail.html', {
         'product': product,
         'reviews': reviews,
         'can_review': can_review,
+        'variants': variants,
+        'sizes': sizes,
+        'colors': colors,
     })
 
 
@@ -140,7 +147,22 @@ def search(request):
 def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id, is_active=True)
     cart = get_or_create_cart(request)
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    variant = None
+    variant_id = request.GET.get('variant') or request.POST.get('variant')
+    if variant_id:
+        variant = get_object_or_404(ProductVariant, id=variant_id, product=product)
+        if not variant.is_in_stock():
+            messages.error(request, f'{product.name} ({variant}) is out of stock.')
+            return redirect(request.META.get('HTTP_REFERER', 'home'))
+    elif product.has_variants():
+        messages.error(request, f'Please select a size/color for {product.name}.')
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
+    elif not product.is_in_stock():
+        messages.error(request, f'{product.name} is out of stock.')
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product, variant=variant)
     if not created:
         cart_item.quantity += 1
         cart_item.save()
@@ -202,13 +224,29 @@ def checkout(request):
                 status='completed',
             )
             for item in cart.items.all():
+                variant_label = str(item.variant) if item.variant else ''
+                if item.variant:
+                    variant_label = ' / '.join([p for p in [item.variant.size, item.variant.color] if p])
+
                 OrderItem.objects.create(
                     order=order,
                     product=item.product,
+                    variant=item.variant,
                     product_name=item.product.name,
-                    price=item.product.get_discounted_price(),
+                    variant_label=variant_label,
+                    price=item.get_unit_price(),
                     quantity=item.quantity,
                 )
+
+                if item.variant:
+                    ProductVariant.objects.filter(id=item.variant.id).update(
+                        stock=models.F('stock') - item.quantity
+                    )
+                else:
+                    Product.objects.filter(id=item.product.id).update(
+                        stock=models.F('stock') - item.quantity
+                    )
+
             cart.items.all().delete()
 
         messages.success(request, f'Order #{order.id} placed successfully!')

@@ -2,17 +2,11 @@ from django.contrib import admin
 from django.utils.html import format_html
 from mptt.admin import DraggableMPTTAdmin
 from .models import (
-    Category, Product, Brand, Slider, Banner, SiteSettings,
-    Order, OrderItem, Review, WishlistItem
+    Category, Product, ProductVariant, Brand, Slider, Banner, SiteSettings,
+    Order, OrderItem, Review, WishlistItem, NewsletterSubscriber
 )
 
-from .models import NewsletterSubscriber
 
-@admin.register(NewsletterSubscriber)
-class NewsletterSubscriberAdmin(admin.ModelAdmin):
-    list_display = ('email', 'is_active', 'subscribed_at')
-    list_editable = ('is_active',)
-    search_fields = ('email',)
 @admin.register(Category)
 class CategoryAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "title"
@@ -33,14 +27,21 @@ class CategoryAdmin(DraggableMPTTAdmin):
         return super().get_queryset(request).prefetch_related('parent')
 
 
+class ProductVariantInline(admin.TabularInline):
+    model = ProductVariant
+    extra = 1
+    fields = ('size', 'color', 'stock', 'price_override', 'discount_override', 'sku')
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('image_preview', 'name', 'category', 'brand', 'price', 'discount', 'final_price', 'is_featured', 'is_active')
+    list_display = ('image_preview', 'name', 'category', 'brand', 'price', 'discount', 'final_price', 'stock_display', 'is_featured', 'is_active')
     list_display_links = ('name',)
     list_filter = ('is_active', 'is_featured', 'category', 'brand')
     search_fields = ('name', 'description')
     prepopulated_fields = {'slug': ('name',)}
     list_editable = ('price', 'discount', 'is_featured', 'is_active')
+    inlines = [ProductVariantInline]
 
     class Media:
         css = {'all': ('css/admin_compact.css',)}
@@ -62,11 +63,18 @@ class ProductAdmin(admin.ModelAdmin):
         return f'${obj.price}'
     final_price.short_description = 'Final'
 
+    def stock_display(self, obj):
+        total = obj.get_total_stock()
+        color = 'green' if total > 0 else 'red'
+        label = 'Variants' if obj.has_variants() else 'Stock'
+        return format_html('<span style="color:{};">{}: {}</span>', color, label, total)
+    stock_display.short_description = 'Stock'
+
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-    readonly_fields = ('product', 'product_name', 'price', 'quantity')
+    readonly_fields = ('product', 'variant', 'product_name', 'variant_label', 'price', 'quantity')
     can_delete = False
 
 
@@ -105,6 +113,13 @@ class WishlistItemAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     search_fields = ('user__username', 'product__name')
     readonly_fields = ('user', 'product', 'created_at')
+
+
+@admin.register(NewsletterSubscriber)
+class NewsletterSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email', 'is_active', 'subscribed_at')
+    list_editable = ('is_active',)
+    search_fields = ('email',)
 
 
 @admin.register(Brand)
