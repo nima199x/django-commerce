@@ -123,7 +123,7 @@
                             {% endif %}
                         </div>
                         <div class="button-group">
-                            <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
+                            {% if product.has_variants %}<a href="{% url 'products:product_detail' product.slug %}" class="btn-primary"><span>Select Options</span></a>{% else %}<a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>{% endif %}
                             <div class="add-to-links">
                                 {% if request.user.is_authenticated %}
                                 <a href="{% url 'products:wishlist_add' product.id %}" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></a>
@@ -205,7 +205,7 @@
                                         {% endif %}
                                     </div>
                                     <div class="button-group">
-                                        <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
+                                        {% if product.has_variants %}<a href="{% url 'products:product_detail' product.slug %}" class="btn-primary"><span>Select Options</span></a>{% else %}<a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>{% endif %}
                                         <div class="add-to-links">
                                             {% if request.user.is_authenticated %}
                                             <a href="{% url 'products:wishlist_add' product.id %}" data-toggle="tooltip" title="Add to Wish List"><i class="fa fa-heart"></i></a>
@@ -248,7 +248,7 @@
                 <div id="carousel" class="owl-carousel nxt">
                     {% for brand in brands %}
                     <div class="item text-center">
-                        <a href="{% url 'products:brand_detail' brand.slug %}">
+                        <a href="#">
                             {% if brand.logo %}
                             <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="img-responsive"/>
                             {% else %}

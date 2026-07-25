@@ -1,10 +1,18 @@
 from django.shortcuts import render
+from django.db.models import Q, Sum
 from products.models import Category, Product
 
 
 def home_page(request):
     main_categories = Category.objects.filter(level=0)
-    featured_products = Product.objects.filter(is_active=True, is_featured=True, stock__gt=0)[:6]
+
+    # A product counts as in-stock if it has no variants and stock>0,
+    # OR it has variants and at least one variant has stock>0.
+    in_stock_filter = Q(variants__isnull=True, stock__gt=0) | Q(variants__stock__gt=0)
+
+    featured_products = Product.objects.filter(
+        is_active=True, is_featured=True
+    ).filter(in_stock_filter).distinct()[:6]
 
     categories_with_products = []
     for cat in main_categories:
@@ -13,9 +21,8 @@ def home_page(request):
         for child in children:
             products = Product.objects.filter(
                 category=child,
-                is_active=True,
-                stock__gt=0
-            )[:8]
+                is_active=True
+            ).filter(in_stock_filter).distinct()[:8]
             if products:
                 children_with_products.append({
                     'child': child,
