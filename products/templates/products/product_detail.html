@@ -58,7 +58,7 @@
                     <div id="pv-price-card" style="background:#f9f9f9; border:1px solid #ececec; border-radius:8px; padding:16px 20px; margin-bottom:20px; display:inline-block; min-width:280px;">
                         <div id="pv-price-row" style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;">
                             {% if product.has_variants %}
-                            <span id="pv-price-new" style="font-size:26px; font-weight:700; color:#2c3e50;">${{ product.price }}</span>
+                            <span id="pv-price-new" style="font-size:26px; font-weight:700; color:#2c3e50; display:none;"></span>
                             <span id="pv-price-old" style="font-size:15px; color:#aaa; text-decoration:line-through; display:none;"></span>
                             <span id="pv-discount-badge" style="background:#e74c3c; color:#fff; padding:2px 9px; border-radius:12px; font-size:12px; font-weight:600; display:none;"></span>
                             {% elif product.discount %}
@@ -160,6 +160,7 @@
                     text-decoration: line-through;
                     background: #f7f7f7;
                     cursor: not-allowed;
+                    pointer-events: none;
                 }
             </style>
 
@@ -222,7 +223,10 @@
                     var match = findMatch();
 
                     if (!match) {
-                        stockRow.innerHTML = '<span style="color:#999;">Select options to see availability</span>';
+                        priceNewEl.style.display = 'none';
+                        if (priceOldEl) { priceOldEl.style.display = 'none'; }
+                        if (discountBadgeEl) { discountBadgeEl.style.display = 'none'; }
+                        stockRow.innerHTML = '<span style="color:#999;">Select size and color to see price and availability</span>';
                         addBtn.href = '#';
                         addBtn.style.pointerEvents = 'none';
                         addBtn.style.opacity = '0.5';
@@ -230,6 +234,7 @@
                         return;
                     }
 
+                    priceNewEl.style.display = 'inline';
                     priceNewEl.textContent = '$' + match.price.toFixed(2);
                     if (match.discount > 0) {
                         if (priceOldEl) {
