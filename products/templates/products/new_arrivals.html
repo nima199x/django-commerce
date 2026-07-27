@@ -60,7 +60,7 @@
                                 {% endif %}
                             {% else %}
                                 {% if product.is_in_stock %}
-                                <a href="{% url 'products:cart_add' product.id %}" class="btn-primary"><span>Add to Cart</span></a>
+                                <a href="{% url 'products:cart_add' product.id %}" class="btn-primary ajax-add-to-cart"><span>Add to Cart</span></a>
                                 {% else %}
                                 <span class="btn-primary" style="background:#999; cursor:not-allowed;"><span>Out of Stock</span></span>
                                 {% endif %}

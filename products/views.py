@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -147,25 +148,44 @@ def search(request):
 def cart_add(request, product_id):
     product = get_object_or_404(Product, id=product_id, is_active=True)
     cart = get_or_create_cart(request)
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
     variant = None
     variant_id = request.GET.get('variant') or request.POST.get('variant')
     if variant_id:
         variant = get_object_or_404(ProductVariant, id=variant_id, product=product)
         if not variant.is_in_stock():
-            messages.error(request, f'{product.name} ({variant}) is out of stock.')
+            msg = f'{product.name} ({variant}) is out of stock.'
+            if is_ajax:
+                return JsonResponse({'success': False, 'message': msg}, status=400)
+            messages.error(request, msg)
             return redirect(request.META.get('HTTP_REFERER', 'home'))
     elif product.has_variants():
-        messages.error(request, f'Please select a size/color for {product.name}.')
+        msg = f'Please select a size/color for {product.name}.'
+        if is_ajax:
+            return JsonResponse({'success': False, 'message': msg}, status=400)
+        messages.error(request, msg)
         return redirect(request.META.get('HTTP_REFERER', 'home'))
     elif not product.is_in_stock():
-        messages.error(request, f'{product.name} is out of stock.')
+        msg = f'{product.name} is out of stock.'
+        if is_ajax:
+            return JsonResponse({'success': False, 'message': msg}, status=400)
+        messages.error(request, msg)
         return redirect(request.META.get('HTTP_REFERER', 'home'))
 
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product, variant=variant)
     if not created:
         cart_item.quantity += 1
         cart_item.save()
+
+    if is_ajax:
+        return JsonResponse({
+            'success': True,
+            'message': f'{product.name} added to cart.',
+            'cart_count': cart.get_count(),
+            'cart_total': str(cart.get_total()),
+        })
+
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
