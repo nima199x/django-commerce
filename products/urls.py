@@ -30,5 +30,7 @@ urlpatterns = [
     path('brands/', views.brand_list, name='brand_list'),
     path('brand/<slug:slug>/', views.brand_detail, name='brand_detail'),
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    path('checkout/apply-coupon/', views.apply_coupon, name='apply_coupon'),
+    path('checkout/remove-coupon/', views.remove_coupon, name='remove_coupon'),
 
 ]

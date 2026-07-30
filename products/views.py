@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction, models
 from django.db.models import Sum, Q
-from .models import Category, Product, ProductVariant, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand, NewsletterSubscriber
+from .models import Category, Product, ProductVariant, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand, NewsletterSubscriber, Coupon
 
 
 COMPARE_SESSION_KEY = 'compare_list'
@@ -225,6 +225,34 @@ def checkout(request):
 
     last_order = Order.objects.filter(user=request.user).first()
 
+    subtotal = cart.get_total()
+    coupon = None
+    discount_amount = 0
+    coupon_code = request.session.get('applied_coupon_code', '')
+
+    if coupon_code:
+        coupon = Coupon.objects.filter(code=coupon_code.upper()).first()
+        if coupon:
+            valid, error = coupon.is_valid(order_total=subtotal)
+            if valid:
+                eligible_amount = coupon.get_eligible_amount(cart.items.all())
+                discount_amount = coupon.get_discount_amount(eligible_amount)
+            else:
+                messages.warning(request, error)
+                coupon = None
+                del request.session['applied_coupon_code']
+
+    total = subtotal - discount_amount
+
+    context = {
+        'cart': cart,
+        'last_order': last_order,
+        'subtotal': subtotal,
+        'coupon': coupon,
+        'discount_amount': discount_amount,
+        'total': total,
+    }
+
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
         address = request.POST.get('address')
@@ -232,7 +260,7 @@ def checkout(request):
 
         if not full_name or not address or not phone:
             messages.error(request, 'Please fill in all fields.')
-            return render(request, 'products/checkout.html', {'cart': cart, 'last_order': last_order})
+            return render(request, 'products/checkout.html', context)
 
         with transaction.atomic():
             order = Order.objects.create(
@@ -240,7 +268,10 @@ def checkout(request):
                 full_name=full_name,
                 address=address,
                 phone=phone,
-                total=cart.get_total(),
+                subtotal=subtotal,
+                coupon=coupon,
+                discount_amount=discount_amount,
+                total=total,
                 status='completed',
             )
             for item in cart.items.all():
@@ -267,12 +298,58 @@ def checkout(request):
                         stock=models.F('stock') - item.quantity
                     )
 
+            if coupon:
+                Coupon.objects.filter(id=coupon.id).update(times_used=models.F('times_used') + 1)
+
             cart.items.all().delete()
+            if 'applied_coupon_code' in request.session:
+                del request.session['applied_coupon_code']
 
         messages.success(request, f'Order #{order.id} placed successfully!')
         return redirect('products:order_detail', order_id=order.id)
 
-    return render(request, 'products/checkout.html', {'cart': cart, 'last_order': last_order})
+    return render(request, 'products/checkout.html', context)
+
+
+@login_required
+def apply_coupon(request):
+    if request.method != 'POST':
+        return redirect('products:checkout')
+
+    code = request.POST.get('coupon_code', '').strip()
+    cart = get_or_create_cart(request)
+    subtotal = cart.get_total()
+
+    if not code:
+        messages.error(request, 'Please enter a coupon code.')
+        return redirect('products:checkout')
+
+    coupon = Coupon.objects.filter(code=code.upper()).first()
+    if not coupon:
+        messages.error(request, 'Invalid coupon code.')
+        return redirect('products:checkout')
+
+    valid, error = coupon.is_valid(order_total=subtotal)
+    if not valid:
+        messages.error(request, error)
+        return redirect('products:checkout')
+
+    eligible_amount = coupon.get_eligible_amount(cart.items.all())
+    if eligible_amount <= 0:
+        messages.error(request, 'This coupon does not apply to any items in your cart.')
+        return redirect('products:checkout')
+
+    request.session['applied_coupon_code'] = coupon.code
+    messages.success(request, f'Coupon "{coupon.code}" applied!')
+    return redirect('products:checkout')
+
+
+@login_required
+def remove_coupon(request):
+    if 'applied_coupon_code' in request.session:
+        del request.session['applied_coupon_code']
+        messages.success(request, 'Coupon removed.')
+    return redirect('products:checkout')
 
 
 @login_required

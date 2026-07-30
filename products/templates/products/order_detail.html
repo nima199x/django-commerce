@@ -44,6 +44,7 @@
                     {% else %}
                     {{ item.product_name }}
                     {% endif %}
+                    {% if item.variant_label %}<br><small style="color:#999;">{{ item.variant_label }}</small>{% endif %}
                 </td>
                 <td>${{ item.price }}</td>
                 <td>{{ item.quantity }}</td>
@@ -75,6 +76,18 @@
                 {% endif %}
             </tr>
             {% endfor %}
+            <tr>
+                <td colspan="3" class="text-right">Subtotal</td>
+                <td colspan="{% if order.status == 'completed' %}2{% else %}1{% endif %}">${{ order.subtotal }}</td>
+            </tr>
+            {% if order.discount_amount > 0 %}
+            <tr style="color:#27ae60;">
+                <td colspan="3" class="text-right">
+                    Discount {% if order.coupon %}({{ order.coupon.code }}){% endif %}
+                </td>
+                <td colspan="{% if order.status == 'completed' %}2{% else %}1{% endif %}">-${{ order.discount_amount }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <td colspan="3" class="text-right"><strong>Total</strong></td>
                 <td colspan="{% if order.status == 'completed' %}2{% else %}1{% endif %}"><strong>${{ order.total }}</strong></td>

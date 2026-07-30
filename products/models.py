@@ -130,6 +130,79 @@ class ProductVariant(models.Model):
         return price
 
 
+class Coupon(models.Model):
+    DISCOUNT_TYPE_CHOICES = [
+        ('percentage', 'Percentage'),
+        ('fixed', 'Fixed Amount'),
+    ]
+    code = models.CharField(max_length=50, unique=True, verbose_name='Code')
+    discount_type = models.CharField(max_length=20, choices=DISCOUNT_TYPE_CHOICES, default='percentage', verbose_name='Discount Type')
+    discount_value = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Discount Value', help_text='Percentage (0-100) or fixed amount')
+    min_order_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Minimum Order Amount')
+    categories = models.ManyToManyField(
+        Category, blank=True, related_name='coupons', verbose_name='Restrict to Categories',
+        help_text='Leave empty to apply to the whole site. If set, discount only applies to items from these categories.'
+    )
+    max_uses = models.PositiveIntegerField(null=True, blank=True, verbose_name='Max Uses', help_text='Leave blank for unlimited')
+    times_used = models.PositiveIntegerField(default=0, verbose_name='Times Used')
+    valid_from = models.DateTimeField(verbose_name='Valid From')
+    valid_until = models.DateTimeField(verbose_name='Valid Until')
+    is_active = models.BooleanField(default=True, verbose_name='Is Active')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Coupon'
+        verbose_name_plural = 'Coupons'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.code
+
+    def save(self, *args, **kwargs):
+        self.code = self.code.upper().strip()
+        super().save(*args, **kwargs)
+
+    def is_valid(self, order_total=None):
+        from django.utils import timezone
+        now = timezone.now()
+
+        if not self.is_active:
+            return False, 'This coupon is not active.'
+        if now < self.valid_from:
+            return False, 'This coupon is not active yet.'
+        if now > self.valid_until:
+            return False, 'This coupon has expired.'
+        if self.max_uses is not None and self.times_used >= self.max_uses:
+            return False, 'This coupon has reached its usage limit.'
+        if order_total is not None and order_total < self.min_order_amount:
+            return False, f'Minimum order amount for this coupon is ${self.min_order_amount}.'
+        return True, ''
+
+    def get_eligible_amount(self, cart_items):
+        """
+        Returns the total amount of cart items eligible for this coupon's discount.
+        If no categories are set, the whole cart is eligible.
+        """
+        restricted_category_ids = set(self.categories.values_list('id', flat=True))
+        if not restricted_category_ids:
+            return sum(item.get_subtotal() for item in cart_items)
+
+        eligible_total = 0
+        for item in cart_items:
+            product_category = item.product.category
+            ancestor_ids = set(c.id for c in product_category.get_ancestors(include_self=True))
+            if ancestor_ids & restricted_category_ids:
+                eligible_total += item.get_subtotal()
+        return eligible_total
+
+    def get_discount_amount(self, eligible_amount):
+        if self.discount_type == 'percentage':
+            amount = eligible_amount * (self.discount_value / 100)
+        else:
+            amount = self.discount_value
+        return min(amount, eligible_amount)
+
+
 class FAQ(models.Model):
     question = models.CharField(max_length=500, verbose_name='Question')
     answer = models.TextField(verbose_name='Answer')
@@ -197,6 +270,9 @@ class Order(models.Model):
     full_name = models.CharField(max_length=200, verbose_name='Full Name')
     address = models.CharField(max_length=300, verbose_name='Address')
     phone = models.CharField(max_length=20, verbose_name='Phone')
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Subtotal')
+    coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name='Coupon')
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Discount Amount')
     total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created At')
 

@@ -56,14 +56,53 @@
                 <tbody>
                     {% for item in cart.items.all %}
                     <tr>
-                        <td>{{ item.product.name }}</td>
+                        <td>
+                            {{ item.product.name }}
+                            {% if item.variant %}<br><small style="color:#999;">{{ item.variant.size }} {% if item.variant.size and item.variant.color %}/{% endif %} {{ item.variant.color }}</small>{% endif %}
+                        </td>
                         <td>{{ item.quantity }}</td>
                         <td>${{ item.get_subtotal }}</td>
                     </tr>
                     {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Coupon Section -->
+            <div style="margin:15px 0; padding:15px; background:#f9f9f9; border:1px solid #ececec; border-radius:6px;">
+                {% if coupon %}
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:#27ae60; font-weight:600;">
+                        <i class="fa fa-check-circle"></i> Coupon "{{ coupon.code }}" applied
+                    </span>
+                    <form method="POST" action="{% url 'products:remove_coupon' %}" style="margin:0;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-default btn-sm">Remove</button>
+                    </form>
+                </div>
+                {% else %}
+                <form method="POST" action="{% url 'products:apply_coupon' %}" style="display:flex; gap:8px;">
+                    {% csrf_token %}
+                    <input type="text" name="coupon_code" placeholder="Coupon code" class="form-control" style="flex:1;">
+                    <button type="submit" class="btn-primary btn-sm"><span>Apply</span></button>
+                </form>
+                {% endif %}
+            </div>
+
+            <table class="table table-bordered">
+                <tbody>
                     <tr>
-                        <td colspan="2" class="text-right"><strong>Total</strong></td>
-                        <td><strong>${{ cart.get_total }}</strong></td>
+                        <td class="text-right"><strong>Subtotal</strong></td>
+                        <td style="width:100px;">${{ subtotal }}</td>
+                    </tr>
+                    {% if discount_amount > 0 %}
+                    <tr style="color:#27ae60;">
+                        <td class="text-right"><strong>Discount</strong></td>
+                        <td>-${{ discount_amount }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr style="font-size:16px;">
+                        <td class="text-right"><strong>Total</strong></td>
+                        <td><strong>${{ total }}</strong></td>
                     </tr>
                 </tbody>
             </table>

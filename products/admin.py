@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from mptt.admin import DraggableMPTTAdmin
 from .models import (
     Category, Product, ProductVariant, Brand, Slider, Banner, SiteSettings,
-    Order, OrderItem, Review, WishlistItem, NewsletterSubscriber
+    Order, OrderItem, Review, WishlistItem, NewsletterSubscriber, Coupon
 )
 
 
@@ -80,14 +80,23 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'full_name', 'phone', 'total', 'status', 'created_at')
+    list_display = ('id', 'user', 'full_name', 'phone', 'subtotal', 'coupon', 'discount_amount', 'total', 'status', 'created_at')
     list_display_links = ('id', 'full_name')
     list_filter = ('status', 'created_at')
     search_fields = ('full_name', 'phone', 'user__username')
     list_editable = ('status',)
-    readonly_fields = ('user', 'full_name', 'address', 'phone', 'total', 'created_at')
+    readonly_fields = ('user', 'full_name', 'address', 'phone', 'subtotal', 'coupon', 'discount_amount', 'total', 'created_at')
     inlines = [OrderItemInline]
     date_hierarchy = 'created_at'
+
+
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ('code', 'discount_type', 'discount_value', 'times_used', 'max_uses', 'valid_from', 'valid_until', 'is_active')
+    list_editable = ('is_active',)
+    list_filter = ('discount_type', 'is_active')
+    search_fields = ('code',)
+    readonly_fields = ('times_used',)
 
 
 @admin.register(Review)
