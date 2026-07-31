@@ -52,10 +52,22 @@ class Product(models.Model):
             return self.variants.filter(stock__gt=0).exists()
         return self.stock > 0
 
+    LOW_STOCK_THRESHOLD = 5
+
     def get_total_stock(self):
         if self.has_variants():
             return sum(v.stock for v in self.variants.all())
         return self.stock
+
+    def get_min_variant_stock(self):
+        """Lowest stock among variants that still have stock > 0 (ignores fully depleted variants)."""
+        stocks = [v.stock for v in self.variants.all() if v.stock > 0]
+        return min(stocks) if stocks else 0
+
+    def is_low_stock(self):
+        if self.has_variants():
+            return any(0 < v.stock <= self.LOW_STOCK_THRESHOLD for v in self.variants.all())
+        return 0 < self.stock <= self.LOW_STOCK_THRESHOLD
 
     def get_discounted_price(self):
         if self.discount:
