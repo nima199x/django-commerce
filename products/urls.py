@@ -32,5 +32,6 @@ urlpatterns = [
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
     path('checkout/apply-coupon/', views.apply_coupon, name='apply_coupon'),
     path('checkout/remove-coupon/', views.remove_coupon, name='remove_coupon'),
+    path('orders/<int:order_id>/cancel/', views.cancel_order, name='cancel_order'),
 
 ]

@@ -272,7 +272,7 @@ def checkout(request):
                 coupon=coupon,
                 discount_amount=discount_amount,
                 total=total,
-                status='completed',
+                status='pending',
             )
             for item in cart.items.all():
                 variant_label = str(item.variant) if item.variant else ''
@@ -356,6 +356,37 @@ def remove_coupon(request):
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
     return render(request, 'products/order_detail.html', {'order': order})
+
+
+@login_required
+def cancel_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    if order.status != 'pending':
+        messages.error(request, 'This order can no longer be cancelled.')
+        return redirect('products:order_detail', order_id=order.id)
+
+    with transaction.atomic():
+        for item in order.items.all():
+            if item.variant:
+                ProductVariant.objects.filter(id=item.variant.id).update(
+                    stock=models.F('stock') + item.quantity
+                )
+            elif item.product:
+                Product.objects.filter(id=item.product.id).update(
+                    stock=models.F('stock') + item.quantity
+                )
+
+        if order.coupon:
+            Coupon.objects.filter(id=order.coupon.id).update(
+                times_used=models.F('times_used') - 1
+            )
+
+        order.status = 'cancelled'
+        order.save()
+
+    messages.success(request, f'Order #{order.id} has been cancelled.')
+    return redirect('products:order_detail', order_id=order.id)
 
 
 @login_required
