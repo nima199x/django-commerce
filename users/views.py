@@ -4,8 +4,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, ProfileUpdateForm
+from eshop_online.rate_limit import rate_limit
 
 
+@rate_limit('register', limit=3, period=3600, redirect_to='register')
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -43,6 +45,7 @@ def merge_guest_cart(request, user):
     guest_cart.delete()
 
 
+@rate_limit('login', limit=5, period=300, redirect_to='login')
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -66,7 +69,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    messages.success(request, "شما با موفقیت خارج شدید.")
+    messages.success(request, "successfully logged out.")
     return redirect('home')
 
 

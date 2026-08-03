@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.db import transaction, models
 from django.db.models import Sum, Q
 from .models import Category, Product, ProductVariant, FAQ, Cart, CartItem, Order, OrderItem, Review, WishlistItem, Brand, NewsletterSubscriber, Coupon
+from eshop_online.rate_limit import rate_limit
 
 
 COMPARE_SESSION_KEY = 'compare_list'
@@ -312,6 +313,7 @@ def checkout(request):
 
 
 @login_required
+@rate_limit('apply_coupon', limit=10, period=600, redirect_to='products:checkout')
 def apply_coupon(request):
     if request.method != 'POST':
         return redirect('products:checkout')
@@ -481,6 +483,7 @@ def compare_detail(request):
     return render(request, 'products/compare.html', {'products': products})
 
 
+@rate_limit('newsletter', limit=5, period=3600, redirect_to='home')
 def newsletter_subscribe(request):
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
