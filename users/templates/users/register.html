@@ -23,6 +23,14 @@
                         {{ form|crispy }}
                     </fieldset>
 
+                    <fieldset>
+                        <legend>Verification</legend>
+                        <div class="form-group">
+                            <label>{{ captcha_question }}</label>
+                            <input type="number" name="captcha_answer" class="form-control" required style="max-width:150px;">
+                        </div>
+                    </fieldset>
+
                     <div class="buttons">
                         <div class="pull-right">
                             <input type="checkbox" name="agree" value="1"> &nbsp;

@@ -5,19 +5,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, ProfileUpdateForm
 from eshop_online.rate_limit import rate_limit
+from eshop_online.captcha import generate_captcha, verify_captcha
 
 
 @rate_limit('register', limit=3, period=3600, redirect_to='register')
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
+        captcha_answer = request.POST.get('captcha_answer', '')
+
+        if not verify_captcha(request, captcha_answer):
+            messages.error(request, 'Incorrect answer to the verification question. Please try again.')
+            captcha_question = generate_captcha(request)
+            return render(request, 'users/register.html', {'form': form, 'captcha_question': captcha_question})
+
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
         form = RegisterForm()
 
-    return render(request, 'users/register.html', {'form': form})
+    captcha_question = generate_captcha(request)
+    return render(request, 'users/register.html', {'form': form, 'captcha_question': captcha_question})
 
 
 def merge_guest_cart(request, user):
@@ -69,7 +78,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    messages.success(request, "successfully logged out.")
+    messages.success(request, "You have successfully logged out.")
     return redirect('home')
 
 
